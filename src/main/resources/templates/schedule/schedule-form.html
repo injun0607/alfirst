@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/schedule/schedule.css">
+</head>
+<body>
+
+    <div class="schedule-form">
+        <h2>TimeSlot 추가</h2>
+        <form action="/schedule/addTimeSlot" method="post">
+
+            <div class="form-group">
+                <label for="startTime">시작 시간</label>
+                <input type="time" id="startTime" name="startTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="endTime">종료 시간</label>
+                <input type="time" id="endTime" name="endTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="todoTitle">To-Do 항목</label>
+                <input type="text" id="todoTitle" name="todoTitle" placeholder="할 일을 입력하세요">
+                <button type="button" class="add-todo-btn" onclick="addTodo()">To-Do 추가</button>
+            </div>
+
+            <ul class="todo-list" id="todoList">
+                <!-- To-Do 항목들이 여기에 추가됩니다. -->
+            </ul>
+
+            <input type="hidden" id="todoItems" name="todoItems">
+
+            <button type="submit" class="submit-btn">TimeSlot 추가</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    function addTodo() {
+        const todoTitleInput = document.getElementById('todoTitle');
+        const todoTitle = todoTitleInput.value.trim();
+
+        if (!todoTitle) return;
+
+        const todoList = document.getElementById('todoList');
+
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+        li.textContent = todoTitle;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = '삭제';
+        removeBtn.onclick = function() {
+            todoList.removeChild(li);
+        };
+
+        li.appendChild(removeBtn);
+        todoList.appendChild(li);
+
+        updateHiddenField();
+
+        todoTitleInput.value = '';
+    }
+
+    function updateHiddenField() {
+        const todoList = document.getElementById('todoList');
+        const todoItems = Array.from(todoList.children).map(li => li.textContent.replace('삭제', '').trim());
+        document.getElementById('todoItems').value = JSON.stringify(todoItems);
+    }
+</script>
+</html>

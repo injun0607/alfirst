@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+        Novel Writing Platform
+    </div>
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="nav-buttons" id="nav-buttons">
+        <a href="/signup">Sign Up</a>
+        <a href="/login">Log In</a>
+    </div>
+</header>
+<div class="container">
+    <div class="features">
+        <div class="feature">
+            <h3>Write Your Novel</h3>
+            <p>Start writing your novel using our powerful and easy-to-use editor.</p>
+        </div>
+        <div class="feature">
+            <h3>Discover Stories</h3>
+            <p>Explore and read stories from various genres and authors.</p>
+        </div>
+        <div class="feature">
+            <h3>Connect with Writers</h3>
+            <p>Join our community and connect with other writers and readers.</p>
+        </div>
+    </div>
+</div>
+<footer>
+    &copy; 2024 Novel Writing Platform. All rights reserved.
+</footer>
+<script>
+    function toggleMenu() {
+        const navButtons = document.getElementById('nav-buttons');
+        if (navButtons.style.display === 'flex') {
+            navButtons.style.display = 'none';
+        } else {
+            navButtons.style.display = 'flex';
+        }
+    }
+</script>
+</body>
+</html>

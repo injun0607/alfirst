@@ -10,4 +10,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class UserDTO {
+
+
+
+
 }

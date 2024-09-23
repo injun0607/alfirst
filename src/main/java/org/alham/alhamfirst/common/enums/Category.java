@@ -1,6 +1,5 @@
 package org.alham.alhamfirst.common.enums;
 
 public enum Category {
-    STUDY, WORK, EXERCISE, HOBBY, ETC
-
+    PHYSICAL, MENTAL, EMOTIONAL, SOCIAL, PROFESSIONAL, LIFESTYLE;
 }

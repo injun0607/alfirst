@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.alham.alhamfirst.common.enums.WeekStatus;
 import org.hibernate.annotations.Cascade;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class Schedule {
 
     //시간표 설명
     private String scheduleDesc;
+
+    private LocalDate date;
 
 
     @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL,

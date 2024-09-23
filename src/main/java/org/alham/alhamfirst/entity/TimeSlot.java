@@ -24,6 +24,7 @@ public class TimeSlot {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
+    
     private String startTime;
     private String endTime;
 

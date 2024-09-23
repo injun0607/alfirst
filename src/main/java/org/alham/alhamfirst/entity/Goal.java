@@ -21,23 +21,22 @@ public class Goal {
     @JoinColumn(name = "time_slot_id")
     private TimeSlot timeSlot;
 
-    private String title;
+    @Column(name = "goal_desc")
     private String description;
+
     private Boolean completed;
 
     public void addTimeSlot(TimeSlot timeSlot) {
         this.timeSlot = timeSlot;
     }
 
-    public void updateGoal(String title, String description, Boolean completed){
-        this.title = title;
+    public void updateGoal( String description, Boolean completed){
         this.description = description;
         this.completed = completed;
     }
 
     @Builder
-    public Goal(String title, String description, Boolean completed) {
-        this.title = title;
+    public Goal(String description, Boolean completed) {
         this.description = description;
         this.completed = completed;
     }

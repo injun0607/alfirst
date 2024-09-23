@@ -39,7 +39,6 @@ public class ScheduleMapper {
 
     public Goal goalFromDTO(GoalDTO goalDTO){
         return Goal.builder()
-                .title(goalDTO.getTitle())
                 .description(goalDTO.getDescription())
                 .completed(goalDTO.getCompleted()).build();
     }
@@ -73,7 +72,7 @@ public class ScheduleMapper {
     }
 
     public void updateGoalFromDTO(Goal goal, GoalDTO goalDTO){
-        goal.updateGoal(goalDTO.getTitle(),goalDTO.getDescription(),goalDTO.getCompleted());
+        goal.updateGoal(goalDTO.getDescription(),goalDTO.getCompleted());
     }
 
 

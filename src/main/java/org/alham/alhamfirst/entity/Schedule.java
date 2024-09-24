@@ -18,13 +18,13 @@ import java.util.List;
 @Table(name = "al_schedule")
 public class Schedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
     private long id;
 
     //시간표 소유자
     @ManyToOne
-    @JoinColumn(name = "user_idx")
+    @JoinColumn(name = "al_user_id")
     private User user;
 
     //시간표 제목

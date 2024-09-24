@@ -12,6 +12,7 @@ import lombok.ToString;
 public class UserDTO {
 
 
-
+    public String name;
+    public int age;
 
 }

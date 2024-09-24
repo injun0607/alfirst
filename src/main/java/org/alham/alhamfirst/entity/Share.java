@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class Share {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "share_id")
     private long id;
 

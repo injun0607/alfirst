@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface TodoService {
 
+
+
     public void createTodo(TodoDTO todoDTO);
 
     List<TodoDTO> listTodo();
@@ -17,4 +19,7 @@ public interface TodoService {
     TodoDTO getTodoDetail(Long id);
 
     void updateTodoDetail(Long id, TodoDTO todoDTO);
+
+
+
 }

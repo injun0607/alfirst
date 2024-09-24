@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Todo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id")
     private Long id;
 
@@ -44,4 +44,9 @@ public class Todo {
         this.detail = detail;
         this.completed = completed;
     }
+
+    public void addTodoList(TodoList todoList){
+        this.todoList = todoList;
+    }
+
 }

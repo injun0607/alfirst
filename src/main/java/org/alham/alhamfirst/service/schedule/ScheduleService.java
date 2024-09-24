@@ -31,7 +31,7 @@ public class ScheduleService {
     @Transactional
     public int createSchedule(ScheduleDTO scheduleDTO, long userIdx){
         Schedule schedule = scheduleMapper.scheduleFromDTO(scheduleDTO);
-        User user = new User(userIdx);
+        User user = User.createTempUser(userIdx);
         schedule.addUser(user);
 
         scheduleRepository.save(schedule);

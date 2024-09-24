@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u LEFT JOIN FETCH u.scheduleList WHERE u.user_idx = :userIdx")
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.scheduleList WHERE u.id = :userIdx")
     public User getUserByUserIdxWithSchedule(@Param(value = "userIdx") long userIdx);
 }

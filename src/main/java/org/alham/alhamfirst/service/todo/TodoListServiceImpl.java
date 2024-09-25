@@ -84,7 +84,9 @@ public class TodoListServiceImpl implements ToDoListService{
         TodoList todoList = todoListRepository.findByUserIdAndDateWithTodoList(userId, date)
                 .orElseThrow(() -> new EntityNotFoundException("TodoList not found with userId: " + userId + " and date: " + date));
 
-        return todoMapper.createTodoListDTOFromEntity(todoList);
+        TodoListDTO todoListDTOFromEntity = todoMapper.createTodoListDTOFromEntity(todoList);
+        todoListDTOFromEntity.setUserId(userId);
+        return todoListDTOFromEntity;
     }
 
     @Override

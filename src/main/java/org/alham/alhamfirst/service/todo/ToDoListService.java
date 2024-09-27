@@ -5,6 +5,7 @@ import org.alham.alhamfirst.entity.TodoList;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface ToDoListService {
 
@@ -13,7 +14,7 @@ public interface ToDoListService {
     public void updateTodoList(TodoListDTO todoListDTO);
 
     public TodoList getTodoListByToday(long userId);
-    public TodoListDTO getTodoListByDate(long userId, LocalDate date);
+    public Optional<TodoListDTO> getTodoListByDate(long userId, LocalDate date);
 
     public List<TodoListDTO> getAllTodoListByUserId(long userId);
 

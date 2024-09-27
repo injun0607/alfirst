@@ -15,9 +15,11 @@ import org.alham.alhamfirst.repository.todo.TodoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -53,7 +55,6 @@ public class TodoListServiceImpl implements ToDoListService{
             if(todoDTO.getId() == Constant.NEW_ENTITY_NUMBER){
                 Todo todo = todoMapper.createTodoFromDTO(todoDTO);
                 findTodoList.addTodo(todo);
-
             }else{
                 Todo todo = todoMap.get(todoDTO.getId());
                 if(todo != null){
@@ -77,16 +78,12 @@ public class TodoListServiceImpl implements ToDoListService{
     }
 
     @Override
-    public TodoListDTO getTodoListByDate(long userId, LocalDate date) {
-
-        TodoListDTO todoListDTO = new TodoListDTO();
-
-        TodoList todoList = todoListRepository.findByUserIdAndDateWithTodoList(userId, date)
-                .orElseThrow(() -> new EntityNotFoundException("TodoList not found with userId: " + userId + " and date: " + date));
-
-        TodoListDTO todoListDTOFromEntity = todoMapper.createTodoListDTOFromEntity(todoList);
-        todoListDTOFromEntity.setUserId(userId);
-        return todoListDTOFromEntity;
+    public Optional<TodoListDTO> getTodoListByDate(long userId, LocalDate date) {
+        return todoListRepository.findByUserIdAndDateWithTodoList(userId, date).map(todoList -> {
+            TodoListDTO todoListDTOFromEntity = todoMapper.createTodoListDTOFromEntity(todoList);
+            todoListDTOFromEntity.setUserId(userId);
+            return todoListDTOFromEntity;
+        });
     }
 
     @Override

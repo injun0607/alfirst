@@ -45,8 +45,10 @@ public class TodoListServiceImpl implements ToDoListService{
     @Transactional
     public void updateTodoList(TodoListDTO todoListDTO) {
 
-        TodoList findTodoList = todoListRepository.findByUserIdWithTodo(todoListDTO.getUserId())
-                .orElseThrow(()-> new EntityNotFoundException("TodoList not found with id: " + todoListDTO.getUserId()));
+        TodoList findTodoList = todoListDTO.getId() > 0 ? todoListRepository.findByTodoListId(todoListDTO.getId())
+                .orElseThrow(()-> new EntityNotFoundException("TodoList not found with todoList id: " + todoListDTO.getId())):
+                todoListRepository.findByUserIdWithTodo(todoListDTO.getUserId())
+                .orElseThrow(()-> new EntityNotFoundException("TodoList not found with user id: " + todoListDTO.getUserId()));
 
         Map<Long,Todo> todoMap = findTodoList.getTodoList().stream()
                 .collect(Collectors.toMap(Todo::getId, Function.identity()));
@@ -70,8 +72,6 @@ public class TodoListServiceImpl implements ToDoListService{
 
         todoListRepository.save(findTodoList);
     }
-
-
 
     @Override
     public TodoList getTodoListByToday(long userId) {

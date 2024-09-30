@@ -45,6 +45,7 @@ public class TodoMapper {
 
     public TodoListDTO createTodoListDTOFromEntity(TodoList todoList) {
         TodoListDTO todoListDTO = TodoListDTO.builder()
+                .id(todoList.getId())
                 .date(todoList.getDate())
                 .build();
 

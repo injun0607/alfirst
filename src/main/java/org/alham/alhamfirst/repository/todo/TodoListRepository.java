@@ -20,5 +20,7 @@ public interface TodoListRepository extends JpaRepository<TodoList, Long>{
     public Optional<TodoList> findByUserIdAndDateWithTodoList(@Param("userId") long userId, @Param("date") LocalDate date);
 
 
-
+    @EntityGraph(attributePaths = {"user","todoList"})
+    @Query("select tl from TodoList tl where tl.id = :id")
+    Optional<TodoList> findByTodoListId(@Param("id") long id);
 }

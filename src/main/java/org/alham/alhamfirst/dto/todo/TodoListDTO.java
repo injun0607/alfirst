@@ -12,11 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 public class TodoListDTO {
 
-    public long userId;
+    private long id;
+    private long userId;
+    private LocalDate date;
+    private List<TodoDTO> todoList = new ArrayList<>();
 
-    public LocalDate date;
-
-    public List<TodoDTO> todoList = new ArrayList<>();
+    @Builder
+    public TodoListDTO(long id,LocalDate date){
+        this.id = id;
+        this.date = date;
+    }
 
     @Builder
     public TodoListDTO(LocalDate date){

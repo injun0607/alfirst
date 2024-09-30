@@ -1,7 +1,6 @@
-package org.alham.alhamfirst.entity;
+package org.alham.alhamfirst.entity.todo;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +25,7 @@ public class Todo {
     private String detail;
 
     private boolean completed;
+
 
 
     @Builder

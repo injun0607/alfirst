@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.service.todo;
 
 import org.alham.alhamfirst.dto.todo.TodoListDTO;
-import org.alham.alhamfirst.entity.TodoList;
+import org.alham.alhamfirst.entity.todo.TodoList;
 
 import java.time.LocalDate;
 import java.util.List;

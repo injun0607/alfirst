@@ -1,6 +1,6 @@
 package org.alham.alhamfirst.repository.todo;
 
-import org.alham.alhamfirst.entity.TodoList;
+import org.alham.alhamfirst.entity.todo.TodoList;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

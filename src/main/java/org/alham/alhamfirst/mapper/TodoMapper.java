@@ -2,8 +2,8 @@ package org.alham.alhamfirst.mapper;
 
 import org.alham.alhamfirst.dto.todo.TodoDTO;
 import org.alham.alhamfirst.dto.todo.TodoListDTO;
-import org.alham.alhamfirst.entity.Todo;
-import org.alham.alhamfirst.entity.TodoList;
+import org.alham.alhamfirst.entity.todo.Todo;
+import org.alham.alhamfirst.entity.todo.TodoList;
 import org.alham.alhamfirst.entity.User;
 import org.springframework.stereotype.Component;
 

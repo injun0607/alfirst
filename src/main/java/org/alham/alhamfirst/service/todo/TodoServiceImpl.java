@@ -3,13 +3,12 @@ package org.alham.alhamfirst.service.todo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.dto.todo.TodoDTO;
-import org.alham.alhamfirst.entity.Todo;
+import org.alham.alhamfirst.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.TodoMapper;
 import org.alham.alhamfirst.repository.todo.TodoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor

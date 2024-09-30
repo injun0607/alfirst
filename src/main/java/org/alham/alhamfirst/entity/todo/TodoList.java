@@ -1,8 +1,9 @@
-package org.alham.alhamfirst.entity;
+package org.alham.alhamfirst.entity.todo;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.alham.alhamfirst.entity.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
 public class TodoListDTO {
 
@@ -19,6 +18,8 @@ public class TodoListDTO {
 
     public List<TodoDTO> todoList = new ArrayList<>();
 
-
-
+    @Builder
+    public TodoListDTO(LocalDate date){
+        this.date = date;
+    }
 }

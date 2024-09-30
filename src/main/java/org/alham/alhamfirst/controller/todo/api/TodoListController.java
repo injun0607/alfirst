@@ -20,11 +20,17 @@ public class TodoListController {
     private final ToDoListService todoService;
 
 
-    @GetMapping
-    public ResponseEntity<TodoListDTO> getTodoList(){
+    @GetMapping("/{userId}")
+    public ResponseEntity<AlhamResponse<TodoListDTO>> getTodoList(@PathVariable(name = "userId") Long userId){
         LocalDate now = LocalDate.now();
-        TodoListDTO todoListByDate = todoService.getTodoListByDate(1L, now).orElseGet(TodoListDTO::new);
-        return new ResponseEntity<>(todoListByDate, null, 200);
+        try {
+            TodoListDTO todoListByDate = todoService.getTodoListByDate(userId, now).orElseGet(TodoListDTO::new);
+            return new ResponseEntity<>(AlhamResponse.createGetSuccess("성공", todoListByDate), null, 200);
+        } catch (Exception e){
+            log.error("TodoList 조회 실패", e);
+            return new ResponseEntity<>(new AlhamResponse<>("실패", ResponseCode.GET_FAIL), null, 500);
+        }
+
 
     }
 
@@ -41,7 +47,7 @@ public class TodoListController {
             return new ResponseEntity<>(new AlhamResponse<>("성공", ResponseCode.SAVE_SUCCESS), null, 200);
         } catch (Exception e){
             log.error("TodoList 생성 실패", e);
-            return new ResponseEntity<>(new AlhamResponse("실패",
+            return new ResponseEntity<>(new AlhamResponse<>("실패",ResponseCode.SAVE_FAIL),null,500);
         }
 
     }

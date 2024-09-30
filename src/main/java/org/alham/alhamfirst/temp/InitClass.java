@@ -40,6 +40,13 @@ public class InitClass {
 
         toDoListService.createTodoList(todoListDTO);
 
+        UserDTO userDTO2 = new UserDTO();
+        userDTO.setName("aljun");
+        userDTO.setAge(29);
+
+        User user2 = userService.createUser(userDTO2);
+
+
 
 
     }

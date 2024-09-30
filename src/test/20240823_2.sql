@@ -38,15 +38,10 @@ INSERT INTO dslabdb.revresearcher2 (revIdx, memId, memName, align) VALUES(109221
 INSERT INTO dslabdb.revresearcher2 (revIdx, memId, memName, align) VALUES(109223,'sungeunjo','조성은','1');
 
 
-
-
-
-
-
-
-
-
-
+#fastApi(python) ->
+#fast Api 데이터 받기 연결 -> langchain -> llm 사용확인 -> 결과값 리턴 -> springserver -> return front
+# -> request front
+# -> data json ->  springDataApi -> save DB ->
 
 
 

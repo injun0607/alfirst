@@ -11,8 +11,9 @@ import java.util.Optional;
 
 public interface TodoListRepository extends JpaRepository<TodoList, Long>{
 
-    @Query("SELECT tl FROM TodoList tl JOIN FETCH tl.todoList WHERE tl.user.id = :userId")
-    public Optional<TodoList> findByUserIdWithTodo(long userId);
+    @EntityGraph(attributePaths = {"user","todoList"})
+    @Query("SELECT tl FROM TodoList tl WHERE tl.user.id = :userId")
+    public Optional<TodoList> findByUserIdWithTodo(@Param("userId")long userId);
 
     @EntityGraph(attributePaths = {"user","todoList"})
     @Query("SELECT tl FROM TodoList tl WHERE tl.user.id = :userId AND tl.date = :date")

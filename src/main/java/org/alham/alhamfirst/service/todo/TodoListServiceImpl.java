@@ -52,6 +52,7 @@ public class TodoListServiceImpl implements ToDoListService{
                 .collect(Collectors.toMap(Todo::getId, Function.identity()));
 
         todoListDTO.getTodoList().forEach(todoDTO -> {
+            //새로 생성된 TODO들은 ID가 0이다.
             if(todoDTO.getId() == Constant.NEW_ENTITY_NUMBER){
                 Todo todo = todoMapper.createTodoFromDTO(todoDTO);
                 findTodoList.addTodo(todo);

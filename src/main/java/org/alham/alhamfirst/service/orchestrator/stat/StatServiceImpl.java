@@ -1,12 +1,16 @@
-package org.alham.alhamfirst.service.stat;
+package org.alham.alhamfirst.service.orchestrator.stat;
 
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.service.stat.preprocess.PreProcessService;
+import org.alham.alhamfirst.dto.stat.StatDocument;
+import org.alham.alhamfirst.repository.stat.StatRepository;
+import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -14,7 +18,15 @@ import reactor.core.publisher.Mono;
 public class StatServiceImpl implements StatService{
 
     private final PreProcessService preProcessService;
+    private final StatRepository statRepository;
     private final WebClient webClient;
+
+    @Override
+    public StatDocument saveStat(long todoIdx,  Map<String, Integer> statData) {
+        StatDocument statDocument = new StatDocument(todoIdx, statData);
+        log.info("StatService saveStat");
+        return statRepository.save(statDocument);
+    }
 
     @Override
     public String calculateStat(String desc) {
@@ -38,6 +50,11 @@ public class StatServiceImpl implements StatService{
     public void updateStat(String stat) {
         log.info("StatService updateStat");
         //stat을 받아서 db에 업데이트
+    }
+
+    @Override
+    public StatDocument findByTodoIdx(long todoIdx) {
+        return statRepository.findByTodoIdx(todoIdx);
     }
 
     private String proProcess(String desc){

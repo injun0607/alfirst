@@ -10,7 +10,4 @@ public class Quest {
 
     private String info;
 
-
-
-
 }

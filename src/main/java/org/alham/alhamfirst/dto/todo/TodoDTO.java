@@ -2,6 +2,8 @@ package org.alham.alhamfirst.dto.todo;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -10,8 +12,8 @@ import lombok.*;
 public class TodoDTO {
 
     private Long id;
-    private String title;
     private String detail;
     private boolean completed;
+    private LocalDate startDate;
 
 }

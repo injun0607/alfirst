@@ -4,7 +4,7 @@ package org.alham.alhamfirst.controller.todo.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.dto.todo.TodoDTO;
-import org.alham.alhamfirst.service.todo.TodoService;
+import org.alham.alhamfirst.service.orchestrator.todo.TodoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +23,9 @@ public class TodoController {
         todoService.createTodo(todoDTO);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/todo-list/todo")
     public List<TodoDTO> listTodo(){
-        return todoService.listTodo();
+        return todoService.getTodoList();
     }
 
     @GetMapping("/detail/{id}")

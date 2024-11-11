@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.service.stat.preprocess;
+package org.alham.alhamfirst.service.orchestrator.stat.preprocess;
 
 public interface PreProcessService {
 

@@ -1,13 +1,15 @@
-package org.alham.alhamfirst.service.todo;
+package org.alham.alhamfirst.service.orchestrator.todo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.dto.todo.TodoDTO;
+import org.alham.alhamfirst.entity.User;
 import org.alham.alhamfirst.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.TodoMapper;
 import org.alham.alhamfirst.repository.todo.TodoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,11 +21,24 @@ public class TodoServiceImpl implements TodoService{
 
     private final TodoMapper todoMapper;
 
+    /**
+     * 할일 생성
+     * startDate는 해당 레이어에서 넣어줌
+     * @param todoDTO
+     *
+     */
     @Override
     public void createTodo(TodoDTO todoDTO) {
-
+        todoDTO.setStartDate(LocalDate.now());
         Todo todo = todoMapper.createTodoFromDTO(todoDTO);
+        User user = User.createTempUser(1L);
+        todo.addUser(user);
         todoRepository.save(todo);
+    }
+
+    @Override
+    public List<TodoDTO> getTodoList() {
+        return todoRepository.findAll().stream().map(todoMapper::createTodoDTOFromEntity).toList();
     }
 
     @Override
@@ -40,7 +55,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public void updateTodoDetail(Long id, TodoDTO todoDTO) {
         todoRepository.findById(id).ifPresent(todo -> {
-            todo.updateTodo(todoDTO.getTitle(), todoDTO.getDetail(), todoDTO.isCompleted());
+            todo.updateTodo(todoDTO.getDetail());
             todoRepository.save(todo);
         });
     }

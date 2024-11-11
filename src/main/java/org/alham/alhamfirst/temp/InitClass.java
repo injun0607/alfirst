@@ -3,10 +3,8 @@ package org.alham.alhamfirst.temp;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.dto.todo.TodoListDTO;
 import org.alham.alhamfirst.dto.user.UserDTO;
 import org.alham.alhamfirst.entity.User;
-import org.alham.alhamfirst.service.todo.ToDoListService;
 import org.alham.alhamfirst.service.user.UserService;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +17,6 @@ public class InitClass {
 
 
     private final UserService userService;
-    private final ToDoListService toDoListService;
-
 
 
     @PostConstruct
@@ -33,16 +29,9 @@ public class InitClass {
 
         User user = userService.createUser(userDTO);
 
-
-        TodoListDTO todoListDTO = new TodoListDTO();
-        todoListDTO.setUserId(user.getId());
-        todoListDTO.setDate(LocalDate.now());
-
-        toDoListService.createTodoList(todoListDTO);
-
         UserDTO userDTO2 = new UserDTO();
-        userDTO.setName("aljun");
-        userDTO.setAge(29);
+        userDTO2.setName("aljun");
+        userDTO2.setAge(29);
 
         User user2 = userService.createUser(userDTO2);
 

@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
 
-import org.alham.alhamfirst.dto.stat.StatDocument;
+import org.alham.alhamfirst.document.stat.StatDocument;
 
 import java.util.Map;
 

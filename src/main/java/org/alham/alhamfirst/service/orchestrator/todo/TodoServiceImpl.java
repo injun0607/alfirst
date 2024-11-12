@@ -24,16 +24,17 @@ public class TodoServiceImpl implements TodoService{
     /**
      * 할일 생성
      * startDate는 해당 레이어에서 넣어줌
-     * @param todoDTO
      *
+     * @param todoDTO
+     * @return
      */
     @Override
-    public void createTodo(TodoDTO todoDTO) {
+    public Todo createTodo(TodoDTO todoDTO) {
         todoDTO.setStartDate(LocalDate.now());
         Todo todo = todoMapper.createTodoFromDTO(todoDTO);
         User user = User.createTempUser(1L);
         todo.addUser(user);
-        todoRepository.save(todo);
+        return todoRepository.save(todo);
     }
 
     @Override

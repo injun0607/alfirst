@@ -3,7 +3,8 @@ package org.alham.alhamfirst.service.orchestrator.stat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.dto.stat.StatDocument;
+import org.alham.alhamfirst.document.stat.StatDocument;
+import org.alham.alhamfirst.dto.stat.StatDTO;
 import org.alham.alhamfirst.repository.stat.StatRepository;
 import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,7 @@ public class StatServiceImpl implements StatService{
     }
 
     @Override
-    public String calculateStat(String desc) {
-
+    public String calculateStat(String todoDetail) {
         log.info("StatService calculateStat");
         /*
          * desc를 받고 -> stat을 계산해야한다.
@@ -38,11 +38,11 @@ public class StatServiceImpl implements StatService{
          * 2. 전처리한 것을 ai쪽에 보내고
          * 3. ai에서 받은 결과를 가지고 stat을 계산
          */
-        String preProcessed = proProcess(desc);
+        String preProcessed = proProcess(todoDetail);
 
-        String stat = callAi(preProcessed);
+        StatDTO statDTO = callAi(preProcessed);
 
-        return stat;
+        return null;
 
     }
 
@@ -57,18 +57,19 @@ public class StatServiceImpl implements StatService{
         return statRepository.findByTodoIdx(todoIdx);
     }
 
-    private String proProcess(String desc){
-        return null;
+    private String proProcess(String todoDetail){
+        return todoDetail;
     }
 
 
-    private String callAi(String preProcessed){
+    private StatDTO callAi(String preProcessed){
 
         Mono<String> stringMono = webClient.post()
                 .uri("/api/calculate")
                 .bodyValue(preProcessed)
                 .retrieve()
                 .bodyToMono(String.class);
+
         return null;
     }
 

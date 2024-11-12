@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.controller.todo.api;
 
 import lombok.RequiredArgsConstructor;
-import org.alham.alhamfirst.dto.stat.StatDocument;
+import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.service.orchestrator.stat.StatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -2,6 +2,7 @@ package org.alham.alhamfirst.service.orchestrator.todo;
 
 
 import org.alham.alhamfirst.dto.todo.TodoDTO;
+import org.alham.alhamfirst.entity.todo.Todo;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface TodoService {
 
 
 
-    public void createTodo(TodoDTO todoDTO);
+    public Todo createTodo(TodoDTO todoDTO);
 
     List<TodoDTO> getTodoList();
 

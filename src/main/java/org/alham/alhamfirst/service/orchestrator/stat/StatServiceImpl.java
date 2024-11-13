@@ -3,6 +3,7 @@ package org.alham.alhamfirst.service.orchestrator.stat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.alham.alhamfirst.common.error.MongoCustomError;
 import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.dto.stat.StatDTO;
 import org.alham.alhamfirst.repository.stat.StatRepository;
@@ -26,24 +27,32 @@ public class StatServiceImpl implements StatService{
     public StatDocument saveStat(long todoIdx,  Map<String, Integer> statData) {
         StatDocument statDocument = new StatDocument(todoIdx, statData);
         log.info("StatService saveStat");
-        return statRepository.save(statDocument);
+        try {
+            return statRepository.save(statDocument);
+        } catch (Exception e){
+            log.error("StatService saveStat error");
+            throw new MongoCustomError("StatService saveStat error");
+        }
     }
 
     @Override
-    public String calculateStat(String todoDetail) {
+    public StatDTO calculateStat(String todoDetail) {
         log.info("StatService calculateStat");
-        /*
-         * desc를 받고 -> stat을 계산해야한다.
-         * 1.받은 것을 한번 전처리
-         * 2. 전처리한 것을 ai쪽에 보내고
-         * 3. ai에서 받은 결과를 가지고 stat을 계산
-         */
-        String preProcessed = proProcess(todoDetail);
 
-        StatDTO statDTO = callAi(preProcessed);
+        try{
+            /*
+             * desc를 받고 -> stat을 계산해야한다.
+             * 1.받은 것을 한번 전처리
+             * 2. 전처리한 것을 ai쪽에 보내고
+             * 3. ai에서 받은 결과를 가지고 stat을 계산
+             */
+            String preProcessed = proProcess(todoDetail);
 
-        return null;
-
+            return callAi(preProcessed);
+        } catch (Exception e){
+            log.error("StatService calculateStat error");
+            throw new MongoCustomError("StatService calculateStat error");
+        }
     }
 
     @Override
@@ -70,7 +79,11 @@ public class StatServiceImpl implements StatService{
                 .retrieve()
                 .bodyToMono(String.class);
 
-        return null;
+        StatDTO statDTO = new StatDTO();
+        Map<String,Integer> statData = Map.of("힘",1,"지능",2,"민첩",3,"순발력",2);
+        statDTO.setStatData(statData);
+
+        return statDTO;
     }
 
 

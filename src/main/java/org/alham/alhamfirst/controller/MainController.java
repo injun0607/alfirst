@@ -2,20 +2,23 @@ package org.alham.alhamfirst.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.alham.alhamfirst.document.stat.StatDocument;
+import org.alham.alhamfirst.dto.todo.TodoDTO;
+import org.alham.alhamfirst.service.orchestrator.OrchestratorTodoService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @Slf4j
 @RequiredArgsConstructor
 public class MainController {
 
-    @GetMapping("/main")
-    public String main() {
-        return "main";
+    private final OrchestratorTodoService orchestratorTodoService;
+
+    @PostMapping("/todo/create")
+    public StatDocument create(@RequestBody TodoDTO todoDTO) {
+        return orchestratorTodoService.createTodo(todoDTO);
     }
-
-
 
 
 }

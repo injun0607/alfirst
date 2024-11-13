@@ -8,6 +8,7 @@ import org.alham.alhamfirst.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.TodoMapper;
 import org.alham.alhamfirst.repository.todo.TodoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class TodoServiceImpl implements TodoService{
 
     private final TodoRepository todoRepository;
@@ -59,5 +61,16 @@ public class TodoServiceImpl implements TodoService{
             todo.updateTodo(todoDTO.getDetail());
             todoRepository.save(todo);
         });
+    }
+
+    @Override
+    @Transactional
+    public void deleteTodo(long id) {
+        todoRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteTodoWithStatReward(long id) {
+        todoRepository.deleteById(id);
     }
 }

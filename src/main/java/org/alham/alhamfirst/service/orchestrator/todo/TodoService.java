@@ -21,5 +21,9 @@ public interface TodoService {
 
     void updateTodoDetail(Long id, TodoDTO todoDTO);
 
+    void deleteTodo(long id);
+
+    //stat 저장 로직이 실패하면 적용할 로직
+    void deleteTodoWithStatReward(long id);
 
 }

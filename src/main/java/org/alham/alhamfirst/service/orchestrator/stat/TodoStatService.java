@@ -6,7 +6,7 @@ import org.alham.alhamfirst.dto.stat.StatDTO;
 
 import java.util.Map;
 
-public interface StatService {
+public interface TodoStatService {
 
 
     public StatDocument saveStat(long todoIdx,  Map<String, Integer> statData);

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.common.error.MongoCustomError;
 import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.dto.stat.StatDTO;
-import org.alham.alhamfirst.repository.stat.StatRepository;
+import org.alham.alhamfirst.repository.stat.TodoStatRepository;
 import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,10 +17,10 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class StatServiceImpl implements StatService{
+public class TodoStatServiceImpl implements TodoStatService {
 
     private final PreProcessService preProcessService;
-    private final StatRepository statRepository;
+    private final TodoStatRepository statRepository;
     private final WebClient webClient;
 
     @Override

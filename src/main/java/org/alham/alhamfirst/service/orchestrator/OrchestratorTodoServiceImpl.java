@@ -2,6 +2,7 @@ package org.alham.alhamfirst.service.orchestrator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.alham.alhamfirst.common.error.MariaDBCustomError;
 import org.alham.alhamfirst.common.error.MongoCustomError;
 import org.alham.alhamfirst.common.error.OrchestratorCustomError;
 import org.alham.alhamfirst.document.stat.StatDocument;
@@ -25,6 +26,30 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
     private final TodoService todoService;
     private final TodoStatService todoStatService;
 
+    //TODO - 유저의아이디로 조회시 todo와 같이 stat을 가지고 오는 로직
+    @Override
+    public void getTodoByUserId(Long userId) {
+        try {
+            TodoDTO todo = todoService.getTodoDetailByUserId(userId);
+            StatDocument stat = todoStatService.findByTodoIdx(todo.getId());
+        } catch (MariaDBCustomError e){
+            //마리아 디비 커스텀에러
+            throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
+        } catch (MongoCustomError e){
+            //몽고디비 커스텀에러
+            //보상 리워드
+
+            throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
+        } catch (Exception e){
+            throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
+        }
+    }
+
+    @Override
+    public void getTodoById(Long todoId) {
+
+    }
+
     @Override
     public StatDocument createTodo(TodoDTO todoDTO) {
         try {
@@ -42,7 +67,26 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
                 todoService.deleteTodoWithStatReward(todo.getId());
                 throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
             }
-        }catch (Exception e){
+        }catch (MongoCustomError e){
+            throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
+        }
+
+        try {
+            /*
+            생길수 있는 에러는 1. 투두 생성시 에러, 2. 스탯 생성시 에러
+             */
+            log.info("OrchestratorTodoService createTodo");
+            Todo todo = todoService.createTodo(todoDTO);
+            try{
+                log.info("OrchestratorTodoService createTodo statService.calculateStat");
+                StatDTO statDTO = todoStatService.calculateStat(todo.getDetail());
+                return todoStatService.saveStat(todo.getId(), statDTO.getStatData());
+            }catch (MongoCustomError e) {
+                log.info("OrchestratorTodoService createTodo error");
+                todoService.deleteTodoWithStatReward(todo.getId());
+                throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
+            }
+        }catch (MongoCustomError e){
             throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
         }
 
@@ -74,5 +118,10 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
     @Override
     public UserStatDocument unCompleteTodo(TodoDTO todoDTO) {
         return null;
+    }
+
+    @Override
+    public void deleteTodoById(String todoId) {
+
     }
 }

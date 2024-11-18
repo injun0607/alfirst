@@ -23,6 +23,12 @@ public class TodoServiceImpl implements TodoService{
 
     private final TodoMapper todoMapper;
 
+    @Override
+    public TodoDTO getTodoDetailByUserId(Long id) {
+        Todo byUserId = todoRepository.findByUserId(id);
+        return todoMapper.createTodoDTOFromEntity(byUserId);
+    }
+
     /**
      * 할일 생성
      * startDate는 해당 레이어에서 넣어줌

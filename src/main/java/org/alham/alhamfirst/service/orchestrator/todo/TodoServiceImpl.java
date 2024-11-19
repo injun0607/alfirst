@@ -70,6 +70,11 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
+    public List<TodoDTO> getTodoListByUserIdWithUndo(Long id) {
+        return todoRepository.findUndoListByUserId(id).stream().map(todoMapper::createTodoDTOFromEntity).toList();
+    }
+
+    @Override
     @Transactional
     public void deleteTodo(long id) {
         todoRepository.deleteById(id);

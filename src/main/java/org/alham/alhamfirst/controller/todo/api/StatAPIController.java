@@ -2,6 +2,7 @@ package org.alham.alhamfirst.controller.todo.api;
 
 import lombok.RequiredArgsConstructor;
 import org.alham.alhamfirst.document.stat.StatDocument;
+import org.alham.alhamfirst.dto.stat.StatDTO;
 import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,8 @@ public class StatAPIController {
     }
 
     @GetMapping("/list/{todoIdx}")
-    public ResponseEntity<StatDocument> getStat(@PathVariable(name = "todoIdx") long todoIdx){
-        StatDocument statDocument = statService.findByTodoIdx(todoIdx);
+    public ResponseEntity<StatDTO> getStat(@PathVariable(name = "todoIdx") long todoIdx){
+        StatDTO statDocument = statService.findByTodoIdx(todoIdx);
         return ResponseEntity.ok(statDocument);
     }
 

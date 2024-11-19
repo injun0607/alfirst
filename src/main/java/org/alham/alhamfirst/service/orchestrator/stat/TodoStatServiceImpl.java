@@ -6,13 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.common.error.MongoCustomError;
 import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.dto.stat.StatDTO;
+import org.alham.alhamfirst.mapper.StatMapper;
 import org.alham.alhamfirst.repository.stat.TodoStatRepository;
 import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -20,6 +23,7 @@ import java.util.Map;
 public class TodoStatServiceImpl implements TodoStatService {
 
     private final PreProcessService preProcessService;
+    private final StatMapper statMapper;
     private final TodoStatRepository statRepository;
     private final WebClient webClient;
 
@@ -27,12 +31,9 @@ public class TodoStatServiceImpl implements TodoStatService {
     public StatDocument saveStat(long todoIdx,  Map<String, Integer> statData) {
         StatDocument statDocument = new StatDocument(todoIdx, statData);
         log.info("StatService saveStat");
-        try {
-            return statRepository.save(statDocument);
-        } catch (Exception e){
-            log.error("StatService saveStat error");
-            throw new MongoCustomError("StatService saveStat error");
-        }
+
+        return statRepository.save(statDocument);
+
     }
 
     @Override
@@ -62,8 +63,14 @@ public class TodoStatServiceImpl implements TodoStatService {
     }
 
     @Override
-    public StatDocument findByTodoIdx(long todoIdx) {
-        return statRepository.findByTodoIdx(todoIdx);
+    public StatDTO findByTodoIdx(long todoIdx) {
+        StatDocument statDocument = statRepository.findByTodoIdx(todoIdx);
+        return statMapper.createStatDTOFromDocument(statDocument);
+    }
+
+    @Override
+    public List<StatDTO> findListInTodoIdxList(List<Long> todoIdxList) {
+        return statRepository.findInTodoIdx(todoIdxList).stream().map(statMapper::createStatDTOFromDocument).toList();
     }
 
     private String proProcess(String todoDetail){

@@ -21,6 +21,8 @@ public interface TodoService {
 
     TodoDTO getTodoDetailByUserId(Long id);
 
+    List<TodoDTO> getTodoListByUserIdWithUndo(Long id);
+
     void updateTodoDetail(Long id, TodoDTO todoDTO);
 
     void deleteTodo(long id);

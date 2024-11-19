@@ -4,6 +4,7 @@ package org.alham.alhamfirst.service.orchestrator.stat;
 import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.dto.stat.StatDTO;
 
+import java.util.List;
 import java.util.Map;
 
 public interface TodoStatService {
@@ -19,5 +20,7 @@ public interface TodoStatService {
 
     public void updateStat(String stat);
 
-    StatDocument findByTodoIdx(long todoIdx);
+    StatDTO findByTodoIdx(long todoIdx);
+
+    List<StatDTO> findListInTodoIdxList(List<Long> todoIdxList);
 }

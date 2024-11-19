@@ -8,5 +8,5 @@ import java.util.List;
 public interface TodoStatRepository extends MongoRepository<StatDocument, String>{
     StatDocument findByTodoIdx(long todoIdx);
 
-    List<StatDocument> findInTodoIdx(List<Long> todoIdxList);
+    List<StatDocument> findByTodoIdxIn(List<Long> todoIdxList);
 }

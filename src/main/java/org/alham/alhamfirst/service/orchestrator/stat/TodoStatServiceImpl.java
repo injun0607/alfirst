@@ -15,7 +15,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -70,7 +69,7 @@ public class TodoStatServiceImpl implements TodoStatService {
 
     @Override
     public List<StatDTO> findListInTodoIdxList(List<Long> todoIdxList) {
-        return statRepository.findInTodoIdx(todoIdxList).stream().map(statMapper::createStatDTOFromDocument).toList();
+        return statRepository.findByTodoIdxIn(todoIdxList).stream().map(statMapper::createStatDTOFromDocument).toList();
     }
 
     private String proProcess(String todoDetail){

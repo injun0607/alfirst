@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class TodoDTO {
 
     private Long id;
+    private Long userId;
     private String detail;
     private boolean completed;
     private LocalDate startDate;

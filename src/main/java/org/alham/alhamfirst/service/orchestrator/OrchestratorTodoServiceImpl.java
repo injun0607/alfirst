@@ -13,6 +13,7 @@ import org.alham.alhamfirst.dto.todo.TodoDTO;
 import org.alham.alhamfirst.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.QuestMapper;
 import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
+import org.alham.alhamfirst.service.orchestrator.stat.UserStatService;
 import org.alham.alhamfirst.service.orchestrator.todo.TodoService;
 import org.springframework.stereotype.Service;
 
@@ -30,30 +31,31 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
      */
     private final TodoService todoService;
     private final TodoStatService todoStatService;
+    private final UserStatService userStatService;
     private final QuestMapper questMapper;
 
     /**
      * 완료하지 않은 할일과 stat 들을 가져오는 로직
+     *
      * @param userId
      * @return
      */
     @Override
     public List<QuestDTO> getUnDoQuestListByUserId(Long userId) {
         try {
-            TodoDTO todo = todoService.getTodoDetailByUserId(userId);
             List<TodoDTO> todoListByUserIdWithUndo = todoService.getTodoListByUserIdWithUndo(userId);
             List<Long> idxList = todoListByUserIdWithUndo.stream().map(TodoDTO::getId).toList();
             List<StatDTO> statListInTodoIdxList = todoStatService.findListInTodoIdxList(idxList);
 
             return questMapper.createQuestListDTO(todoListByUserIdWithUndo, statListInTodoIdxList);
-        } catch (MariaDBCustomError e){
+        } catch (MariaDBCustomError e) {
             //마리아 디비 커스텀에러
-            throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
-        } catch (MongoCustomError e){
+            throw new OrchestratorCustomError("OrchestratorTodoService MariaDB error");
+        } catch (MongoCustomError e) {
             //몽고디비 커스텀에러
             //보상 리워드
-            throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
-        } catch (Exception e){
+            throw new OrchestratorCustomError("OrchestratorTodoService MongonDB error");
+        } catch (Exception e) {
             throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
         }
     }
@@ -72,22 +74,23 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
             log.info("OrchestratorTodoService createTodo");
             Todo todo = todoService.createTodo(todoDTO);
 
-            try{
+            try {
                 log.info("OrchestratorTodoService createTodo statService.calculateStat");
                 StatDTO statDTO = todoStatService.calculateStat(todo.getDetail());
                 return todoStatService.saveStat(todo.getId(), statDTO.getStatData());
-            }catch (MongoCustomError e) {
+            } catch (MongoCustomError e) {
                 log.info("OrchestratorTodoService createTodo error");
                 todoService.deleteTodoWithStatReward(todo.getId());
                 throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
             }
-        }catch (MongoCustomError e){
+        } catch (MongoCustomError e) {
             throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
         }
     }
 
     /**
      * 유저가 할일을 완료했을때 수행되는 로직
+     *
      * @param todoDTO
      * @return
      */
@@ -98,6 +101,13 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
         todoId를 가지고 stat을 가져온다.
         stat을 가지고 유저의 stat을 업데이트한다.
          */
+        TodoDTO todo = todoService.updateTodoDetail(todoDTO);
+        StatDTO stat = todoStatService.findByTodoIdx(todo.getId());
+
+        userStatService.findByUserId(todoDTO.getUserId());
+
+        //get
+
 //        StatDocument todoStat = todoStatService.findByTodoIdx(todoDTO.getId());
 //        todoStatService.getUserStatDocument(todoStat);
 
@@ -106,6 +116,7 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
 
     /**
      * 유저가 할일을 완료하지 못했을때 수행되는 로직
+     *
      * @param todoDTO
      * @return
      */

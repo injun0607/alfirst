@@ -37,6 +37,7 @@ public class TodoServiceImpl implements TodoService{
      * @return
      */
     @Override
+    @Transactional
     public Todo createTodo(TodoDTO todoDTO) {
         todoDTO.setStartDate(LocalDate.now());
         Todo todo = todoMapper.createTodoFromDTO(todoDTO);
@@ -62,15 +63,18 @@ public class TodoServiceImpl implements TodoService{
 
     //TODO - 업데이트 할때마다 stat 변경 로직 적용여부 확인 후 적용
     @Override
-    public void updateTodoDetail(Long id, TodoDTO todoDTO) {
-        todoRepository.findById(id).ifPresent(todo -> {
-            todo.updateTodo(todoDTO.getDetail());
-            todoRepository.save(todo);
-        });
+    @Transactional
+    public TodoDTO updateTodoDetail(TodoDTO todoDTO) {
+        Todo todo = todoRepository.findById(todoDTO.getId()).orElseThrow();
+        todo.updateTodo(todoDTO.getDetail());
+        Todo saved = todoRepository.save(todo);
+        return todoMapper.createTodoDTOWithUserIdFromEntity(saved);
+
     }
 
     @Override
     public List<TodoDTO> getTodoListByUserIdWithUndo(Long id) {
+        List<Todo> undoListByUserId = todoRepository.findUndoListByUserId(id);
         return todoRepository.findUndoListByUserId(id).stream().map(todoMapper::createTodoDTOFromEntity).toList();
     }
 

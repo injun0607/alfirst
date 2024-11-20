@@ -34,8 +34,8 @@ public class TodoController {
     }
 
     @PostMapping("/update/{id}")
-    public void updateTodoDetail(@PathVariable Long id, @RequestBody TodoDTO todoDTO){
-        todoService.updateTodoDetail(id, todoDTO);
+    public void updateTodoDetail(@RequestBody TodoDTO todoDTO){
+        todoService.updateTodoDetail(todoDTO);
     }
 
 

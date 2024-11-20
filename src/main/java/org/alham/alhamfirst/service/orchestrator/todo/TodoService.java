@@ -23,7 +23,7 @@ public interface TodoService {
 
     List<TodoDTO> getTodoListByUserIdWithUndo(Long id);
 
-    void updateTodoDetail(Long id, TodoDTO todoDTO);
+    TodoDTO updateTodoDetail(TodoDTO todoDTO);
 
     void deleteTodo(long id);
 

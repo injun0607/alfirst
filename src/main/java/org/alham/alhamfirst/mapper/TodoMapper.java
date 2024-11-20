@@ -23,6 +23,20 @@ public class TodoMapper {
                 .build();
     }
 
+    /**
+     * userId를 포함한 TodoDTO 생성
+     * @param todo
+     * @return
+     */
+    public TodoDTO createTodoDTOWithUserIdFromEntity(Todo todo) {
+        return TodoDTO.builder()
+                .id(todo.getId())
+                .userId(todo.getUser().getId())
+                .detail(todo.getDetail())
+                .completed(todo.isCompleted())
+                .build();
+    }
+
 
 
 

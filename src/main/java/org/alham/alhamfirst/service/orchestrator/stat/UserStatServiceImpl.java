@@ -24,9 +24,12 @@ public class UserStatServiceImpl implements UserStatService{
 
     @Override
     public UserStatDTO findByUserId(long userId) {
-
         UserStatDocument userStat = userStatRepository.findByUserId(userId);
-        return user
+        return userStatMapper.createStatDTOFromDocument(userStat);
+    }
+
+    @Override
+    public UserStatDTO updateUserStat(long userId, Map<String, Integer> statData) {
         return null;
     }
 }

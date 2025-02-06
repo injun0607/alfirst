@@ -9,6 +9,7 @@ import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.document.stat.UserStatDocument;
 import org.alham.alhamfirst.dto.quest.QuestDTO;
 import org.alham.alhamfirst.dto.stat.StatDTO;
+import org.alham.alhamfirst.dto.stat.UserStatDTO;
 import org.alham.alhamfirst.dto.todo.TodoDTO;
 import org.alham.alhamfirst.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.QuestMapper;
@@ -104,7 +105,8 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
         TodoDTO todo = todoService.updateTodoDetail(todoDTO);
         StatDTO stat = todoStatService.findByTodoIdx(todo.getId());
 
-        userStatService.findByUserId(todoDTO.getUserId());
+        UserStatDTO userStat = userStatService.findByUserId(todoDTO.getUserId());
+        userStatService.updateUserStat(userStat, stat);
 
         //get
 

@@ -1,15 +1,15 @@
-#ALhamFirstProject
-- Todo 항목 작성시 AI를 이용해 스탯 산정을 해준다.
-- ex) 1. 유산소 운동 1시간 하기 -> 근지구력+3, 지구력+2, 끈기+2
+# AI를 통한 TODO Stat산정하기 
+- Todo 항목 작성시 AI를 이용해 스탯 산정을 해준다. <br>
+- ex) 1. 유산소 운동 1시간 하기 -> 근지구력+3, 지구력+2, 끈기+2 <br>
 
 
-#기술 스택
-Java/SpringBoot/SpringAI/SpringJPA/React/MariaDB/MongoDB
+# 기술 스택
+Java/SpringBoot/SpringAI/SpringJPA/React/MariaDB/MongoDB <br>
 
-#기술 구성
-BackEnd - Java/SpringBoot 를 통한 REST API 구성
-AI - SpringAI를 사용해 프로토타입 작성(OpenAI API 사용) , 추후 LLM 파인튜닝을 통해 LANGCHAIN 과 FASTAPI로 전환
-FrontEnd - React를 통해 웹을 구성, React로 완료 되면 ReactNative를 통해 모바일 어플까지 생각중
+# 기술 구성
+BackEnd - Java/SpringBoot 를 통한 REST API 구성 <br>
+AI - SpringAI를 사용해 프로토타입 작성(OpenAI API 사용) , 추후 LLM 파인튜닝을 통해 LANGCHAIN 과 FASTAPI로 전환 <br>
+FrontEnd - React를 통해 웹을 구성, React로 완료 되면 ReactNative를 통해 모바일 어플까지 생각중 <br>
 DB - MariaDB - 유저 관련 데이터 / MongoDB - AI관련 처리 데이터
 
 

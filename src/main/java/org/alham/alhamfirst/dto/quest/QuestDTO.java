@@ -20,10 +20,10 @@ public class QuestDTO {
     private Long id;
     private String detail;
     private boolean completed;
-    private Map<String, Integer> statData = new HashMap<>();
+    private Map<String, Double> statData = new HashMap<>();
 
     @Builder
-    public QuestDTO (Long id, String detail, boolean completed, Map<String, Integer> statData) {
+    public QuestDTO (Long id, String detail, boolean completed, Map<String, Double> statData) {
         this.id = id;
         this.detail = detail;
         this.completed = completed;

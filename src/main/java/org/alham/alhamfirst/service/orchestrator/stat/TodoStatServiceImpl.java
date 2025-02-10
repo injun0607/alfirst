@@ -82,18 +82,11 @@ public class TodoStatServiceImpl implements TodoStatService {
 
     private StatDTO callAi(String preProcessed){
 
-        Mono<String> stringMono = webClient.post()
-                .uri("/api/calculate")
-                .bodyValue(preProcessed)
-                .retrieve()
-                .bodyToMono(String.class);
-
-
-
+        String answer = aiService.getAnswer(preProcessed);
+        Map<String, Double> statData = aiService.getStat(answer);
 
         StatDTO statDTO = new StatDTO();
-//        Map<String,Double> statData = Map.of("힘",1,"지능",2,"민첩",3,"순발력",2);
-//        statDTO.setStatData(statData);
+        statDTO.setStatData(statData);
 
         return statDTO;
     }

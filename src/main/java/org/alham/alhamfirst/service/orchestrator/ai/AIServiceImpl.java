@@ -40,13 +40,20 @@ public class AIServiceImpl implements AIService{
     public Map<String, Double> getStat(String statJson) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Double> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
+        Map<String, Double> statList = new HashMap<>();
         try{
+
             result = objectMapper.readValue(statJson, Map.class);
+            String category = (String) result.get("Category");
+            statList = (Map<String, Double>) result.get("StatList");
+
+
+
         }catch (Exception e){
             //TODO - 스탯변환 실패했을때 오류 잡아야함
-            log.error("AIService getStat error");
+            log.error(e.getMessage());
         }
-        return result;
+        return statList;
     }
 }

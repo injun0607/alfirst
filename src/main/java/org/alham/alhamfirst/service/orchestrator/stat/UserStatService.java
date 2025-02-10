@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface UserStatService {
 
-    public UserStatDocument saveStat(long userId,  Map<String, Integer> statData);
+    public UserStatDocument saveStat(long userId,  Map<String, Double> statData);
     public UserStatDTO findByUserId(long userId);
 
-    public UserStatDTO updateUserStat(long userId, Map<String, Integer> statData);
+    public UserStatDTO updateUserStat(long userId, Map<String, Double> statData);
 
 }

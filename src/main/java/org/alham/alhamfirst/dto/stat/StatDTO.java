@@ -14,10 +14,10 @@ import java.util.Map;
 public class StatDTO {
     private String id;
     private Long todoIdx;
-    private Map<String, Integer> statData = new HashMap<>();
+    private Map<String, Double> statData = new HashMap<>();
 
     @Builder
-    public StatDTO(String id, Long todoIdx, Map<String, Integer> statData) {
+    public StatDTO(String id, Long todoIdx, Map<String, Double> statData) {
         this.id = id;
         this.todoIdx = todoIdx;
         this.statData = statData;

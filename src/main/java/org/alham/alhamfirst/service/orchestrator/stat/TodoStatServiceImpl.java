@@ -8,7 +8,9 @@ import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.dto.stat.StatDTO;
 import org.alham.alhamfirst.mapper.StatMapper;
 import org.alham.alhamfirst.repository.stat.TodoStatRepository;
+import org.alham.alhamfirst.service.orchestrator.ai.AIService;
 import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -26,13 +28,14 @@ public class TodoStatServiceImpl implements TodoStatService {
     private final TodoStatRepository statRepository;
     private final WebClient webClient;
 
+    private final AIService aiService;
+
     @Override
-    public StatDocument saveStat(long todoIdx,  Map<String, Integer> statData) {
+    public StatDocument saveStat(long todoIdx,  Map<String, Double> statData) {
         StatDocument statDocument = new StatDocument(todoIdx, statData);
         log.info("StatService saveStat");
 
         return statRepository.save(statDocument);
-
     }
 
     @Override
@@ -85,9 +88,12 @@ public class TodoStatServiceImpl implements TodoStatService {
                 .retrieve()
                 .bodyToMono(String.class);
 
+
+
+
         StatDTO statDTO = new StatDTO();
-        Map<String,Integer> statData = Map.of("힘",1,"지능",2,"민첩",3,"순발력",2);
-        statDTO.setStatData(statData);
+//        Map<String,Double> statData = Map.of("힘",1,"지능",2,"민첩",3,"순발력",2);
+//        statDTO.setStatData(statData);
 
         return statDTO;
     }

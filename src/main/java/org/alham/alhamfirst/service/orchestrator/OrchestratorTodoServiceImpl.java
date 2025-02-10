@@ -13,6 +13,7 @@ import org.alham.alhamfirst.dto.stat.UserStatDTO;
 import org.alham.alhamfirst.dto.todo.TodoDTO;
 import org.alham.alhamfirst.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.QuestMapper;
+import org.alham.alhamfirst.service.orchestrator.ai.AIService;
 import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
 import org.alham.alhamfirst.service.orchestrator.stat.UserStatService;
 import org.alham.alhamfirst.service.orchestrator.todo.TodoService;
@@ -34,6 +35,7 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
     private final TodoStatService todoStatService;
     private final UserStatService userStatService;
     private final QuestMapper questMapper;
+    private final AIService aiService;
 
     /**
      * 완료하지 않은 할일과 stat 들을 가져오는 로직
@@ -106,7 +108,10 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
         StatDTO stat = todoStatService.findByTodoIdx(todo.getId());
 
         UserStatDTO userStat = userStatService.findByUserId(todoDTO.getUserId());
-        userStatService.updateUserStat(userStat, stat);
+
+
+
+        userStatService.updateUserStat(todoDTO.getUserId(), stat.getStatData());
 
         //get
 

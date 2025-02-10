@@ -18,7 +18,7 @@ public class UserStatServiceImpl implements UserStatService{
     private final UserStatRepository userStatRepository;
     private final UserStatMapper userStatMapper;
     @Override
-    public UserStatDocument saveStat(long userId, Map<String, Integer> statData) {
+    public UserStatDocument saveStat(long userId, Map<String, Double> statData) {
         return null;
     }
 
@@ -29,7 +29,7 @@ public class UserStatServiceImpl implements UserStatService{
     }
 
     @Override
-    public UserStatDTO updateUserStat(long userId, Map<String, Integer> statData) {
+    public UserStatDTO updateUserStat(long userId, Map<String, Double> statData) {
         return null;
     }
 }

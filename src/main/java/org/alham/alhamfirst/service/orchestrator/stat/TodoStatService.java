@@ -10,7 +10,7 @@ import java.util.Map;
 public interface TodoStatService {
 
 
-    public StatDocument saveStat(long todoIdx,  Map<String, Integer> statData);
+    public StatDocument saveStat(long todoIdx,  Map<String, Double> statData);
 
     /**
      * desc를 받아서 stat을 산출하는 서비스

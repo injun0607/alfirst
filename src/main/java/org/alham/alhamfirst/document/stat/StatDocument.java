@@ -18,9 +18,9 @@ public class StatDocument {
     @Id
     private String id;
     private Long todoIdx;
-    private Map<String, Integer> statData = new HashMap<>();
+    private Map<String, Double> statData = new HashMap<>();
 
-    public StatDocument(Long todoIdx, Map<String, Integer> statData) {
+    public StatDocument(Long todoIdx, Map<String, Double> statData) {
         this.todoIdx = todoIdx;
         this.statData = statData;
     }

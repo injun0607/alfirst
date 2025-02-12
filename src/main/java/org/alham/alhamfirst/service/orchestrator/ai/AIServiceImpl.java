@@ -18,6 +18,7 @@ public class AIServiceImpl implements AIService{
 
     private final ChatClient chatClient;
 
+    //TODO - 이부분 병렬처리 가능한것같음 . 청크를 병렬로 돌려서 처리하는것도 생각해봐야겠음
     @Override
     public String getAnswer(String question) {
          return chat(question)

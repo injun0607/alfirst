@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.alham.alhamfirst.common.enums.UserType;
 
 import java.util.List;
 
@@ -24,6 +25,11 @@ public class User {
 
     private int age;
 
+    private UserType userType = UserType.BASIC;
+
+    private String email;
+
+    @Deprecated
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,
             orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Schedule> scheduleList;
@@ -42,9 +48,12 @@ public class User {
     }
 
     @Builder
-    public User(String name, int age) {
+    public User(Long id, String name, int age, UserType userType, String email) {
+        this.id = id;
         this.name = name;
         this.age = age;
+        this.userType = userType;
+        this.email = email;
     }
 
 

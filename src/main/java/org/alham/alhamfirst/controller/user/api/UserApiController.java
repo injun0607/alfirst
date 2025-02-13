@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -17,10 +19,22 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @GetMapping("/{userIdx}")
-    public UserDTO getUser(@PathVariable long userIdx) {
-        return userService.getUser(userIdx);
+    private final UserDTO userDTO;
+
+    @GetMapping("/users/get")
+    public UserDTO getUser() {
+
+        UserDTO jwtInfo = userDTO;
+
+        return null;
     }
+
+    @GetMapping("/user-info/get")
+    public UserDTO getUserInfo() {
+//        return userService.getUserInfo();
+        return null;
+    }
+
 
 
 }

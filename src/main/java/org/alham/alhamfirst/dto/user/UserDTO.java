@@ -1,18 +1,26 @@
 package org.alham.alhamfirst.dto.user;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.alham.alhamfirst.common.enums.UserType;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class UserDTO {
 
 
-    public String name;
-    public int age;
+    private String id;
+    private String name;
+    private int age;
+    private UserType userType;
+    private String email;
+
+
+    public static UserDTO getEmptyUser(){
+        return new UserDTO();
+    }
 
 }

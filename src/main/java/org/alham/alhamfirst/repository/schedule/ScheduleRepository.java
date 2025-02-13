@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Deprecated
 public interface ScheduleRepository extends JpaRepository<Schedule, Long>,ScheduleCustomRepository{
 
 

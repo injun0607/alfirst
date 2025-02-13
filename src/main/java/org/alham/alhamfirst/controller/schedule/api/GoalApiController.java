@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/goal")
 @RestController
+@Deprecated
 public class GoalApiController {
 
     @PostMapping("/create")

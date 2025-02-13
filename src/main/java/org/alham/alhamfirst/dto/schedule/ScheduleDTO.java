@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ScheduleDTO {
 
     private long id;

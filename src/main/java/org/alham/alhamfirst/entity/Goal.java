@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Table(name = "al_goal")
 @AllArgsConstructor
 @NoArgsConstructor
+@Deprecated
 public class Goal {
 
     @Id

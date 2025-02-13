@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Table(name = "al_schedule")
+@Deprecated
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

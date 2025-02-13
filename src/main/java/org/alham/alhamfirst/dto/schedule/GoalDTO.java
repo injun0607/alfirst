@@ -10,6 +10,7 @@ import org.alham.alhamfirst.entity.Goal;
 @Setter
 @ToString
 @NoArgsConstructor
+@Deprecated
 public class GoalDTO {
 
     private Long id;

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@Deprecated
 public class TimeSlotDTO {
 
     private Long id;

@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/schedule")
 @RestController
+@Deprecated
 public class ScheduleApiController {
 
 

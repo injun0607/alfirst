@@ -9,6 +9,7 @@ import org.alham.alhamfirst.entity.TimeSlot;
 import org.springframework.stereotype.Component;
 
 @Component
+@Deprecated
 public class ScheduleMapper {
     public Schedule scheduleFromDTO(ScheduleDTO scheduleDTO){
         Schedule schedule = Schedule.builder()

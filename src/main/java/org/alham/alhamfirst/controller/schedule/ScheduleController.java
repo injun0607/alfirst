@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/schedule")
 @Controller
+@Deprecated
 public class ScheduleController {
 
 

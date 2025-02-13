@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Table(name = "al_time_slot")
+@Deprecated
 public class TimeSlot {
 
     @Id

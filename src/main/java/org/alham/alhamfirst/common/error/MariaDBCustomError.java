@@ -5,4 +5,8 @@ public class MariaDBCustomError extends RuntimeException{
         super(message);
     }
 
+    public MariaDBCustomError(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

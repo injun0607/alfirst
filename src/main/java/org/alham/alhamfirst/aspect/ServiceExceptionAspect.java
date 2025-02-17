@@ -5,6 +5,7 @@ import org.alham.alhamfirst.common.error.MariaDBCustomError;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -23,9 +24,11 @@ public class ServiceExceptionAspect {
             log.info("className = {},mehodName = {}", className, methodName);
 
             return joinPoint.proceed();
-        } catch (Exception ex) {
+        } catch (DataAccessException ex) {
             // 커스텀 예외로 변환
-            throw new MariaDBCustomError(ex.getMessage());
+            throw new MariaDBCustomError(ex.getMessage(),ex.getCause());
+        } catch (RuntimeException ex){
+            throw new MariaDBCustomError(ex.getMessage(),ex.getCause());
         }
     }
 

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 //TODO - 이걸로 로그 구현해줘야함
+//TODO -
 public class AlhamCustomErrorLog {
 
     //발생한 클래스
@@ -22,6 +23,12 @@ public class AlhamCustomErrorLog {
 
     //누가 호출했는지
     private String sessionId;
+
+    private Exception exception;
+
+    public AlhamCustomErrorLog(Exception exception){
+        this.exception = exception;
+    }
 
 
 }

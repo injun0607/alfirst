@@ -1,6 +1,6 @@
 package org.alham.alhamfirst.mapper;
 
-import org.alham.alhamfirst.common.error.AlhamCustomErrorLog;
+import org.alham.alhamfirst.common.error.AlhamCustomException;
 import org.alham.alhamfirst.dto.user.UserDTO;
 import org.alham.alhamfirst.entity.User;
 import org.alham.alhamfirst.util.AESUtil;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public UserDTO createUserDTOFromEntity(User user) throws Exception {
+    public UserDTO createUserDTOFromEntity(User user) {
         return UserDTO.builder()
                 .id(AESUtil.encrypt(user.getId().toString()))
                 .name(user.getName())
@@ -20,9 +20,9 @@ public class UserMapper {
     }
 
 
-    public User createUserFromDTO(UserDTO userDTO) throws Exception {
+    public User createUserFromDTO(UserDTO userDTO) {
         return User.builder()
-                .id(Long.parseLong(AESUtil.decrypt(userDTO.getId())))
+                .id(userDTO.getIdDecrypt())
                 .name(userDTO.getName())
                 .age(userDTO.getAge())
                 .userType(userDTO.getUserType())

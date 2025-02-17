@@ -11,6 +11,7 @@ public interface UserService {
     public UserDTO getUser(long userIdx);
     public User createUser(UserDTO userDTO);
     public UserDTO getUserByIdx(long userId);
-    public UserDTO updateUserInfo(UserDTO userDTO);
+    public UserDTO getUserByEncryptedId(String encryptedId);
+
 
 }

@@ -2,6 +2,7 @@ package org.alham.alhamfirst.dto.user;
 
 import lombok.*;
 import org.alham.alhamfirst.common.enums.UserType;
+import org.alham.alhamfirst.util.AESUtil;
 
 @Getter
 @Setter
@@ -21,6 +22,10 @@ public class UserDTO {
 
     public static UserDTO getEmptyUser(){
         return new UserDTO();
+    }
+
+    public long getIdDecrypt() {
+        return Long.parseLong(AESUtil.decrypt(this.id));
     }
 
 }

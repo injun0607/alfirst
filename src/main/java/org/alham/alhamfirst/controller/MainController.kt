@@ -9,26 +9,18 @@ import org.alham.alhamfirst.dto.user.UserDTO;
 import org.alham.alhamfirst.service.orchestrator.OrchestratorTodoService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @Slf4j
-@RequiredArgsConstructor
-public class MainController {
-
-    private final OrchestratorTodoService orchestratorTodoService;
-
-    private final UserDTO jwtInfo;
+class MainController(val orchestratorTodoService: OrchestratorTodoService, private val jwtInfo :UserDTO) {
 
     @PostMapping("/todo/create")
-    public StatDocument create(@RequestBody TodoDTO todoDTO) {
-        return orchestratorTodoService.createTodo(todoDTO,jwtInfo.getId());
+    fun create(@RequestBody todoDTO : TodoDTO) : StatDocument{
+        return orchestratorTodoService.createTodo(todoDTO,jwtInfo.id);
     }
 
     @GetMapping("/undo-list/get")
-    public List<QuestDTO> getUnDoQuestListByUserId() {
-        return orchestratorTodoService.getUnDoQuestListByEncryptedUserId(jwtInfo.getId());
+    fun getUndoQuestListByUserId() : List<QuestDTO> {
+        return orchestratorTodoService.getUnDoQuestListByEncryptedUserId(jwtInfo.id);
     }
-
 
 }

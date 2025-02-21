@@ -30,6 +30,7 @@ Java/SpringBoot/SpringAI/SpringJPA/React/MariaDB/MongoDB <br>
 2. service에서는 Optional반환값을 처리해서 객체로 내려준다. 만약 값이 없는것에 대해선 객체마다 처리를 필요로 한다. service를 사용하는 레이어에선 객체만 받아 사용.
 3. 비지니스 로직이 없는 메소드의 예외는 상위로 던진다. 해당 메소드를 사용하는 비지니스 로직에서 일괄처리해준다
 - ex) userMapper에서 나오는 에러는 상위로 던지고 ,예외는 해당 메소드를 사용하는 service에서 처리한다.
+4. 서비스로직에서 상세 에러 처리 , 컨트롤러 에러는 범용 에러로 처리
 
 
 # 생각해봐야 할 것

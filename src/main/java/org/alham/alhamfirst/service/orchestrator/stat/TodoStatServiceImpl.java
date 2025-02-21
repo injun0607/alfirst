@@ -72,7 +72,9 @@ public class TodoStatServiceImpl implements TodoStatService {
 
     @Override
     public List<StatDTO> findListInTodoIdxList(List<Long> todoIdxList) {
-        return statRepository.findByTodoIdxIn(todoIdxList).stream().map(statMapper::createStatDTOFromDocument).toList();
+        List<StatDocument> byTodoIdxIn = statRepository.findByTodoIdxIn(todoIdxList);
+
+        return byTodoIdxIn.stream().map(statMapper::createStatDTOFromDocument).toList();
     }
 
     private String proProcess(String todoDetail){

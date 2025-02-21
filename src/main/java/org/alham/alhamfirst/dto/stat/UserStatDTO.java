@@ -22,4 +22,12 @@ public class UserStatDTO {
         this.userIdx = userIdx;
         this.statData = statData;
     }
+
+    public static UserStatDTO getEmptyUserStat(){
+        return UserStatDTO.builder()
+                .id("")
+                .userIdx(0L)
+                .statData(new HashMap<>())
+                .build();
+    }
 }

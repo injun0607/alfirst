@@ -22,6 +22,7 @@ class AESUtilTest {
 
         assertEquals(userIdxStr, decrypted);
         assertEquals(userIdx, Long.parseLong(decrypted));
+        assertEquals(1, Long.parseLong(decrypted));
 
 
 

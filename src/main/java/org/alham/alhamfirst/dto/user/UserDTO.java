@@ -4,6 +4,9 @@ import lombok.*;
 import org.alham.alhamfirst.common.enums.UserType;
 import org.alham.alhamfirst.util.AESUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 @ToString
@@ -18,7 +21,7 @@ public class UserDTO {
     private int age;
     private UserType userType;
     private String email;
-
+    private Map<String, Integer> statData = new HashMap<>();
 
     public static UserDTO getEmptyUser(){
         return new UserDTO();

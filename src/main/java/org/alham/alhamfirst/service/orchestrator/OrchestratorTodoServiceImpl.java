@@ -2,9 +2,7 @@ package org.alham.alhamfirst.service.orchestrator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.common.error.MariaDBCustomError;
-import org.alham.alhamfirst.common.error.MongoCustomError;
-import org.alham.alhamfirst.common.error.OrchestratorCustomError;
+import org.alham.alhamfirst.common.error.*;
 import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.document.stat.UserStatDocument;
 import org.alham.alhamfirst.dto.quest.QuestDTO;
@@ -17,6 +15,7 @@ import org.alham.alhamfirst.service.orchestrator.ai.AIService;
 import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
 import org.alham.alhamfirst.service.orchestrator.stat.UserStatService;
 import org.alham.alhamfirst.service.orchestrator.todo.TodoService;
+import org.alham.alhamfirst.util.CommonUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,13 +39,14 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
     /**
      * 완료하지 않은 할일과 stat 들을 가져오는 로직
      *
-     * @param userId
+     * @param encryptedId
      * @return
      */
     @Override
-    public List<QuestDTO> getUnDoQuestListByUserId(Long userId) {
+    public List<QuestDTO> getUnDoQuestListByEncryptedUserId(String encryptedId) {
         try {
-            List<TodoDTO> todoListByUserIdWithUndo = todoService.getTodoListByUserIdWithUndo(userId);
+
+            List<TodoDTO> todoListByUserIdWithUndo = todoService.getTodoListByUserIdWithUndo(CommonUtil.getDecryptedId(encryptedId));
             List<Long> idxList = todoListByUserIdWithUndo.stream().map(TodoDTO::getId).toList();
             List<StatDTO> statListInTodoIdxList = todoStatService.findListInTodoIdxList(idxList);
 
@@ -58,6 +58,9 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
             //몽고디비 커스텀에러
             //보상 리워드
             throw new OrchestratorCustomError("OrchestratorTodoService MongonDB error");
+        } catch (AlhamCustomException e) {
+            new AlhamCustomErrorLog(e);
+            throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
         } catch (Exception e) {
             throw new OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
         }
@@ -69,12 +72,14 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
     }
 
     @Override
-    public StatDocument createTodo(TodoDTO todoDTO) {
+    public StatDocument createTodo(TodoDTO todoDTO,String encryptedId) {
         try {
+
             /*
             생길수 있는 에러는 1. 투두 생성시 에러, 2. 스탯 생성시 에러
              */
             log.info("OrchestratorTodoService createTodo");
+            todoDTO.setUserId(CommonUtil.getDecryptedId(encryptedId));
             Todo todo = todoService.createTodo(todoDTO);
 
             try {
@@ -86,7 +91,8 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
                 todoService.deleteTodoWithStatReward(todo.getId());
                 throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
             }
-        } catch (MongoCustomError e) {
+        } catch (MongoCustomError | AlhamCustomException e) {
+            AlhamCustomErrorLog errorLog = new AlhamCustomErrorLog(e);
             throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
         }
     }

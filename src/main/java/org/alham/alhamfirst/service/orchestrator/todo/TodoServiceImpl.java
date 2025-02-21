@@ -41,7 +41,7 @@ public class TodoServiceImpl implements TodoService{
     public Todo createTodo(TodoDTO todoDTO) {
         todoDTO.setStartDate(LocalDate.now());
         Todo todo = todoMapper.createTodoFromDTO(todoDTO);
-        User user = User.createTempUser(1L);
+        User user = User.createTempUser(todoDTO.getUserId());
         todo.addUser(user);
         return todoRepository.save(todo);
     }

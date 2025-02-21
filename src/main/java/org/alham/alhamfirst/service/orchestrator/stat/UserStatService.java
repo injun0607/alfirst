@@ -10,6 +10,9 @@ public interface UserStatService {
     public UserStatDocument saveStat(long userId,  Map<String, Double> statData);
     public UserStatDTO findByUserId(long userId);
 
+    public UserStatDTO findByEncryptedId(String encryptedId);
+
     public UserStatDTO updateUserStat(long userId, Map<String, Double> statData);
+
 
 }

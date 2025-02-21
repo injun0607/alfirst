@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface OrchestratorTodoService {
 
-    public List<QuestDTO> getUnDoQuestListByUserId(Long userId);
+    public List<QuestDTO> getUnDoQuestListByEncryptedUserId(String encryptedId);
     public void getTodoById(Long todoId);
 
-    public StatDocument createTodo(TodoDTO todoDTO);
+    public StatDocument createTodo(TodoDTO todoDTO, String encryptedId);
 
     public UserStatDocument completeTodo(TodoDTO todoDTO);
 

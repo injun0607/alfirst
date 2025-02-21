@@ -44,7 +44,7 @@ public class AIServiceImpl implements AIService{
         Map<String, Object> result = new HashMap<>();
         Map<String, Double> statList = new HashMap<>();
         try{
-
+            log.info("statJson : {}",statJson);
             result = objectMapper.readValue(statJson, Map.class);
             String category = (String) result.get("Category");
             statList = (Map<String, Double>) result.get("StatList");

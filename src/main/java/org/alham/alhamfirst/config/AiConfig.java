@@ -16,12 +16,12 @@ public class AiConfig {
 
     public static final String DEFAULT_SYSTEM_CHAT = "\n" +
             "역할 : 너는 유저가 작성하는 Todo를 보고 STAT을 산출해주는 역할을 할거야. Todo에 맞게Category를 분류하고, Stat을 올려줘 . STAT은 아래에 제시될거야\n" +
-            "outPut :  JSON 형식으로만 나타내줘. StatList의 Stat들은 {}(대괄호)로 감싸지말고 Stat1:,Stat2 이런형식으로 해줘\n" +
+            "outPut :  JSON 형식으로만 나타내줘. StatList의 Stat들은 {}(대괄호)로 감싸지말고 \"Stat1\":,\"Stat2\" 이런형식으로 해줘\n" +
             "예시 outPut 형식 : {\n" +
             "\t \"Category\" :\n" +
             "\t\"StatList\" : {\n" +
-            "stat1 : 0.2"+
-            "stat2 : 0.3"+
+            "\"stat1\" : 0.2"+
+            "\"stat2\" : 0.3"+
             "\t\t\n" +
             "\t} \n" +
             " }\n" +

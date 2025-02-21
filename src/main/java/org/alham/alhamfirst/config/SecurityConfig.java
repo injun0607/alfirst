@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.alham.alhamfirst.common.enums.UserType;
 import org.alham.alhamfirst.dto.user.UserDTO;
 import org.alham.alhamfirst.security.oauth.OAuth2Service;
+import org.alham.alhamfirst.util.AESUtil;
+import org.alham.alhamfirst.util.CommonUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +17,7 @@ public class SecurityConfig {
     public UserDTO getJwtToken(){
 
         UserDTO userDTO = new UserDTO();
-        userDTO.setId("1L");
+        userDTO.setId(CommonUtil.getEncryptedId(1L));
         userDTO.setName("alham");
         userDTO.setAge(30);
         userDTO.setEmail("alham@alham.net");

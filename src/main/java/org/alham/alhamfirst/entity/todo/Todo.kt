@@ -12,54 +12,71 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "al_todo")
-@NoArgsConstructor
 @Getter
-public class Todo {
+class Todo(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "todo_id")
+        val id : Long? = null,
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "todo_id")
-    private Long id;
+        @ManyToOne
+        @JoinColumn(name = "al_user_id")
+        var user : User? = null,
 
-    @ManyToOne
-    @JoinColumn(name = "al_user_id")
-    private User user;
+        var detail : String ="",
+        var category: Category? = null,
+        var completed : Boolean = false,
+        var startDate : LocalDate = LocalDate.now(),
+        var endDate : LocalDate? = null,
 
-    private String detail;
+        @LastModifiedDate
+        var editDate : LocalDate = LocalDate.now()
+) {
 
-    private Category category;
 
-    private boolean completed;
-    //시작 날짜
-    private LocalDate startDate;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "todo_id")
+//    private Long id;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "al_user_id")
+//    private User user;
+//
+//    private String detail;
+//
+//    private Category category;
+//
+//    private boolean completed;
+//    //시작 날짜
+//    private LocalDate startDate;
+//
+//    //달성 날짜
+//    private LocalDate endDate;
+//
+//    //수정 날짜
+//    @LastModifiedDate
+//    private LocalDate editDate;
+//
+//    @Builder
+//    public Todo(String detail,boolean completed, LocalDate startDate){
+//        this.detail = detail;
+//        this.completed = completed;
+//        this.startDate = startDate;
+//    }
 
-    //달성 날짜
-    private LocalDate endDate;
-
-    //수정 날짜
-    @LastModifiedDate
-    private LocalDate editDate;
-
-    @Builder
-    public Todo(String detail,boolean completed, LocalDate startDate){
-        this.detail = detail;
-        this.completed = completed;
-        this.startDate = startDate;
-    }
-
-    public void updateCompleted(boolean completed) {
+    fun updateCompeted(completed: Boolean){
         if(completed){
             this.endDate = LocalDate.now();
         }
         this.completed = completed;
     }
 
-
-    public void updateTodo(String detail) {
+    fun updateTodo(detail : String){
         this.detail = detail;
     }
 
-    public void addUser(User user){
+    fun addUser(user : User){
         this.user = user;
     }
 

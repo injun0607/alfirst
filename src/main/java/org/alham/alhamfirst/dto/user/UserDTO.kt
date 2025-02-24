@@ -7,28 +7,28 @@ import org.alham.alhamfirst.util.AESUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@Builder
-@AllArgsConstructor
-public class UserDTO {
+//@Getter
+//@Setter
+//@ToString
+//@NoArgsConstructor
+//@Builder
+//@AllArgsConstructor
+data class UserDTO(
+        var id : String = "",
+        var name : String ="",
+        var age : Int = 0,
+        var userType : UserType = UserType.BASIC,
+        var email : String = "",
+        var statDate : MutableMap<String,Int> = mutableMapOf()
+) {
 
 
-    private String id;
-    private String name;
-    private int age;
-    private UserType userType;
-    private String email;
-    private Map<String, Integer> statData = new HashMap<>();
-
-    public static UserDTO getEmptyUser(){
-        return new UserDTO();
+    fun getEmptyUser() :  UserDTO{
+        return UserDTO();
     }
 
-    public long getIdDecrypt() {
-        return Long.parseLong(AESUtil.decrypt(this.id));
+    fun getIdDecrypt() : Long{
+        return AESUtil.decrypt(this.id).toLong();
     }
 
 }

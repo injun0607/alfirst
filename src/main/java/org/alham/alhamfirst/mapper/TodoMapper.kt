@@ -5,22 +5,38 @@ import org.alham.alhamfirst.entity.todo.Todo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TodoMapper {
+class TodoMapper {
 
-    public Todo createTodoFromDTO(TodoDTO todoDTO) {
-        return Todo.builder()
-                .detail(todoDTO.getDetail())
-                .completed(todoDTO.isCompleted())
-                .startDate(todoDTO.getStartDate())
-                .build();
+//    public Todo createTodoFromDTO(TodoDTO todoDTO) {
+//        return Todo.builder()
+//                .detail(todoDTO.getDetail())
+//                .completed(todoDTO.getCompleted())
+//                .startDate(todoDTO.getStartDate())
+//                .build();
+//    }
+
+    fun createTodoFromDTO(todoDTO: TodoDTO) :Todo {
+        return Todo(
+            detail=todoDTO.detail,
+            completed = todoDTO.completed,
+            startDate = todoDTO.startDate
+        );
     }
 
-    public TodoDTO createTodoDTOFromEntity(Todo todo) {
-        return TodoDTO.builder()
-                .id(todo.getId())
-                .detail(todo.getDetail())
-                .completed(todo.isCompleted())
-                .build();
+//    public TodoDTO createTodoDTOFromEntity(Todo todo) {
+//        return TodoDTO.()
+//                .id(todo.getId())
+//                .detail(todo.getDetail())
+//                .completed(todo.isCompleted())
+//                .build();
+//    }
+
+    fun createTodoDTOFromEntity(todo : Todo): TodoDTO {
+        return TodoDTO(
+            id = todo.id,
+            detail = todo.detail,
+            completed = todo.completed,
+        )
     }
 
     /**
@@ -28,19 +44,33 @@ public class TodoMapper {
      * @param todo
      * @return
      */
-    public TodoDTO createTodoDTOWithUserIdFromEntity(Todo todo) {
-        return TodoDTO.builder()
-                .id(todo.getId())
-                .userId(todo.getUser().getId())
-                .detail(todo.getDetail())
-                .completed(todo.isCompleted())
-                .build();
+//    public TodoDTO createTodoDTOWithUserIdFromEntity(Todo todo) {
+//        return TodoDTO.builder()
+//                .id(todo.getId())
+//                .userId(todo.getUser().getId())
+//                .detail(todo.getDetail())
+//                .completed(todo.isCompleted())
+//                .build();
+//    }
+
+    fun createTodoDTOWithUserIdFromEntity(todo : Todo): TodoDTO {
+        return TodoDTO(
+            id = todo.id,
+            userId = todo.user?.id,
+            detail = todo.detail,
+            completed = todo.completed
+        )
     }
 
 
-
-
-    public void updateTodoFromDTO(Todo todo, TodoDTO todoDTO) {
-        todo.updateTodo(todoDTO.getDetail());
+    fun updateTodoFromDTO(todo : Todo, todoDTO : TodoDTO) {
+        todo.updateTodo(
+            todoDTO.detail
+        )
     }
+
+
+//    public void updateTodoFromDTO(Todo todo, TodoDTO todoDTO) {
+//        todo.updateTodo(todoDTO.getDetail());
+//    }
 }

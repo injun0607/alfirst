@@ -1,38 +1,26 @@
 package org.alham.alhamfirst.document.stat;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Document
-@Getter
-@Setter
-@NoArgsConstructor
-public class UserStatDocument {
+class UserStatDocument(
+        @Id
+        var id: String? = null,
+        var userId: Long = 0,
+        var userStatData: MutableMap<String,Double> = mutableMapOf()
+) {
 
-    @Id
-    private String id;
-    private Long userId;
-    private Map<String,Integer> userStatData = new HashMap<>();
-
-    public UserStatDocument(Long userId, Map<String,Integer> userStatData){
-        this.userId = userId;
-        this.userStatData = userStatData;
-    }
-
-    public void calculateStat(Map<String,Integer> statData){
-        statData.forEach((key, value) -> {
+    fun calculateStat(statData: Map<String,Double>) {
+        statData.forEach{ (key, value) ->
             if(userStatData.containsKey(key)){
-                userStatData.put(key, userStatData.get(key) + value);
+                userStatData[key] = userStatData[key]?.plus(value) ?: 0.0;
             }else{
-                userStatData.put(key, value);
+                userStatData[key] = value;
             }
-        });
+        }
+
     }
 
 

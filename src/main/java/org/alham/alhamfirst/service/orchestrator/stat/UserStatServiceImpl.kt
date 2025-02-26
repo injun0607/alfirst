@@ -8,45 +8,40 @@ import org.alham.alhamfirst.document.stat.UserStatDocument;
 import org.alham.alhamfirst.dto.stat.UserStatDTO;
 import org.alham.alhamfirst.mapper.UserStatMapper;
 import org.alham.alhamfirst.repository.stat.UserStatRepository;
+import org.alham.alhamfirst.repository.user.UserRepository
 import org.alham.alhamfirst.util.CommonUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
-public class UserStatServiceImpl implements UserStatService{
+class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
+                          private val userStatMapper: UserStatMapper
+) :UserStatService{
 
-    private final UserStatRepository userStatRepository;
-    private final UserStatMapper userStatMapper;
-    @Override
-    public UserStatDocument saveStat(long userId, Map<String, Double> statData) {
-        return null;
+    override fun saveStat(userId: Long, statData: Map<String,Double>): UserStatDocument{
+        TODO()
     }
 
-    @Override
-    public UserStatDTO findByUserId(long userId) {
-        UserStatDocument userStat = userStatRepository.findByUserId(userId);
+    override fun findByUserId(userId: Long): UserStatDTO{
+        val userStat = userStatRepository.findByUserId(userId)
         return userStatMapper.createStatDTOFromDocument(userStat);
     }
 
-    @Override
-    public UserStatDTO findByEncryptedId(String encryptedId) {
+    override fun findByEncryptedId(encryptedId: String): UserStatDTO{
         try{
-            Long userId = CommonUtil.getDecryptedId(encryptedId);
-            UserStatDocument userStat = userStatRepository.findByUserId(userId);
+            val userId = CommonUtil.getDecryptedId(encryptedId)
+            val userStat = userStatRepository.findByUserId(userId)
             return userStatMapper.createStatDTOFromDocument(userStat);
-        }catch(AlhamCustomException e){
-            new AlhamCustomErrorLog(e);
-            return UserStatDTO.getEmptyUserStat();
+        }catch(e: AlhamCustomException){
+            AlhamCustomErrorLog(e);
+            return UserStatDTO();
         }
-
     }
 
-    @Override
-    public UserStatDTO updateUserStat(long userId, Map<String, Double> statData) {
-        return null;
+    override fun updateUserStat(userId: Long, statData: Map<String,Double>) : UserStatDTO{
+        TODO()
     }
+
 
 }

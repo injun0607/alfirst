@@ -13,17 +13,11 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StatDocument {
-
-    @Id
-    private String id;
-    private Long todoIdx;
-    private Map<String, Double> statData = new HashMap<>();
-
-    public StatDocument(Long todoIdx, Map<String, Double> statData) {
-        this.todoIdx = todoIdx;
-        this.statData = statData;
-    }
-
+class StatDocument(
+        @Id
+        var id: String? = null,
+        var todoIdx: Long = 0,
+        var statData: MutableMap<String, Double> = mutableMapOf()
+) {
 
 }

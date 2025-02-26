@@ -1,24 +1,19 @@
 package org.alham.alhamfirst.service.orchestrator;
 
-import org.alham.alhamfirst.document.stat.StatDocument;
-import org.alham.alhamfirst.document.stat.UserStatDocument;
-import org.alham.alhamfirst.dto.quest.QuestDTO;
-import org.alham.alhamfirst.dto.todo.TodoDTO;
-
-import java.util.List;
-
-public interface OrchestratorTodoService {
-
-    public List<QuestDTO> getUnDoQuestListByEncryptedUserId(String encryptedId);
-    public void getTodoById(Long todoId);
-
-    public StatDocument createTodo(TodoDTO todoDTO, String encryptedId);
-
-    public UserStatDocument completeTodo(TodoDTO todoDTO);
-
-    public UserStatDocument unCompleteTodo(TodoDTO todoDTO);
-
-    public void deleteTodoById(String todoId);
+import org.alham.alhamfirst.document.stat.StatDocument
+import org.alham.alhamfirst.document.stat.UserStatDocument
+import org.alham.alhamfirst.dto.quest.QuestDTO
+import org.alham.alhamfirst.dto.stat.UserStatDTO
+import org.alham.alhamfirst.dto.todo.TodoDTO
 
 
+interface OrchestratorTodoService {
+
+
+    fun getUnDoQuestListByEncryptedUserId(encryptedId: String): List<QuestDTO>
+    fun getTodoById(todoId: Long)
+    fun createTodo(todoDTO: TodoDTO, encryptedId: String): StatDocument
+    fun completeTodo(todoId: Long, encryptedId: String): UserStatDTO
+    fun unCompleteTodo(todoDTO: TodoDTO): UserStatDocument
+    fun deleteTodoById(todoId: String)
 }

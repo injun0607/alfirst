@@ -11,23 +11,10 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserStatDTO {
-    private String id;
-    private Long userIdx;
-    private Map<String, Integer> statData = new HashMap<>();
+data class UserStatDTO(
+        var id: String? = null,
+        var userIdx: Long = 0,
+        var statData: MutableMap<String,Double> = mutableMapOf()
+) {
 
-    @Builder
-    public UserStatDTO(String id, Long userIdx, Map<String, Integer> statData) {
-        this.id = id;
-        this.userIdx = userIdx;
-        this.statData = statData;
-    }
-
-    public static UserStatDTO getEmptyUserStat(){
-        return UserStatDTO.builder()
-                .id("")
-                .userIdx(0L)
-                .statData(new HashMap<>())
-                .build();
-    }
 }

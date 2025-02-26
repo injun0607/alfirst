@@ -4,10 +4,12 @@ package org.alham.alhamfirst.service.orchestrator.stat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.common.error.MongoCustomError;
+import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.dto.stat.StatDTO;
 import org.alham.alhamfirst.mapper.StatMapper;
 import org.alham.alhamfirst.repository.stat.TodoStatRepository;
+import org.alham.alhamfirst.repository.stat.UserStatRepository
 import org.alham.alhamfirst.service.orchestrator.ai.AIService;
 import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService;
 import org.springframework.ai.chat.client.ChatClient;
@@ -15,28 +17,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.util.Map;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
-public class TodoStatServiceImpl implements TodoStatService {
+class TodoStatServiceImpl(
+        private val preProcessService: PreProcessService,
+        private val statMapper: StatMapper,
+        private val statRepository: TodoStatRepository,
+        private val webClient: WebClient,
+        private val aiService: AIService
+) :TodoStatService {
 
-    private final PreProcessService preProcessService;
-    private final StatMapper statMapper;
-    private final TodoStatRepository statRepository;
-    private final WebClient webClient;
+    val log = logger()
 
-    private final AIService aiService;
-
-    @Override
-    public StatDocument saveStat(long todoIdx,  Map<String, Double> statData) {
-        StatDocument statDocument = new StatDocument(todoIdx, statData);
-        log.info("StatService saveStat");
-
-        return statRepository.save(statDocument);
+    override fun saveStat(todoIdx: Long, statData: MutableMap<String,Double>): StatDocument{
+        log.info("StatService saveStat")
+        return statRepository.save(StatDocument(todoIdx = todoIdx, statData = statData))
     }
+
 
     @Override
     public StatDTO calculateStat(String todoDetail) {

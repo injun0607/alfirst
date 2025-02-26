@@ -17,13 +17,13 @@ class UserStatDocumentTest {
     void calulateStat() {
         UserStatDocument userStatDocument = new UserStatDocument();
         userStatDocument.setUserId(1L);
-        Map<String,Integer> statData = new HashMap<>();
-        statData.put("a", 1);
-        statData.put("b", 2);
-        statData.put("c", 3);
+        Map<String,Double> statData = new HashMap<>();
+        statData.put("a", 1.0);
+        statData.put("b", 2.0);
+        statData.put("c", 3.0);
         userStatDocument.setUserStatData(statData);
 
-        Map<String,Integer> updateStat = Map.of("a", 2, "b", 1, "c", 3);
+        Map<String,Double> updateStat = Map.of("a", 2.0, "b", 1.0, "c", 3.0);
 
         userStatDocument.calculateStat(updateStat);
 

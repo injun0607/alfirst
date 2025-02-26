@@ -19,7 +19,7 @@ data class UserDTO(
         var age : Int = 0,
         var userType : UserType = UserType.BASIC,
         var email : String = "",
-        var statData : MutableMap<String,Int> = mutableMapOf()
+        var statData : MutableMap<String,Long> = mutableMapOf()
 ) {
 
 

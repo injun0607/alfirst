@@ -5,14 +5,14 @@ import org.alham.alhamfirst.dto.stat.UserStatDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserStatMapper {
+class UserStatMapper {
 
-    public UserStatDTO createStatDTOFromDocument(UserStatDocument userStatDocument){
-        return UserStatDTO.builder()
-                .id(userStatDocument.getId())
-                .userIdx(userStatDocument.getUserId())
-                .statData(userStatDocument.getUserStatData())
-                .build();
+    fun createStatDTOFromDocument(userStatDocument: UserStatDocument): UserStatDTO{
+        return UserStatDTO(
+                id = userStatDocument.id,
+                userIdx = userStatDocument.userId,
+                statData = userStatDocument.userStatData
+        )
     }
 
 }

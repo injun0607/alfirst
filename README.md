@@ -13,7 +13,7 @@
 - 스탯 피드백의 퀄리티 유지(기본적인 텍스트로만 제공되는 스탯 피드백은 자칫 흥미를 떨어트릴수 있다)
 
 # 기술 스택
-Java/SpringBoot/SpringAI/SpringJPA/React/MariaDB/MongoDB <br>
+Java(Kotlin 이관)/SpringBoot/SpringAI/SpringJPA/React/MariaDB/MongoDB <br>
 
 # 기술 구성
 1. BackEnd - Java/SpringBoot 를 통한 REST API 구성 <br>

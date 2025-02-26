@@ -22,13 +22,13 @@ class UserMapperTest {
 
     @Test
     public void transferTest() throws Exception {
-        User user = User.builder()
-                .id(1L)
-                .name("alham")
-                .age(30)
-                .email("alham@naver.com")
-                .userType(UserType.BASIC)
-                .build();
+        User user = new User();
+        user.setId(1L);
+        user.setName("alham");
+        user.setAge(30);
+        user.setUserType(UserType.BASIC);
+        user.setEmail("alham@naver.com");
+
 
         String encrypted = AESUtil.encrypt(user.getId().toString());
         UserDTO userDTO = userMapper.createUserDTOFromEntity(user);

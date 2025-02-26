@@ -27,10 +27,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public User createUser(UserDTO userDTO) {
-        User user = User.builder()
-                .name(userDTO.getName())
-                .age(userDTO.getAge())
-                .build();
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setAge(userDTO.getAge());
+
         return userRepository.save(user);
     }
 
@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService {
         try{
             Optional<User> optionalUser = userRepository.findById(userId);
             return optionalUser.isPresent() ?
-                    userMapper.createUserDTOFromEntity(optionalUser.get()) : UserDTO.getEmptyUser();
+                    userMapper.createUserDTOFromEntity(optionalUser.get()) : new UserDTO().getEmptyUser();
         } catch(AlhamCustomException e) {
             new AlhamCustomErrorLog(e);
-            return UserDTO.getEmptyUser();
+            return new UserDTO().getEmptyUser();
         }
     }
 
@@ -53,11 +53,11 @@ public class UserServiceImpl implements UserService {
             Optional<User> optionalUser = userRepository.findById(userId);
 
             return optionalUser.isPresent() ?
-                    userMapper.createUserDTOFromEntity(optionalUser.get()) : UserDTO.getEmptyUser();
+                    userMapper.createUserDTOFromEntity(optionalUser.get()) : new UserDTO().getEmptyUser();
 
         } catch(AlhamCustomException e){
             new AlhamCustomErrorLog(e);
-            return UserDTO.getEmptyUser();
+            return new UserDTO().getEmptyUser();
         }
 
     }

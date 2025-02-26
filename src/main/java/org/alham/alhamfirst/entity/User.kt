@@ -9,7 +9,7 @@ import org.alham.alhamfirst.common.enums.UserType;
 
 @Entity
 @Table(name = "al_user")
-public class User(
+class User(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name="al_user_id")

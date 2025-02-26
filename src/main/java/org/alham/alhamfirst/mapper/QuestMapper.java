@@ -14,7 +14,7 @@ public class QuestMapper {
         return QuestDTO.builder()
                 .id(todoDTO.getId())
                 .detail(todoDTO.getDetail())
-                .completed(todoDTO.isCompleted())
+                .completed(todoDTO.getCompleted())
                 .statData(statDTO.getStatData())
                 .build();
     }
@@ -25,7 +25,7 @@ public class QuestMapper {
             return QuestDTO.builder()
                     .id(todoDTO.getId())
                     .detail(todoDTO.getDetail())
-                    .completed(todoDTO.isCompleted())
+                    .completed(todoDTO.getCompleted())
                     .statData(statDTO.getStatData())
                     .build();
         }).toList();

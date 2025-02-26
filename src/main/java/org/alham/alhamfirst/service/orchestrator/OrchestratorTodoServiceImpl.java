@@ -88,7 +88,7 @@ public class OrchestratorTodoServiceImpl implements OrchestratorTodoService {
                 return todoStatService.saveStat(todo.getId(), statDTO.getStatData());
             } catch (MongoCustomError e) {
                 log.info("OrchestratorTodoService createTodo error");
-                todoService.deleteTodoWithStatReward(todo.getId());
+                todoService.deleteTodoWIthStartReward(todo.getId());
                 throw new OrchestratorCustomError("OrchestratorTodoService createTodo error");
             }
         } catch (MongoCustomError | AlhamCustomException e) {

@@ -28,7 +28,7 @@ public interface TodoService {
     fun getTodoListByUserIdWithUndo(id : Long) : List<TodoDTO>
 
 //    TodoDTO updateTodoDetail(TodoDTO todoDTO);
-    fun updateTodoDetail(todoDTO : Todo) : TodoDTO
+    fun updateTodoDetail(todoDTO : TodoDTO) : TodoDTO
 
 //    void deleteTodo(long id);
 

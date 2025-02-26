@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-class MainController(val orchestratorTodoService: OrchestratorTodoService, private val jwtInfo :UserDTO) {
+class MainController(private val orchestratorTodoService: OrchestratorTodoService, private val jwtInfo :UserDTO) {
 
     @PostMapping("/todo/create")
     fun create(@RequestBody todoDTO : TodoDTO) : StatDocument{

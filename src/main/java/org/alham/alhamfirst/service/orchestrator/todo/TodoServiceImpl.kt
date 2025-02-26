@@ -11,22 +11,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
-public class TodoServiceImpl implements TodoService{
+class TodoServiceImpl(private val todoRepository : TodoRepository ,
+                      private val todoMapper: TodoMapper
+) : TodoService{
 
-    private final TodoRepository todoRepository;
+    override fun getTodoDetailByUserId(id: Long): TodoDTO {
+        val byUserId = todoRepository.findByUserId(id)
+        return todoMapper.createTodoDTOFromEntity(byUserId)
 
-    private final TodoMapper todoMapper;
-
-    @Override
-    public TodoDTO getTodoDetailByUserId(Long id) {
-        Todo byUserId = todoRepository.findByUserId(id);
-        return todoMapper.createTodoDTOFromEntity(byUserId);
     }
 
     /**
@@ -36,57 +33,44 @@ public class TodoServiceImpl implements TodoService{
      * @param todoDTO
      * @return
      */
-    @Override
     @Transactional
-    public Todo createTodo(TodoDTO todoDTO) {
-        todoDTO.setStartDate(LocalDate.now());
-        Todo todo = todoMapper.createTodoFromDTO(todoDTO);
-//        User user = User.createTempUser(todoDTO.getUserId());
-        User user = User.Companion.createTempUser();
-        todo.addUser(user);
+    override fun createTodo(todoDTO : TodoDTO) : Todo{
+        todoDTO.startDate = LocalDate.now()
+        val todo = todoMapper.createTodoFromDTO(todoDTO)
+        val user = User().createTempUser(todoDTO.userId?:0);
+        todo.addUser(user)
         return todoRepository.save(todo);
     }
 
-    @Override
-    public List<TodoDTO> getTodoList() {
-        return todoRepository.findAll().stream().map(todoMapper::createTodoDTOFromEntity).toList();
+    override fun getTodoList():List<TodoDTO>{
+        return todoRepository.findAll().stream().map(todoMapper::createTodoDTOFromEntity).toList()
     }
 
-    @Override
-    public List<TodoDTO> listTodo() {
-        return todoRepository.findAll().stream().map(todoMapper::createTodoDTOFromEntity).toList();
+    override fun listTodo():List<TodoDTO>{
+        return todoRepository.findAll().stream().map(todoMapper::createTodoDTOFromEntity).toList()
     }
 
-    @Override
-    public TodoDTO getTodoDetail(Long id) {
-        return todoRepository.findById(id).map(todoMapper::createTodoDTOFromEntity).orElse(new TodoDTO());
+    override fun getTodoDetail(id: Long): TodoDTO {
+        return todoRepository.findById(id).map(todoMapper::createTodoDTOFromEntity).orElse(TodoDTO())
+    }
+    override fun updateTodoDetail(todoDTO: TodoDTO): TodoDTO {
+        val todo = todoRepository.findById(todoDTO.id?:0).orElseThrow();
+        todo.updateTodo(todoDTO.detail)
+        val saved = todoRepository.save(todo)
+        return todoMapper.createTodoDTOWithUserIdFromEntity(saved)
     }
 
-    //TODO - 업데이트 할때마다 stat 변경 로직 적용여부 확인 후 적용
-    @Override
-    @Transactional
-    public TodoDTO updateTodoDetail(TodoDTO todoDTO) {
-        Todo todo = todoRepository.findById(todoDTO.getId()).orElseThrow();
-        todo.updateTodo(todoDTO.getDetail());
-        Todo saved = todoRepository.save(todo);
-        return todoMapper.createTodoDTOWithUserIdFromEntity(saved);
-
+    override fun getTodoListByUserIdWithUndo(id : Long) : List<TodoDTO>{
+        val undoListByUserId = todoRepository.findByUserId(id)
+        return todoRepository.findUndoListByUserId(id).stream().map(todoMapper::createTodoDTOFromEntity).toList()
     }
 
-    @Override
-    public List<TodoDTO> getTodoListByUserIdWithUndo(Long id) {
-        List<Todo> undoListByUserId = todoRepository.findUndoListByUserId(id);
-        return todoRepository.findUndoListByUserId(id).stream().map(todoMapper::createTodoDTOFromEntity).toList();
+    override fun deleteTodo(id: Long){
+        todoRepository.deleteById(id)
     }
 
-    @Override
-    @Transactional
-    public void deleteTodo(long id) {
-        todoRepository.deleteById(id);
+    override fun deleteTodoWIthStartReward(id: Long) {
+        todoRepository.deleteById(id)
     }
 
-    @Override
-    public void deleteTodoWithStatReward(long id) {
-        todoRepository.deleteById(id);
-    }
 }

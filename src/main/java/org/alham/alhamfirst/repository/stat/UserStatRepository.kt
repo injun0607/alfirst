@@ -3,6 +3,8 @@ package org.alham.alhamfirst.repository.stat;
 import org.alham.alhamfirst.document.stat.UserStatDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UserStatRepository extends MongoRepository<UserStatDocument, String> {
-    UserStatDocument findByUserId(long userId);
+interface UserStatRepository{
+    fun findByUserId(userId: Long): UserStatDocument
+    fun updateUserStat(userId: Long, statData: Map<String,Double>): UserStatDocument
+    fun createUserStatDocument(userId: Long): UserStatDocument
 }

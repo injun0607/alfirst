@@ -69,7 +69,6 @@ class OrchestratorTodoServiceImpl(
             log.info("OrchestratorTodoService createTodo")
             todoDTO.userId = CommonUtil.getDecryptedId(encryptedId)
             val todo = todoService.createTodo(todoDTO)
-            val createTodo = todoService.createTodo(todoDTO)
             val todoId = todo.id?:throw MongoCustomError("TODO ID 없음")
 
             try{
@@ -96,6 +95,8 @@ class OrchestratorTodoServiceImpl(
         val todo = todoService.updateTodoDetail(TodoDTO(id=todoId, completed = true))
         val todoStat = todoStatService.findByTodoIdx(todoId)
         val userStat = userStatService.findByEncryptedId(encryptedId)
+
+        //여기서 stat계산 후 updateStat 해주면 된다.
         return userStatService.updateUserStat(userStat.userIdx, todoStat.statData)
     }
 

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.common.error.AlhamCustomErrorLog;
 import org.alham.alhamfirst.common.error.AlhamCustomException;
+import org.alham.alhamfirst.common.error.MongoCustomError
 import org.alham.alhamfirst.document.stat.UserStatDocument;
 import org.alham.alhamfirst.dto.stat.UserStatDTO;
 import org.alham.alhamfirst.mapper.UserStatMapper;
@@ -18,6 +19,10 @@ import org.springframework.stereotype.Service;
 class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
                           private val userStatMapper: UserStatMapper
 ) :UserStatService{
+
+    override fun createUserStatDocument(userId: Long): UserStatDocument {
+        return userStatRepository.createUserStatDocument(userId)
+    }
 
     override fun saveStat(userId: Long, statData: Map<String,Double>): UserStatDocument{
         TODO()
@@ -40,7 +45,14 @@ class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
     }
 
     override fun updateUserStat(userId: Long, statData: Map<String,Double>) : UserStatDTO{
-        TODO()
+        //유저 스탯 업데이트
+        try {
+            val userStat = userStatRepository.updateUserStat(userId, statData)
+            return userStatMapper.createStatDTOFromDocument(userStat);
+        }catch(e: MongoCustomError){
+            AlhamCustomErrorLog(e)
+            return UserStatDTO()
+        }
     }
 
 

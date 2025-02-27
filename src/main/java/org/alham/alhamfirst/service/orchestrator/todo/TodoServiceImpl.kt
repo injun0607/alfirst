@@ -53,15 +53,15 @@ class TodoServiceImpl(private val todoRepository : TodoRepository ,
     override fun getTodoDetail(id: Long): TodoDTO {
         return todoRepository.findById(id).map(todoMapper::createTodoDTOFromEntity).orElse(TodoDTO())
     }
+    @Transactional
     override fun updateTodoDetail(todoDTO: TodoDTO): TodoDTO {
         val todo = todoRepository.findById(todoDTO.id?:0).orElseThrow();
-        todo.updateTodo(todoDTO.detail)
+        todo.updateCompeted(todoDTO.completed)
         val saved = todoRepository.save(todo)
         return todoMapper.createTodoDTOWithUserIdFromEntity(saved)
     }
 
     override fun getTodoListByUserIdWithUndo(id : Long) : List<TodoDTO>{
-        val undoListByUserId = todoRepository.findByUserId(id)
         return todoRepository.findUndoListByUserId(id).stream().map(todoMapper::createTodoDTOFromEntity).toList()
     }
 

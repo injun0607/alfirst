@@ -1,21 +1,16 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.common.error.MongoCustomError;
+import org.alham.alhamfirst.common.error.MongoCustomError
 import org.alham.alhamfirst.common.logger
-import org.alham.alhamfirst.document.stat.StatDocument;
-import org.alham.alhamfirst.dto.stat.StatDTO;
-import org.alham.alhamfirst.mapper.StatMapper;
-import org.alham.alhamfirst.repository.stat.TodoStatRepository;
-import org.alham.alhamfirst.repository.stat.UserStatRepository
-import org.alham.alhamfirst.service.orchestrator.ai.AIService;
-import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.alham.alhamfirst.document.stat.StatDocument
+import org.alham.alhamfirst.dto.stat.StatDTO
+import org.alham.alhamfirst.mapper.StatMapper
+import org.alham.alhamfirst.repository.stat.TodoStatRepository
+import org.alham.alhamfirst.service.orchestrator.ai.AIService
+import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService
+import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.client.WebClient
 
 
 @Service
@@ -34,65 +29,48 @@ class TodoStatServiceImpl(
         return statRepository.save(StatDocument(todoIdx = todoIdx, statData = statData))
     }
 
-
-    @Override
-    public StatDTO calculateStat(String todoDetail) {
-        log.info("StatService calculateStat");
+    override fun calculateStat(todoDetail: String): StatDTO{
+        log.info("StatService calculateStat")
 
         try{
+            val preProcessed = preProcess(todoDetail)
             /*
              * desc를 받고 -> stat을 계산해야한다.
              * 1.받은 것을 한번 전처리
              * 2. 전처리한 것을 ai쪽에 보내고
              * 3. ai에서 받은 결과를 가지고 stat을 계산
              */
-            String preProcessed = proProcess(todoDetail);
-
-            return callAi(preProcessed);
-        } catch (Exception e){
-            log.error("StatService calculateStat error");
-            throw new MongoCustomError("StatService calculateStat error");
+            return callAi(preProcessed)
+        }catch(e: Exception){
+            log.error("StatService calculateStat error")
+            throw MongoCustomError("StatService calculateStat error")
         }
     }
 
-    @Override
-    public void updateStat(String stat) {
+    override fun updateStat(stat: String){
         log.info("StatService updateStat");
         //stat을 받아서 db에 업데이트
     }
 
-    @Override
-    public StatDTO findByTodoIdx(long todoIdx) {
-        StatDocument statDocument = statRepository.findByTodoIdx(todoIdx);
-        return statMapper.createStatDTOFromDocument(statDocument);
+    override fun findByTodoIdx(todoIdx: Long): StatDTO{
+        val statDocument = statRepository.findByTodoIdx(todoIdx)
+        return statMapper.createStatDTOFromDocument(statDocument)
     }
 
-    @Override
-    public List<StatDTO> findListInTodoIdxList(List<Long> todoIdxList) {
-        List<StatDocument> byTodoIdxIn = statRepository.findByTodoIdxIn(todoIdxList);
-
-        return byTodoIdxIn.stream().map(statMapper::createStatDTOFromDocument).toList();
-    }
-
-    private String proProcess(String todoDetail){
-        return todoDetail;
+    override fun findListInTodoIdxList(todoIdxList: List<Long>): List<StatDTO>{
+        val byTodoIdxIn = statRepository.findByTodoIdxIn(todoIdxList)
+        return byTodoIdxIn.map(statMapper::createStatDTOFromDocument)
     }
 
 
-    private StatDTO callAi(String preProcessed){
-
-        String answer = aiService.getAnswer(preProcessed);
-        Map<String, Double> statData = aiService.getStat(answer);
-
-        StatDTO statDTO = new StatDTO();
-        statDTO.setStatData(statData);
-
-        return statDTO;
+    private fun preProcess(todoDetail: String): String{
+        return todoDetail
     }
 
-
-
-
-
+    private fun callAi(preProcessed: String): StatDTO{
+        val answer = aiService.getAnswer(preProcessed)
+        val statData = aiService.getStat(answer)
+        return StatDTO(statData = statData)
+    }
 
 }

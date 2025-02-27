@@ -1,26 +1,20 @@
 package org.alham.alhamfirst.service.orchestrator;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.common.error.*;
 import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.document.stat.StatDocument;
 import org.alham.alhamfirst.document.stat.UserStatDocument;
 import org.alham.alhamfirst.dto.quest.QuestDTO;
-import org.alham.alhamfirst.dto.stat.StatDTO;
 import org.alham.alhamfirst.dto.stat.UserStatDTO;
 import org.alham.alhamfirst.dto.todo.TodoDTO;
-import org.alham.alhamfirst.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.QuestMapper;
 import org.alham.alhamfirst.service.orchestrator.ai.AIService;
 import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
 import org.alham.alhamfirst.service.orchestrator.stat.UserStatService;
 import org.alham.alhamfirst.service.orchestrator.todo.TodoService;
-import org.alham.alhamfirst.util.AESUtil
 import org.alham.alhamfirst.util.CommonUtil;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +43,7 @@ class OrchestratorTodoServiceImpl(
     override fun getUnDoQuestListByEncryptedUserId(encryptedId: String): List<QuestDTO>{
         try{
             val todoListByUserIdWithUndo = todoService.getTodoListByUserIdWithUndo(CommonUtil.getDecryptedId(encryptedId))
-            val idxList = todoListByUserIdWithUndo.map(TodoDTO::id).toList()
+            val idxList = todoListByUserIdWithUndo.mapNotNull(TodoDTO::id)
             val statList = todoStatService.findListInTodoIdxList(idxList)
             return questMapper.createQuestListDTO(todoListByUserIdWithUndo, statList)
         }catch(e: MariaDBCustomError){

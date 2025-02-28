@@ -9,6 +9,6 @@ interface UserStatService {
     fun saveStat(userId: Long, statData: Map<String,Double>): UserStatDocument
     fun findByUserId(userId: Long): UserStatDTO
     fun findByEncryptedId(encryptedId: String): UserStatDTO
-    fun updateUserStat(userId: Long, statData: Map<String,Double>): UserStatDTO
+    fun updateUserStat(userId: Long, statData: Map<String,Double>, completed: Boolean): UserStatDTO
 
 }

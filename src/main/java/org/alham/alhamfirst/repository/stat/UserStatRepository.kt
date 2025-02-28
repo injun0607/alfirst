@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 interface UserStatRepository{
     fun findByUserId(userId: Long): UserStatDocument
-    fun updateUserStat(userId: Long, statData: Map<String,Double>): UserStatDocument
+    fun updateUserStat(userId: Long, statData: Map<String,Double>, completed: Boolean): UserStatDocument
     fun createUserStatDocument(userId: Long): UserStatDocument
 }

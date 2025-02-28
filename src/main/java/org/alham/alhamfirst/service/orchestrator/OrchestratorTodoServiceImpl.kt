@@ -90,18 +90,14 @@ class OrchestratorTodoServiceImpl(
     }
 
 
-    override fun completeTodo(todoId: Long, encryptedId: String): UserStatDTO{
+    override fun updateTodo(todoId: Long, encryptedId: String, completed: Boolean): UserStatDTO{
 
-        val todo = todoService.updateTodoDetail(TodoDTO(id=todoId, completed = true))
+        val todo = todoService.updateTodoDetail(TodoDTO(id=todoId, completed = completed))
         val todoStat = todoStatService.findByTodoIdx(todoId)
         val userStat = userStatService.findByEncryptedId(encryptedId)
 
         //여기서 stat계산 후 updateStat 해주면 된다.
-        return userStatService.updateUserStat(userStat.userIdx, todoStat.statData)
-    }
-
-    override fun unCompleteTodo(todoDTO: TodoDTO): UserStatDocument{
-        TODO()
+        return userStatService.updateUserStat(userStat.userIdx, todoStat.statData, completed)
     }
 
     override fun deleteTodoById(todoId: String){

@@ -44,11 +44,26 @@ class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
         }
     }
 
-    override fun updateUserStat(userId: Long, statData: Map<String,Double>) : UserStatDTO{
+    override fun updateUserStat(userId: Long, statData: Map<String,Double>,completed: Boolean) : UserStatDTO{
         //유저 스탯 업데이트
         try {
-            val userStat = userStatRepository.updateUserStat(userId, statData)
-            return userStatMapper.createStatDTOFromDocument(userStat);
+
+            var changedStat = statData;
+
+            if(!completed){
+                //값이 없으면 제거
+                val userStat = userStatRepository.findByUserId(userId)
+                changedStat = userStat.userStatData.mapNotNull{(key,value)->
+                    if(statData.containsKey(key)){
+                       key to if(value - statData[key]!! > 0 )
+                           value else statData[key]!!
+                    }else{
+                        null
+                    }
+                }.toMap()
+            }
+            val resultUserStat = userStatRepository.updateUserStat(userId, changedStat,completed)
+            return userStatMapper.createStatDTOFromDocument(resultUserStat);
         }catch(e: MongoCustomError){
             AlhamCustomErrorLog(e)
             return UserStatDTO()

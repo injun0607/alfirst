@@ -13,7 +13,6 @@ interface OrchestratorTodoService {
     fun getUnDoQuestListByEncryptedUserId(encryptedId: String): List<QuestDTO>
     fun getTodoById(todoId: Long)
     fun createTodo(todoDTO: TodoDTO, encryptedId: String): StatDocument
-    fun completeTodo(todoId: Long, encryptedId: String): UserStatDTO
-    fun unCompleteTodo(todoDTO: TodoDTO): UserStatDocument
+    fun updateTodo(todoId: Long, encryptedId: String, completed: Boolean): UserStatDTO
     fun deleteTodoById(todoId: String)
 }

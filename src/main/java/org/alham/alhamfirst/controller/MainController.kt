@@ -40,12 +40,12 @@ class MainController(private val orchestratorTodoService: OrchestratorTodoServic
         }
     }
 
-    @PostMapping("/todo/{id}/completion")
-    fun completeTodo(@PathVariable id: Long): ResponseEntity<UserStatDTO>{
+    @PostMapping("/todo/{id}/{completed}")
+    fun completeTodo(@PathVariable id: Long,@PathVariable completed:Boolean): ResponseEntity<UserStatDTO>{
         try{
-            return ResponseEntity.ok(orchestratorTodoService.completeTodo(id,jwtInfo.id))
+            return ResponseEntity.ok(orchestratorTodoService.updateTodo(id,jwtInfo.id,completed))
         } catch(e: Exception){
-            log.error("todo complete error",e)
+            log.error("todo complete change error",e)
             return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }

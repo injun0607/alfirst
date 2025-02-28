@@ -25,12 +25,13 @@ class UserStatRepositoryImpl(
         return mongoTemplate.findOne(query, UserStatDocument::class.java) ?: throw MongoCustomError("UserStatDocument not found")
     }
 
-    override fun updateUserStat(userId: Long, statData: Map<String,Double>): UserStatDocument{
+    override fun updateUserStat(userId: Long, statData: Map<String,Double>, completed: Boolean): UserStatDocument{
         val query = Query(Criteria.where("userId").`is`(userId))
         val update = Update()
 
         statData.map{(key,value)->
-            update.inc("userStatData.$key",value)
+            //연산시 값이 없을때는 음수 계산 X
+            update.inc("userStatData.$key", if(completed) value else -value)
         }
 
         return mongoTemplate.findAndModify(

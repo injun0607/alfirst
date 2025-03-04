@@ -9,7 +9,6 @@ public class TransactionWrapper {
 
     private Object checkObject = null;
 
-
     public boolean checkObject(){
         return this.checkObject != null;
     }

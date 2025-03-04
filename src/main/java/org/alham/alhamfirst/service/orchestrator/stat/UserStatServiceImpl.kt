@@ -47,9 +47,7 @@ class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
     override fun updateUserStat(userId: Long, statData: Map<String,Double>,completed: Boolean) : UserStatDTO{
         //유저 스탯 업데이트
         try {
-
             var changedStat = statData;
-
             if(!completed){
                 //값이 없으면 제거
                 val userStat = userStatRepository.findByUserId(userId)

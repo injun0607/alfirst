@@ -4,11 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.alham.alhamfirst.common.enums.RepeatedStatus;
-import org.alham.alhamfirst.common.enums.WeekStatus;
 import org.alham.alhamfirst.entity.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "al_repeated_todo")

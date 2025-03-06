@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.common.error.MariaDBCustomError;
+import org.alham.alhamfirst.common.error.MariaDBCustomException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,9 +26,9 @@ public class ServiceExceptionAspect {
             return joinPoint.proceed();
         } catch (DataAccessException ex) {
             // 커스텀 예외로 변환
-            throw new MariaDBCustomError(ex.getMessage(),ex.getCause());
+            throw new MariaDBCustomException(ex.getMessage(),ex.getCause());
         } catch (RuntimeException ex){
-            throw new MariaDBCustomError(ex.getMessage(),ex.getCause());
+            throw new MariaDBCustomException(ex.getMessage(),ex.getCause());
         }
     }
 
@@ -41,7 +41,7 @@ public class ServiceExceptionAspect {
             return joinPoint.proceed();
         } catch (Exception ex) {
             // 커스텀 예외로 변환
-            throw new MariaDBCustomError(ex.getMessage());
+            throw new MariaDBCustomException(ex.getMessage(),ex.getCause());
         }
     }
 }

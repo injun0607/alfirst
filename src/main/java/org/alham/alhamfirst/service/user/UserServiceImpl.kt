@@ -15,49 +15,41 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+class UserServiceImpl(private val userRepository: UserRepository,
+                      private val userMapper: UserMapper
+): UserService {
 
-    private final UserRepository userRepository;
-
-    private final UserMapper userMapper;
-
-    public UserDTO getUser(long userIdx) {
-        return null;
+    override fun getUser(userIdx: Long): UserDTO {
+        TODO();
     }
 
-    public User createUser(UserDTO userDTO) {
-        User user = new User();
-        user.setName(userDTO.getName());
-        user.setAge(userDTO.getAge());
-
+    override fun createUser(userDTO: UserDTO): User  {
+        val user = User(name = userDTO.name, age = userDTO.age)
         return userRepository.save(user);
     }
 
-    public UserDTO getUserByIdx(long userId){
+     override fun getUserByIdx(userId: Long): UserDTO {
         try{
-            Optional<User> optionalUser = userRepository.findById(userId);
-            return optionalUser.isPresent() ?
-                    userMapper.createUserDTOFromEntity(optionalUser.get()) : new UserDTO().getEmptyUser();
-        } catch(AlhamCustomException e) {
-            new AlhamCustomErrorLog(e);
-            return new UserDTO().getEmptyUser();
+            return userRepository.findById(userId)
+                .map{ userMapper.createUserDTOFromEntity(it)}
+                .orElseGet{UserDTO()}
+        } catch(e: AlhamCustomException ) {
+            AlhamCustomErrorLog(exception = e);
+            return UserDTO()
         }
     }
 
     @Override
-    public UserDTO getUserByEncryptedId(String encryptedId) {
+    override fun getUserByEncryptedId(encryptedId: String): UserDTO  {
         try{
+            val userId = CommonUtil.getDecryptedId(encryptedId)
 
-            long userId = CommonUtil.getDecryptedId(encryptedId);
-            Optional<User> optionalUser = userRepository.findById(userId);
-
-            return optionalUser.isPresent() ?
-                    userMapper.createUserDTOFromEntity(optionalUser.get()) : new UserDTO().getEmptyUser();
-
-        } catch(AlhamCustomException e){
-            new AlhamCustomErrorLog(e);
-            return new UserDTO().getEmptyUser();
+            return userRepository.findById(userId)
+                .map{userMapper.createUserDTOFromEntity(it)}
+                .orElseGet{UserDTO()}
+        } catch(e: AlhamCustomException){
+            AlhamCustomErrorLog(exception = e);
+            return UserDTO()
         }
 
     }

@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
 
-import org.alham.alhamfirst.common.error.MongoCustomError
+import org.alham.alhamfirst.common.error.MongoCustomException
 import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.document.stat.StatDocument
 import org.alham.alhamfirst.dto.stat.StatDTO
@@ -43,7 +43,7 @@ class TodoStatServiceImpl(
             return callAi(preProcessed)
         }catch(e: Exception){
             log.error("StatService calculateStat error")
-            throw MongoCustomError("StatService calculateStat error")
+            throw MongoCustomException("StatService calculateStat error")
         }
     }
 

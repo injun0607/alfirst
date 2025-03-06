@@ -6,12 +6,12 @@ import org.alham.alhamfirst.entity.User;
 
 import java.util.Optional;
 
-public interface UserService {
+interface UserService {
 
-    public UserDTO getUser(long userIdx);
-    public User createUser(UserDTO userDTO);
-    public UserDTO getUserByIdx(long userId);
-    public UserDTO getUserByEncryptedId(String encryptedId);
+    fun getUser(userIdx: Long) : UserDTO
+    fun createUser(userDTO: UserDTO ): User
+    fun getUserByIdx(userId: Long): UserDTO
+    fun getUserByEncryptedId(encryptedId: String): UserDTO ;
 
 
 }

@@ -1,17 +1,16 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.common.error.AlhamCustomErrorLog;
-import org.alham.alhamfirst.common.error.AlhamCustomException;
-import org.alham.alhamfirst.common.error.MongoCustomError
-import org.alham.alhamfirst.document.stat.UserStatDocument;
-import org.alham.alhamfirst.dto.stat.UserStatDTO;
-import org.alham.alhamfirst.mapper.UserStatMapper;
-import org.alham.alhamfirst.repository.stat.UserStatRepository;
-import org.alham.alhamfirst.repository.user.UserRepository
-import org.alham.alhamfirst.util.CommonUtil;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j
+import org.alham.alhamfirst.common.error.AlhamCustomErrorLog
+import org.alham.alhamfirst.common.error.AlhamCustomException
+import org.alham.alhamfirst.common.error.MongoCustomException
+
+import org.alham.alhamfirst.document.stat.UserStatDocument
+import org.alham.alhamfirst.dto.stat.UserStatDTO
+import org.alham.alhamfirst.mapper.UserStatMapper
+import org.alham.alhamfirst.repository.stat.UserStatRepository
+import org.alham.alhamfirst.util.CommonUtil
+import org.springframework.stereotype.Service
 
 
 @Service
@@ -39,7 +38,7 @@ class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
             val userStat = userStatRepository.findByUserId(userId)
             return userStatMapper.createStatDTOFromDocument(userStat);
         }catch(e: AlhamCustomException){
-            AlhamCustomErrorLog(e);
+            AlhamCustomErrorLog(exception = e);
             return UserStatDTO();
         }
     }
@@ -62,8 +61,8 @@ class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
             }
             val resultUserStat = userStatRepository.updateUserStat(userId, changedStat,completed)
             return userStatMapper.createStatDTOFromDocument(resultUserStat);
-        }catch(e: MongoCustomError){
-            AlhamCustomErrorLog(e)
+        }catch(e: MongoCustomException){
+            AlhamCustomErrorLog(exception = e)
             return UserStatDTO()
         }
     }

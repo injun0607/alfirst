@@ -1,7 +1,6 @@
 package org.alham.alhamfirst.repository.stat
 
-import org.alham.alhamfirst.common.error.MongoCustomError
-import org.alham.alhamfirst.document.stat.StatDocument
+import org.alham.alhamfirst.common.error.MongoCustomException
 import org.alham.alhamfirst.document.stat.UserStatDocument
 import org.springframework.data.mongodb.core.FindAndModifyOptions
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -22,7 +21,7 @@ class UserStatRepositoryImpl(
 
     override fun findByUserId(userId: Long): UserStatDocument {
         val query = Query(Criteria.where("userId").`is`(userId))
-        return mongoTemplate.findOne(query, UserStatDocument::class.java) ?: throw MongoCustomError("UserStatDocument not found")
+        return mongoTemplate.findOne(query, UserStatDocument::class.java) ?: throw MongoCustomException("UserStatDocument not found")
     }
 
     override fun updateUserStat(userId: Long, statData: Map<String,Double>, completed: Boolean): UserStatDocument{
@@ -36,7 +35,7 @@ class UserStatRepositoryImpl(
 
         return mongoTemplate.findAndModify(
             query, update, FindAndModifyOptions.options().returnNew(true), UserStatDocument::class.java
-        )?: throw MongoCustomError("UserStatDocument not found")
+        )?: throw MongoCustomException("UserStatDocument not found")
 
     }
 

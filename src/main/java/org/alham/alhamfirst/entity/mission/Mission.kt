@@ -13,9 +13,7 @@ class Mission(
     @Column(name ="mission_id")
     val id : Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "al_user_id")
-    var user : User = User(),
+    var userId : Long? = null,
 
     var detail: String = "",
     var repeatedStatus: RepeatedStatus = RepeatedStatus.DAILY,

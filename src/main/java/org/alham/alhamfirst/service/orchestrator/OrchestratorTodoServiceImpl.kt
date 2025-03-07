@@ -46,16 +46,16 @@ class OrchestratorTodoServiceImpl(
             val statList = todoStatService.findListInTodoIdxList(idxList)
             return questMapper.createQuestListDTO(todoListByUserIdWithUndo, statList)
         }catch(e: MariaDBCustomException){
-            throw OrchestratorCustomError("OrchestratorTodoService MariaDB error")
+            throw OrchestratorCustomException("OrchestratorTodoService MariaDB error")
         }catch(e: MongoCustomException){
             //몽고디비 커스텀에러
             //보상 리워드
-            throw OrchestratorCustomError("OrchestratorTodoService MongonDB error");
+            throw OrchestratorCustomException("OrchestratorTodoService MongonDB error");
         }catch(e: AlhamCustomException){
             AlhamCustomErrorLog(exception = e);
-            throw OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
+            throw OrchestratorCustomException("OrchestratorTodoService getTodoByUserId error");
         }catch(e: Exception){
-            throw OrchestratorCustomError("OrchestratorTodoService getTodoByUserId error");
+            throw OrchestratorCustomException("OrchestratorTodoService getTodoByUserId error");
         }
     }
 
@@ -77,14 +77,14 @@ class OrchestratorTodoServiceImpl(
             }catch(e: MongoCustomException){
                 log.info("OrchestratorTodoService createTodo error")
                 todoService.deleteTodoWIthStartReward(todo.id)
-                throw OrchestratorCustomError("OrchestratorTodoService createTodo error")
+                throw OrchestratorCustomException("OrchestratorTodoService createTodo error")
             }
         }catch(e: MongoCustomException){
             AlhamCustomErrorLog(exception = e)
-            throw OrchestratorCustomError("OrchestratorTodoService createTodo error")
+            throw OrchestratorCustomException("OrchestratorTodoService createTodo error")
         }catch (e: AlhamCustomException){
             AlhamCustomErrorLog(exception = e)
-            throw OrchestratorCustomError("OrchestratorTodoService createTodo error")
+            throw OrchestratorCustomException("OrchestratorTodoService createTodo error")
         }
     }
 

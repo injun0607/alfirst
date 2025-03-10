@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.common.error;
+package org.alham.alhamfirst.common.exception;
 
 class AlhamCustomException(
     message: String,

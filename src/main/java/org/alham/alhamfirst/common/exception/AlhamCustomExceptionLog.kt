@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.common.error;
+package org.alham.alhamfirst.common.exception;
 
 //TODO - 이걸로 로그 구현해줘야함
 class AlhamCustomErrorLog(

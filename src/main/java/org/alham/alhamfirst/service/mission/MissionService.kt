@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.service.mission
 
-import org.alham.alhamfirst.common.error.AlhamCustomErrorLog
-import org.alham.alhamfirst.common.error.AlhamCustomException
+import org.alham.alhamfirst.common.exception.AlhamCustomErrorLog
+import org.alham.alhamfirst.common.exception.AlhamCustomException
 import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.domain.dto.mission.MissionDTO
 import org.alham.alhamfirst.mapper.MissionMapper

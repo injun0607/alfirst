@@ -1,9 +1,9 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
 import lombok.extern.slf4j.Slf4j
-import org.alham.alhamfirst.common.error.AlhamCustomErrorLog
-import org.alham.alhamfirst.common.error.AlhamCustomException
-import org.alham.alhamfirst.common.error.MongoCustomException
+import org.alham.alhamfirst.common.exception.AlhamCustomErrorLog
+import org.alham.alhamfirst.common.exception.AlhamCustomException
+import org.alham.alhamfirst.common.exception.MongoCustomException
 
 import org.alham.alhamfirst.domain.document.stat.UserStatDocument
 import org.alham.alhamfirst.domain.dto.stat.UserStatDTO

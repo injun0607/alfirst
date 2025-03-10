@@ -1,3 +1,3 @@
-package org.alham.alhamfirst.common.error;
+package org.alham.alhamfirst.common.exception;
 
 class OrchestratorCustomException(message: String): RuntimeException(message){}

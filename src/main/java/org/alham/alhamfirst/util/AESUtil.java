@@ -1,6 +1,6 @@
 package org.alham.alhamfirst.util;
 
-import org.alham.alhamfirst.common.error.AlhamCustomException;
+import org.alham.alhamfirst.common.exception.AlhamCustomException;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;

@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
 
-import org.alham.alhamfirst.common.error.MongoCustomException
+import org.alham.alhamfirst.common.exception.MongoCustomException
 import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.domain.document.stat.StatDocument
 import org.alham.alhamfirst.domain.dto.stat.StatDTO

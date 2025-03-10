@@ -1,6 +1,6 @@
 package org.alham.alhamfirst.repository.stat
 
-import org.alham.alhamfirst.common.error.MongoCustomException
+import org.alham.alhamfirst.common.exception.MongoCustomException
 import org.alham.alhamfirst.domain.document.stat.UserStatDocument
 import org.springframework.data.mongodb.core.FindAndModifyOptions
 import org.springframework.data.mongodb.core.MongoTemplate

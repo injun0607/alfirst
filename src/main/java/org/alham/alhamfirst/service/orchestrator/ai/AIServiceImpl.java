@@ -21,6 +21,7 @@ public class AIServiceImpl implements AIService{
     //TODO - 이부분 병렬처리 가능한것같음 . 청크를 병렬로 돌려서 처리하는것도 생각해봐야겠음
     @Override
     public String getAnswer(String question) {
+        log.info("question : {}",question);
          return chat(question)
                 .collectList()  // 모든 청크를 리스트로 수집
                 .map(chunks -> String.join("", chunks))  // 청크들을 하나의 문자열로 결합
@@ -39,6 +40,7 @@ public class AIServiceImpl implements AIService{
 
     @Override
     public Map<String, Double> getStat(String statJson) {
+        log.info("getStat statJson : {}",statJson);
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> result = new HashMap<>();

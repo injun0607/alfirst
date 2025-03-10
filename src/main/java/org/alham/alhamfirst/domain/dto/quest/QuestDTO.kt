@@ -1,21 +1,16 @@
 package org.alham.alhamfirst.domain.dto.quest;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * front 단에서 보여주는 quest 정보
- * todo와 stat이 들어가있다.
- */
+import org.alham.alhamfirst.common.Constant
+import java.time.LocalDateTime
 
 data class QuestDTO(
-    var id: Long? = null,
-    var detail: String,
-    var completed: Boolean,
-    var statData: MutableMap<String, Double>
-) {}
+    var id: String? = null,
+    var userId: Long = 0,
+    var detail: String = "",
+    var completed: Boolean = false,
+    var statData: MutableMap<String, Double> = mutableMapOf(),
+    var startDate: LocalDateTime = LocalDateTime.now(),
+    var endDate: LocalDateTime? = Constant.INIT_DATE_TIME
+) {
+
+}

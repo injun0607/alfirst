@@ -1,8 +1,10 @@
 package org.alham.alhamfirst.common;
 
-public class Constant {
+import java.time.LocalDateTime
 
-    public static int NEW_ENTITY_NUMBER = 0;
+object Constant {
 
+    const val NEW_ENTITY_NUMBER = 0;
+    val INIT_DATE_TIME = LocalDateTime.MIN
 
 }

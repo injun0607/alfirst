@@ -1,14 +1,7 @@
 package org.alham.alhamfirst.domain.dto.todo;
 
-import lombok.*;
+import java.time.LocalDate
 
-import java.time.LocalDate;
-
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@Builder
-//@AllArgsConstructor
 data class TodoDTO(var id: Long? = null,
                    var userId : Long? = null,
                    var detail : String = "",

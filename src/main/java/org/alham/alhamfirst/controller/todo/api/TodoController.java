@@ -30,12 +30,12 @@ public class TodoController {
 
     @GetMapping("/detail/{id}")
     public TodoDTO getTodoDetail(@PathVariable Long id){
-        return todoService.getTodoDetail(id);
+        return new TodoDTO();
     }
 
     @PostMapping("/update/{id}")
     public void updateTodoDetail(@RequestBody TodoDTO todoDTO){
-        todoService.updateTodoDetail(todoDTO);
+
     }
 
 

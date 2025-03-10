@@ -1,5 +1,6 @@
 package org.alham.alhamfirst.mapper;
 
+import org.alham.alhamfirst.domain.document.QuestDocument
 import org.alham.alhamfirst.domain.dto.quest.QuestDTO
 import org.alham.alhamfirst.domain.dto.stat.StatDTO
 import org.alham.alhamfirst.domain.dto.todo.TodoDTO
@@ -7,14 +8,27 @@ import org.alham.alhamfirst.domain.dto.todo.TodoDTO
 
 class QuestMapper() {
 
-     fun createQuestDTO(todoDTO: TodoDTO, statDTO: StatDTO): QuestDTO {
-        return QuestDTO(id = todoDTO.id, detail = todoDTO.detail, completed = todoDTO.completed, statData = statDTO.statData)
+     fun createQuestDTOFromDocument(questDocument: QuestDocument): QuestDTO {
+        return QuestDTO(
+            id = questDocument.id,
+            userId = questDocument.userId,
+            detail = questDocument.detail,
+            completed = questDocument.completed,
+            statData = questDocument.statData,
+            startDate = questDocument.startDate,
+            endDate = questDocument.endDate
+        )
      }
 
-    fun createQuestListDTO(todoDTOList: List<TodoDTO>, statDTOList: List<StatDTO>): List<QuestDTO> {
-        return todoDTOList.map{ todoDTO->
-            val statDTO = statDTOList.find{statDTO -> todoDTO.id == statDTO.todoIdx} ?: StatDTO()
-            QuestDTO(id = todoDTO.id, detail = todoDTO.detail, completed = todoDTO.completed, statData = statDTO.statData)
-        }
+    fun createDocumentFromDTO(questDTO: QuestDTO): QuestDocument {
+        return QuestDocument(
+            id = questDTO.id,
+            userId = questDTO.userId,
+            detail = questDTO.detail,
+            completed = questDTO.completed,
+            statData = questDTO.statData,
+            startDate = questDTO.startDate,
+            endDate = questDTO.endDate
+        )
     }
 }

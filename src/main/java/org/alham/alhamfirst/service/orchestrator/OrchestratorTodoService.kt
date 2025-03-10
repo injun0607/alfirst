@@ -11,7 +11,9 @@ interface OrchestratorTodoService {
 
     fun getUnDoQuestListByEncryptedUserId(encryptedId: String): List<QuestDTO>
     fun getTodoById(todoId: Long)
-    fun createTodo(todoDTO: TodoDTO, encryptedId: String): StatDocument
-    fun updateTodo(todoId: Long, encryptedId: String, completed: Boolean): UserStatDTO
+    fun createQuest(todoDTO: TodoDTO, encryptedId: String): QuestDTO
+    fun completeQuest(todoId: Long, encryptedId: String, completed: Boolean): UserStatDTO
     fun deleteTodoById(todoId: String)
+
+    fun changeQuest(todoDTO: TodoDTO, encryptedId: String): QuestDTO
 }

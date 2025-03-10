@@ -1,6 +1,7 @@
 package org.alham.alhamfirst.service.orchestrator.todo;
 
 import lombok.extern.slf4j.Slf4j;
+import org.alham.alhamfirst.common.exception.MariaDBCustomException
 import org.alham.alhamfirst.domain.dto.todo.TodoDTO;
 import org.alham.alhamfirst.domain.entity.User;
 import org.alham.alhamfirst.domain.entity.todo.Todo;
@@ -15,15 +16,8 @@ import java.time.LocalDate;
 @Service
 @Slf4j
 @Transactional(readOnly = true)
-class TodoServiceImpl(private val todoRepository : TodoRepository ,
-                      private val todoMapper: TodoMapper
+class TodoServiceImpl(private val todoRepository : TodoRepository
 ) : TodoService{
-
-    override fun getTodoDetailByUserId(id: Long): TodoDTO {
-        val byUserId = todoRepository.findByUserId(id)
-        return todoMapper.createTodoDTOFromEntity(byUserId)
-
-    }
 
     /**
      * 할일 생성
@@ -35,35 +29,31 @@ class TodoServiceImpl(private val todoRepository : TodoRepository ,
     @Transactional
     override fun createTodo(todoDTO : TodoDTO) : Todo {
         todoDTO.startDate = LocalDate.now()
-        val todo = todoMapper.createTodoFromDTO(todoDTO)
+        val todo = TodoMapper().createTodoFromDTO(todoDTO)
         val user = User().createTempUser(todoDTO.userId?:0);
         todo.addUser(user)
-        return todoRepository.save(todo);
+        return todoRepository.save(todo)
     }
 
     override fun getTodoList():List<TodoDTO>{
-        return todoRepository.findAll().stream().map(todoMapper::createTodoDTOFromEntity).toList()
+        return todoRepository.findAll().map { TodoMapper().createTodoDTOFromEntity(it) }
     }
 
-    override fun listTodo():List<TodoDTO>{
-        return todoRepository.findAll().stream().map(todoMapper::createTodoDTOFromEntity).toList()
-    }
-
-    override fun getTodoDetail(id: Long): TodoDTO {
-        return todoRepository.findById(id).map(todoMapper::createTodoDTOFromEntity).orElse(TodoDTO())
+    override fun getTodoByIdAndUserId(todoId: Long, userId: Long): Todo {
+        return todoRepository.findTodoByIdAndUserId(todoId, userId)?:throw MariaDBCustomException("Todo not found")
     }
     @Transactional
-    override fun updateTodoDetail(todoDTO: TodoDTO): TodoDTO {
-        val todo = todoRepository.findById(todoDTO.id?:0).orElseThrow();
+    override fun completeTodo(todoDTO: TodoDTO): TodoDTO {
+        val todo = todoRepository.findById(todoDTO.id?:0).orElseThrow{MariaDBCustomException("Todo not found")}
         todo.updateCompeted(todoDTO.completed)
         val saved = todoRepository.save(todo)
-        return todoMapper.createTodoDTOWithUserIdFromEntity(saved)
+        return TodoMapper().createTodoDTOWithUserIdFromEntity(saved)
     }
 
-    override fun getTodoListByUserIdWithUndo(id : Long) : List<TodoDTO>{
-        return todoRepository.findUndoListByUserId(id).stream().map(todoMapper::createTodoDTOFromEntity).toList()
-    }
 
+    override fun getTodoListByUserIdWithUnCompleted(id : Long) : List<TodoDTO>{
+        return todoRepository.findUndoListByUserId(id).map{TodoMapper().createTodoDTOFromEntity(it)}
+    }
     override fun deleteTodo(id: Long){
         todoRepository.deleteById(id)
     }
@@ -71,5 +61,6 @@ class TodoServiceImpl(private val todoRepository : TodoRepository ,
     override fun deleteTodoWIthStartReward(id: Long) {
         todoRepository.deleteById(id)
     }
+
 
 }

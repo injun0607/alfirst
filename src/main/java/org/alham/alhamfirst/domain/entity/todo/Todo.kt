@@ -15,13 +15,13 @@ import java.time.LocalDate;
 @Getter
 class Todo(
     @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "todo_id")
-        val id : Long? = null,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "todo_id")
+    val id : Long? = null,
 
     @ManyToOne
-        @JoinColumn(name = "al_user_id")
-        var user : User? = null,
+    @JoinColumn(name = "al_user_id")
+    var user : User? = null,
 
     var detail : String ="",
     var category: Category? = null,
@@ -30,40 +30,8 @@ class Todo(
     var endDate : LocalDate? = null,
 
     @LastModifiedDate
-        var editDate : LocalDate = LocalDate.now()
+    var editDate : LocalDate = LocalDate.now()
 ) {
-
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "todo_id")
-//    private Long id;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "al_user_id")
-//    private User user;
-//
-//    private String detail;
-//
-//    private Category category;
-//
-//    private boolean completed;
-//    //시작 날짜
-//    private LocalDate startDate;
-//
-//    //달성 날짜
-//    private LocalDate endDate;
-//
-//    //수정 날짜
-//    @LastModifiedDate
-//    private LocalDate editDate;
-//
-//    @Builder
-//    public Todo(String detail,boolean completed, LocalDate startDate){
-//        this.detail = detail;
-//        this.completed = completed;
-//        this.startDate = startDate;
-//    }
 
     fun updateCompeted(completed: Boolean){
         if(completed){

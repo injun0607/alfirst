@@ -7,14 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
-public interface TodoRepository extends JpaRepository<Todo, Long> {
-    Todo findByUserId(Long userId);
-    @EntityGraph(attributePaths = {"user"})
+interface TodoRepository : JpaRepository<Todo, Long> {
+    fun findByUserId(userId: Long) : Todo?
+    @EntityGraph(attributePaths = ["user"])
     @Query("select t from Todo t where t.user.id = :userId and t.completed = false")
-    List<Todo> findUndoListByUserId(@Param("userId") Long userId);
+    fun findUndoListByUserId(@Param("userId")userId: Long): List<Todo>
+    fun findTodoByIdAndUserId(id: Long, userId: Long): Todo?
+    fun deleteTodoByIdAndUserId(id: Long, userId: Long)
 
 }
 

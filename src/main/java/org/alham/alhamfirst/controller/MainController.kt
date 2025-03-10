@@ -19,17 +19,17 @@ class MainController(private val orchestratorTodoService: OrchestratorTodoServic
     private val log = logger()
 
     @PostMapping("/todo/create")
-    fun create(@RequestBody todoDTO: TodoDTO): ResponseEntity<StatDocument>{
+    fun questCreate(@RequestBody todoDTO: TodoDTO): ResponseEntity<QuestDTO>{
         try{
-            val todo = orchestratorTodoService.createTodo(todoDTO,jwtInfo.id);
-            return ResponseEntity(todo, HttpStatus.OK)
+            val quest = orchestratorTodoService.createQuest(todoDTO,jwtInfo.id);
+            return ResponseEntity(quest, HttpStatus.OK)
         } catch(e: Exception){
             log.error("todo create error",e)
             return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
-    @GetMapping("/undo-list/get")
+    @GetMapping("/quest/list")
     fun getUndoQuestListByUserId(): ResponseEntity<List<QuestDTO>>{
         try {
             val undoList = orchestratorTodoService.getUnDoQuestListByEncryptedUserId(jwtInfo.id)
@@ -41,14 +41,26 @@ class MainController(private val orchestratorTodoService: OrchestratorTodoServic
     }
 
     @PostMapping("/todo/{id}/{completed}")
-    fun completeTodo(@PathVariable id: Long,@PathVariable completed:Boolean): ResponseEntity<UserStatDTO>{
+    fun questComplete(@PathVariable id: Long,@PathVariable completed:Boolean): ResponseEntity<UserStatDTO>{
         try{
-            return ResponseEntity.ok(orchestratorTodoService.updateTodo(id,jwtInfo.id,completed))
+            return ResponseEntity.ok(orchestratorTodoService.completeQuest(id,jwtInfo.id,completed))
         } catch(e: Exception){
             log.error("todo complete change error",e)
             return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
+
+    @PostMapping("/todo/{id}/change")
+    fun questChange(@PathVariable id: Long,@RequestBody todoDTO: TodoDTO): ResponseEntity<UserStatDTO>{
+        try{
+            TODO()
+//            return ResponseEntity.ok(orchestratorTodoService.changeQuest(id,jwtInfo.id,todoDTO.completed))
+        } catch(e: Exception){
+            log.error("todo update error",e)
+            return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
 
 
 

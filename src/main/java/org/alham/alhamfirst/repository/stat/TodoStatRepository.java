@@ -9,4 +9,6 @@ public interface TodoStatRepository extends MongoRepository<StatDocument, String
     StatDocument findByTodoIdx(long todoIdx);
 
     List<StatDocument> findByTodoIdxIn(List<Long> todoIdxList);
+
+
 }

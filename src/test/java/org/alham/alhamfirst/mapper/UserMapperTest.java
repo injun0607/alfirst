@@ -1,8 +1,8 @@
 package org.alham.alhamfirst.mapper;
 
 import org.alham.alhamfirst.common.enums.UserType;
-import org.alham.alhamfirst.dto.user.UserDTO;
-import org.alham.alhamfirst.entity.User;
+import org.alham.alhamfirst.domain.dto.user.UserDTO;
+import org.alham.alhamfirst.domain.entity.User;
 import org.alham.alhamfirst.util.AESUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

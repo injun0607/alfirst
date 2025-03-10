@@ -1,11 +1,7 @@
-package org.alham.alhamfirst.dto.user;
+package org.alham.alhamfirst.domain.dto.user;
 
-import lombok.*;
 import org.alham.alhamfirst.common.enums.UserType;
 import org.alham.alhamfirst.util.AESUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 //@Getter
 //@Setter
@@ -23,7 +19,7 @@ data class UserDTO(
 ) {
 
 
-    fun getEmptyUser() :  UserDTO{
+    fun getEmptyUser() : UserDTO {
         return UserDTO();
     }
 

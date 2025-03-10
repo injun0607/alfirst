@@ -1,10 +1,11 @@
-package org.alham.alhamfirst.entity.todo;
+package org.alham.alhamfirst.domain.entity.todo;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.alham.alhamfirst.common.enums.RepeatedStatus;
-import org.alham.alhamfirst.entity.User;
+import org.alham.alhamfirst.domain.entity.User;
+import org.alham.alhamfirst.domain.entity.User;
 
 @Entity
 @Table(name = "al_repeated_todo")

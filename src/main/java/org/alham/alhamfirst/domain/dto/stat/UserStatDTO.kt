@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.dto.stat;
+package org.alham.alhamfirst.domain.dto.stat;
 
 import lombok.Builder;
 import lombok.Getter;

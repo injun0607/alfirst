@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.dto.todo;
+package org.alham.alhamfirst.domain.dto.todo;
 
 import lombok.*;
 

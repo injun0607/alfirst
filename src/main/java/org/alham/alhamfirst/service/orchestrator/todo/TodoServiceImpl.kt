@@ -1,10 +1,9 @@
 package org.alham.alhamfirst.service.orchestrator.todo;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.dto.todo.TodoDTO;
-import org.alham.alhamfirst.entity.User;
-import org.alham.alhamfirst.entity.todo.Todo;
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO;
+import org.alham.alhamfirst.domain.entity.User;
+import org.alham.alhamfirst.domain.entity.todo.Todo;
 import org.alham.alhamfirst.mapper.TodoMapper;
 import org.alham.alhamfirst.repository.todo.TodoRepository;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ class TodoServiceImpl(private val todoRepository : TodoRepository ,
      * @return
      */
     @Transactional
-    override fun createTodo(todoDTO : TodoDTO) : Todo{
+    override fun createTodo(todoDTO : TodoDTO) : Todo {
         todoDTO.startDate = LocalDate.now()
         val todo = todoMapper.createTodoFromDTO(todoDTO)
         val user = User().createTempUser(todoDTO.userId?:0);

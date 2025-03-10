@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
-import org.alham.alhamfirst.document.stat.UserStatDocument;
-import org.alham.alhamfirst.dto.stat.UserStatDTO;
+import org.alham.alhamfirst.domain.document.stat.UserStatDocument;
+import org.alham.alhamfirst.domain.dto.stat.UserStatDTO;
 
 
 interface UserStatService {

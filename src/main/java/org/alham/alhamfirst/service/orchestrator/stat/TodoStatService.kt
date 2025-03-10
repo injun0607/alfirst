@@ -1,8 +1,8 @@
 package org.alham.alhamfirst.service.orchestrator.stat;
 
 
-import org.alham.alhamfirst.document.stat.StatDocument;
-import org.alham.alhamfirst.dto.stat.StatDTO;
+import org.alham.alhamfirst.domain.document.stat.StatDocument;
+import org.alham.alhamfirst.domain.dto.stat.StatDTO;
 
 
 interface TodoStatService {

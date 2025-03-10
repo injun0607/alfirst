@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.document.stat;
+package org.alham.alhamfirst.domain.document.stat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

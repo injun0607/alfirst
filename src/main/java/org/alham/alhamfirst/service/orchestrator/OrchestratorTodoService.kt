@@ -1,10 +1,9 @@
 package org.alham.alhamfirst.service.orchestrator;
 
-import org.alham.alhamfirst.document.stat.StatDocument
-import org.alham.alhamfirst.document.stat.UserStatDocument
-import org.alham.alhamfirst.dto.quest.QuestDTO
-import org.alham.alhamfirst.dto.stat.UserStatDTO
-import org.alham.alhamfirst.dto.todo.TodoDTO
+import org.alham.alhamfirst.domain.document.stat.StatDocument
+import org.alham.alhamfirst.domain.dto.quest.QuestDTO
+import org.alham.alhamfirst.domain.dto.stat.UserStatDTO
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO
 
 
 interface OrchestratorTodoService {

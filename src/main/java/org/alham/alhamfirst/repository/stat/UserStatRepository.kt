@@ -1,7 +1,6 @@
 package org.alham.alhamfirst.repository.stat;
 
-import org.alham.alhamfirst.document.stat.UserStatDocument;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.alham.alhamfirst.domain.document.stat.UserStatDocument;
 
 interface UserStatRepository{
     fun findByUserId(userId: Long): UserStatDocument

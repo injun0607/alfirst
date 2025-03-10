@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.repository.stat
 
 import org.alham.alhamfirst.common.error.MongoCustomException
-import org.alham.alhamfirst.document.stat.UserStatDocument
+import org.alham.alhamfirst.domain.document.stat.UserStatDocument
 import org.springframework.data.mongodb.core.FindAndModifyOptions
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
@@ -24,7 +24,7 @@ class UserStatRepositoryImpl(
         return mongoTemplate.findOne(query, UserStatDocument::class.java) ?: throw MongoCustomException("UserStatDocument not found")
     }
 
-    override fun updateUserStat(userId: Long, statData: Map<String,Double>, completed: Boolean): UserStatDocument{
+    override fun updateUserStat(userId: Long, statData: Map<String,Double>, completed: Boolean): UserStatDocument {
         val query = Query(Criteria.where("userId").`is`(userId))
         val update = Update()
 

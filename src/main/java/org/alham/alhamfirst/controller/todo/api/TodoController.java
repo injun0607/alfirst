@@ -3,7 +3,7 @@ package org.alham.alhamfirst.controller.todo.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.dto.todo.TodoDTO;
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO;
 import org.alham.alhamfirst.service.orchestrator.todo.TodoService;
 import org.springframework.web.bind.annotation.*;
 

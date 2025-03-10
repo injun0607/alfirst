@@ -1,8 +1,8 @@
 package org.alham.alhamfirst.service.orchestrator.todo;
 
 
-import org.alham.alhamfirst.dto.todo.TodoDTO;
-import org.alham.alhamfirst.entity.todo.Todo;
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO;
+import org.alham.alhamfirst.domain.entity.todo.Todo;
 
 
 public interface TodoService {

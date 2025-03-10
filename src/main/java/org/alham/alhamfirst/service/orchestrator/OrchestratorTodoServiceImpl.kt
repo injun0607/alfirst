@@ -3,10 +3,10 @@ package org.alham.alhamfirst.service.orchestrator;
 import lombok.RequiredArgsConstructor;
 import org.alham.alhamfirst.common.error.*;
 import org.alham.alhamfirst.common.logger
-import org.alham.alhamfirst.document.stat.StatDocument;
-import org.alham.alhamfirst.dto.quest.QuestDTO;
-import org.alham.alhamfirst.dto.stat.UserStatDTO;
-import org.alham.alhamfirst.dto.todo.TodoDTO;
+import org.alham.alhamfirst.domain.document.stat.StatDocument;
+import org.alham.alhamfirst.domain.dto.quest.QuestDTO;
+import org.alham.alhamfirst.domain.dto.stat.UserStatDTO;
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO;
 import org.alham.alhamfirst.mapper.QuestMapper;
 import org.alham.alhamfirst.service.orchestrator.ai.AIService;
 import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
@@ -22,7 +22,6 @@ class OrchestratorTodoServiceImpl(
         private val todoService: TodoService,
         private val todoStatService: TodoStatService,
         private val userStatService: UserStatService,
-        private val questMapper: QuestMapper,
         private val aiService: AIService
 ): OrchestratorTodoService {
 
@@ -44,7 +43,7 @@ class OrchestratorTodoServiceImpl(
             val todoListByUserIdWithUndo = todoService.getTodoListByUserIdWithUndo(CommonUtil.getDecryptedId(encryptedId))
             val idxList = todoListByUserIdWithUndo.mapNotNull(TodoDTO::id)
             val statList = todoStatService.findListInTodoIdxList(idxList)
-            return questMapper.createQuestListDTO(todoListByUserIdWithUndo, statList)
+            return QuestMapper().createQuestListDTO(todoListByUserIdWithUndo, statList)
         }catch(e: MariaDBCustomException){
             throw OrchestratorCustomException("OrchestratorTodoService MariaDB error")
         }catch(e: MongoCustomException){
@@ -63,7 +62,7 @@ class OrchestratorTodoServiceImpl(
         TODO("Not yet implemented")
     }
 
-    override fun createTodo(todoDTO: TodoDTO, encryptedId: String): StatDocument{
+    override fun createTodo(todoDTO: TodoDTO, encryptedId: String): StatDocument {
         try{
             log.info("OrchestratorTodoService createTodo")
             todoDTO.userId = CommonUtil.getDecryptedId(encryptedId)
@@ -89,7 +88,7 @@ class OrchestratorTodoServiceImpl(
     }
 
 
-    override fun updateTodo(todoId: Long, encryptedId: String, completed: Boolean): UserStatDTO{
+    override fun updateTodo(todoId: Long, encryptedId: String, completed: Boolean): UserStatDTO {
 
         val todo = todoService.updateTodoDetail(TodoDTO(id=todoId, completed = completed))
         val todoStat = todoStatService.findByTodoIdx(todoId)

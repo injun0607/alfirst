@@ -1,10 +1,8 @@
 package org.alham.alhamfirst.mapper
 
-import org.alham.alhamfirst.dto.mission.MissionDTO
-import org.alham.alhamfirst.entity.mission.Mission
-import org.springframework.stereotype.Component
+import org.alham.alhamfirst.domain.dto.mission.MissionDTO
+import org.alham.alhamfirst.domain.entity.mission.Mission
 
-@Component
 class MissionMapper {
     fun createDTOFromEntity(mission: Mission): MissionDTO {
         return MissionDTO(

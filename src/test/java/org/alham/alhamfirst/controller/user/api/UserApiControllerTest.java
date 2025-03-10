@@ -2,15 +2,11 @@ package org.alham.alhamfirst.controller.user.api;
 
 import org.alham.alhamfirst.common.enums.UserType;
 import org.alham.alhamfirst.config.TestConfig;
-import org.alham.alhamfirst.dto.user.UserDTO;
-import org.hibernate.internal.util.ExceptionHelper;
+import org.alham.alhamfirst.domain.dto.user.UserDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.MongoTransactionException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

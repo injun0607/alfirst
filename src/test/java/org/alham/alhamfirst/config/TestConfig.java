@@ -1,7 +1,7 @@
 package org.alham.alhamfirst.config;
 
 import org.alham.alhamfirst.common.enums.UserType;
-import org.alham.alhamfirst.dto.user.UserDTO;
+import org.alham.alhamfirst.domain.dto.user.UserDTO;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 

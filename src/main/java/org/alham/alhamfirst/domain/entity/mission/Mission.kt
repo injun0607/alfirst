@@ -1,9 +1,9 @@
-package org.alham.alhamfirst.entity.mission
+package org.alham.alhamfirst.domain.entity.mission
 
 import jakarta.persistence.*
 import org.alham.alhamfirst.common.enums.DayStatus
 import org.alham.alhamfirst.common.enums.RepeatedStatus
-import org.alham.alhamfirst.entity.User
+import org.alham.alhamfirst.domain.entity.User
 
 @Entity(name = "al_mission")
 class Mission(

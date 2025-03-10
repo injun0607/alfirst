@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.entity;
+package org.alham.alhamfirst.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -25,7 +25,7 @@ class User(
     /**
      * 연관 관계를 위한 유저 생성
      */
-    fun createTempUser(userIdx : Long) : User{
+    fun createTempUser(userIdx : Long) : User {
         return User(id = userIdx)
     }
 

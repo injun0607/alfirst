@@ -2,11 +2,11 @@ package org.alham.alhamfirst.controller;
 
 import lombok.extern.slf4j.Slf4j
 import org.alham.alhamfirst.common.logger
-import org.alham.alhamfirst.document.stat.StatDocument
-import org.alham.alhamfirst.dto.quest.QuestDTO
-import org.alham.alhamfirst.dto.stat.UserStatDTO
-import org.alham.alhamfirst.dto.todo.TodoDTO
-import org.alham.alhamfirst.dto.user.UserDTO
+import org.alham.alhamfirst.domain.document.stat.StatDocument
+import org.alham.alhamfirst.domain.dto.quest.QuestDTO
+import org.alham.alhamfirst.domain.dto.stat.UserStatDTO
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO
+import org.alham.alhamfirst.domain.dto.user.UserDTO
 import org.alham.alhamfirst.service.orchestrator.OrchestratorTodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @Slf4j
-class MainController(private val orchestratorTodoService: OrchestratorTodoService, private val jwtInfo :UserDTO) {
+class MainController(private val orchestratorTodoService: OrchestratorTodoService, private val jwtInfo : UserDTO) {
 
     private val log = logger()
 

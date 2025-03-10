@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.dto.quest;
+package org.alham.alhamfirst.domain.dto.quest;
 
 import lombok.Builder;
 import lombok.Getter;

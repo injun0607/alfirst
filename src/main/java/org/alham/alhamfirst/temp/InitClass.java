@@ -3,12 +3,10 @@ package org.alham.alhamfirst.temp;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alham.alhamfirst.dto.user.UserDTO;
-import org.alham.alhamfirst.entity.User;
+import org.alham.alhamfirst.domain.dto.user.UserDTO;
+import org.alham.alhamfirst.domain.entity.User;
 import org.alham.alhamfirst.service.user.UserService;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor

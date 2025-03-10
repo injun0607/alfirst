@@ -2,9 +2,7 @@ package org.alham.alhamfirst.config;
 
 import lombok.RequiredArgsConstructor;
 import org.alham.alhamfirst.common.enums.UserType;
-import org.alham.alhamfirst.dto.user.UserDTO;
-import org.alham.alhamfirst.security.oauth.OAuth2Service;
-import org.alham.alhamfirst.util.AESUtil;
+import org.alham.alhamfirst.domain.dto.user.UserDTO;
 import org.alham.alhamfirst.util.CommonUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

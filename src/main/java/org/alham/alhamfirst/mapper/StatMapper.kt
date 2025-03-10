@@ -1,13 +1,12 @@
 package org.alham.alhamfirst.mapper;
 
-import org.alham.alhamfirst.document.stat.StatDocument;
-import org.alham.alhamfirst.dto.stat.StatDTO;
+import org.alham.alhamfirst.domain.document.stat.StatDocument;
+import org.alham.alhamfirst.domain.dto.stat.StatDTO;
 import org.springframework.stereotype.Component;
 
-@Component
 class StatMapper {
 
-    fun createStatDTOFromDocument(statDocument: StatDocument): StatDTO{
+    fun createStatDTOFromDocument(statDocument: StatDocument): StatDTO {
         return StatDTO(
                 id = statDocument.id,
                 todoIdx = statDocument.todoIdx,

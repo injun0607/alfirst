@@ -1,8 +1,8 @@
 package org.alham.alhamfirst.controller.todo.api;
 
 import lombok.RequiredArgsConstructor;
-import org.alham.alhamfirst.document.stat.StatDocument;
-import org.alham.alhamfirst.dto.stat.StatDTO;
+import org.alham.alhamfirst.domain.document.stat.StatDocument;
+import org.alham.alhamfirst.domain.dto.stat.StatDTO;
 import org.alham.alhamfirst.service.orchestrator.ai.AIService;
 import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
 import org.springframework.http.ResponseEntity;

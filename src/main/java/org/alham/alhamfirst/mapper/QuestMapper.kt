@@ -1,15 +1,13 @@
 package org.alham.alhamfirst.mapper;
 
-import org.alham.alhamfirst.dto.quest.QuestDTO;
-import org.alham.alhamfirst.dto.stat.StatDTO;
-import org.alham.alhamfirst.dto.todo.TodoDTO;
-import org.springframework.stereotype.Component;
+import org.alham.alhamfirst.domain.dto.quest.QuestDTO
+import org.alham.alhamfirst.domain.dto.stat.StatDTO
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO
 
 
-@Component
 class QuestMapper() {
 
-     fun createQuestDTO(todoDTO: TodoDTO,statDTO: StatDTO ): QuestDTO{
+     fun createQuestDTO(todoDTO: TodoDTO, statDTO: StatDTO): QuestDTO {
         return QuestDTO(id = todoDTO.id, detail = todoDTO.detail, completed = todoDTO.completed, statData = statDTO.statData)
      }
 

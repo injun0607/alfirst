@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.dto.mission
+package org.alham.alhamfirst.domain.dto.mission
 
 import org.alham.alhamfirst.common.enums.DayStatus
 import org.alham.alhamfirst.common.enums.RepeatedStatus

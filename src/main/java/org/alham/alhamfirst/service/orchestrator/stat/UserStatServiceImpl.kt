@@ -5,8 +5,8 @@ import org.alham.alhamfirst.common.error.AlhamCustomErrorLog
 import org.alham.alhamfirst.common.error.AlhamCustomException
 import org.alham.alhamfirst.common.error.MongoCustomException
 
-import org.alham.alhamfirst.document.stat.UserStatDocument
-import org.alham.alhamfirst.dto.stat.UserStatDTO
+import org.alham.alhamfirst.domain.document.stat.UserStatDocument
+import org.alham.alhamfirst.domain.dto.stat.UserStatDTO
 import org.alham.alhamfirst.mapper.UserStatMapper
 import org.alham.alhamfirst.repository.stat.UserStatRepository
 import org.alham.alhamfirst.util.CommonUtil
@@ -15,35 +15,35 @@ import org.springframework.stereotype.Service
 
 @Service
 @Slf4j
-class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
-                          private val userStatMapper: UserStatMapper
+class UserStatServiceImpl(private val userStatRepository: UserStatRepository
+
 ) :UserStatService{
 
     override fun createUserStatDocument(userId: Long): UserStatDocument {
         return userStatRepository.createUserStatDocument(userId)
     }
 
-    override fun saveStat(userId: Long, statData: Map<String,Double>): UserStatDocument{
+    override fun saveStat(userId: Long, statData: Map<String,Double>): UserStatDocument {
         TODO()
     }
 
-    override fun findByUserId(userId: Long): UserStatDTO{
+    override fun findByUserId(userId: Long): UserStatDTO {
         val userStat = userStatRepository.findByUserId(userId)
-        return userStatMapper.createStatDTOFromDocument(userStat);
+        return UserStatMapper().createStatDTOFromDocument(userStat);
     }
 
-    override fun findByEncryptedId(encryptedId: String): UserStatDTO{
+    override fun findByEncryptedId(encryptedId: String): UserStatDTO {
         try{
             val userId = CommonUtil.getDecryptedId(encryptedId)
             val userStat = userStatRepository.findByUserId(userId)
-            return userStatMapper.createStatDTOFromDocument(userStat);
+            return UserStatMapper().createStatDTOFromDocument(userStat);
         }catch(e: AlhamCustomException){
             AlhamCustomErrorLog(exception = e);
             return UserStatDTO();
         }
     }
 
-    override fun updateUserStat(userId: Long, statData: Map<String,Double>,completed: Boolean) : UserStatDTO{
+    override fun updateUserStat(userId: Long, statData: Map<String,Double>,completed: Boolean) : UserStatDTO {
         //유저 스탯 업데이트
         try {
             var changedStat = statData;
@@ -60,7 +60,7 @@ class UserStatServiceImpl(private val userStatRepository: UserStatRepository,
                 }.toMap()
             }
             val resultUserStat = userStatRepository.updateUserStat(userId, changedStat,completed)
-            return userStatMapper.createStatDTOFromDocument(resultUserStat);
+            return UserStatMapper().createStatDTOFromDocument(resultUserStat);
         }catch(e: MongoCustomException){
             AlhamCustomErrorLog(exception = e)
             return UserStatDTO()

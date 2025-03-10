@@ -3,8 +3,8 @@ package org.alham.alhamfirst.service.orchestrator.stat;
 
 import org.alham.alhamfirst.common.error.MongoCustomException
 import org.alham.alhamfirst.common.logger
-import org.alham.alhamfirst.document.stat.StatDocument
-import org.alham.alhamfirst.dto.stat.StatDTO
+import org.alham.alhamfirst.domain.document.stat.StatDocument
+import org.alham.alhamfirst.domain.dto.stat.StatDTO
 import org.alham.alhamfirst.mapper.StatMapper
 import org.alham.alhamfirst.repository.stat.TodoStatRepository
 import org.alham.alhamfirst.service.orchestrator.ai.AIService
@@ -16,7 +16,6 @@ import org.springframework.web.reactive.function.client.WebClient
 @Service
 class TodoStatServiceImpl(
         private val preProcessService: PreProcessService,
-        private val statMapper: StatMapper,
         private val statRepository: TodoStatRepository,
         private val webClient: WebClient,
         private val aiService: AIService
@@ -24,12 +23,12 @@ class TodoStatServiceImpl(
 
     val log = logger()
 
-    override fun saveStat(todoIdx: Long, statData: MutableMap<String,Double>): StatDocument{
+    override fun saveStat(todoIdx: Long, statData: MutableMap<String,Double>): StatDocument {
         log.info("StatService saveStat")
         return statRepository.save(StatDocument(todoIdx = todoIdx, statData = statData))
     }
 
-    override fun calculateStat(todoDetail: String): StatDTO{
+    override fun calculateStat(todoDetail: String): StatDTO {
         log.info("StatService calculateStat")
 
         try{
@@ -52,14 +51,14 @@ class TodoStatServiceImpl(
         //stat을 받아서 db에 업데이트
     }
 
-    override fun findByTodoIdx(todoIdx: Long): StatDTO{
+    override fun findByTodoIdx(todoIdx: Long): StatDTO {
         val statDocument = statRepository.findByTodoIdx(todoIdx)
-        return statMapper.createStatDTOFromDocument(statDocument)
+        return StatMapper().createStatDTOFromDocument(statDocument)
     }
 
     override fun findListInTodoIdxList(todoIdxList: List<Long>): List<StatDTO>{
         val byTodoIdxIn = statRepository.findByTodoIdxIn(todoIdxList)
-        return byTodoIdxIn.map(statMapper::createStatDTOFromDocument)
+        return byTodoIdxIn.map(StatMapper()::createStatDTOFromDocument)
     }
 
 
@@ -67,7 +66,7 @@ class TodoStatServiceImpl(
         return todoDetail
     }
 
-    private fun callAi(preProcessed: String): StatDTO{
+    private fun callAi(preProcessed: String): StatDTO {
         val answer = aiService.getAnswer(preProcessed)
         val statData = aiService.getStat(answer)
         return StatDTO(statData = statData)

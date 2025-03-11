@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.service.orchestrator.stat;
+package org.alham.alhamfirst.service.stat;
 
 
 import org.alham.alhamfirst.common.exception.MongoCustomException
@@ -8,18 +8,18 @@ import org.alham.alhamfirst.domain.dto.stat.StatDTO
 import org.alham.alhamfirst.mapper.StatMapper
 import org.alham.alhamfirst.repository.stat.TodoStatRepository
 import org.alham.alhamfirst.service.orchestrator.ai.AIService
-import org.alham.alhamfirst.service.orchestrator.stat.preprocess.PreProcessService
+import org.alham.alhamfirst.service.stat.preprocess.PreProcessService
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 
 
 @Service
 class TodoStatServiceImpl(
-        private val preProcessService: PreProcessService,
-        private val statRepository: TodoStatRepository,
-        private val webClient: WebClient,
-        private val aiService: AIService
-) :TodoStatService {
+    private val preProcessService: PreProcessService,
+    private val statRepository: TodoStatRepository,
+    private val webClient: WebClient,
+    private val aiService: AIService
+) : TodoStatService {
 
     val log = logger()
 

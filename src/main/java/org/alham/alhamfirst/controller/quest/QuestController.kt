@@ -30,7 +30,6 @@ class QuestController(
             return ResponseEntity.badRequest().body(QuestDTO())
         }
     }
-
     @GetMapping("/list")
     fun getQuestList(): ResponseEntity<List<QuestDTO>> {
         try{
@@ -39,7 +38,6 @@ class QuestController(
             return ResponseEntity.badRequest().body(listOf())
         }
     }
-
 
     @DeleteMapping("/{questId}")
     fun deleteQuest(@PathVariable questId: String): ResponseCode {
@@ -61,8 +59,7 @@ class QuestController(
         }
     }
 
-
-    @PatchMapping("/{questId}/complete")
+    @PostMapping("/{questId}/complete")
     fun completeQuest(@PathVariable questId: String): ResponseCode {
         try{
             questService.completeQuest(questId,jwtToken.id)
@@ -71,5 +68,18 @@ class QuestController(
             return ResponseCode.FAIL
         }
     }
+
+    @PostMapping("/{questId}/cancel")
+    fun cancelQuest(@PathVariable questId: String): ResponseCode {
+        try{
+            questService.cancelQuest(questId,jwtToken.id)
+            return ResponseCode.SUCCESS
+        } catch(e: Exception){
+            return ResponseCode.FAIL
+        }
+    }
+
+
+
 
 }

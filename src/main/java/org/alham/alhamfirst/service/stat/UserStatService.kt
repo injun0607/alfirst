@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.service.orchestrator.stat;
+package org.alham.alhamfirst.service.stat;
 
 import org.alham.alhamfirst.domain.document.stat.UserStatDocument;
 import org.alham.alhamfirst.domain.dto.stat.UserStatDTO;

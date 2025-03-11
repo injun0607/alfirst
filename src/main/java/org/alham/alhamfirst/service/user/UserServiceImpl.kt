@@ -39,17 +39,14 @@ class UserServiceImpl(private val userRepository: UserRepository
     override fun getUserByEncryptedId(encryptedId: String): UserDTO {
         try{
             val userId = CommonUtil.getDecryptedId(encryptedId)
-
             return userRepository.findById(userId)
                 .map{UserMapper().createUserDTOFromEntity(it)}
-                .orElseGet{ UserDTO() }
+                .orElseThrow { AlhamCustomException("User not found") }
         } catch(e: AlhamCustomException){
             AlhamCustomErrorLog(exception = e);
             return UserDTO()
         }
-
     }
-
 
 
 }

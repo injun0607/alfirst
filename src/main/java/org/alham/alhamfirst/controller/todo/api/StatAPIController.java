@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.alham.alhamfirst.domain.document.stat.StatDocument;
 import org.alham.alhamfirst.domain.dto.stat.StatDTO;
 import org.alham.alhamfirst.service.orchestrator.ai.AIService;
-import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
+import org.alham.alhamfirst.service.stat.TodoStatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

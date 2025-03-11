@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated("QuestDocument로 통합")
 @Document(collection = "stat")
 @Getter
 @Setter

@@ -27,5 +27,11 @@ class UserMapper {
         )
     }
 
+    fun addUserStatData(userDTO: UserDTO, statData: MutableMap<String, Double>) : UserDTO {
+        userDTO.statData = statData
+        return userDTO
+    }
+
+
 
 }

@@ -1,29 +1,24 @@
 package org.alham.alhamfirst.service.orchestrator;
 
-import lombok.RequiredArgsConstructor;
-import org.alham.alhamfirst.common.exception.*;
+import lombok.RequiredArgsConstructor
 import org.alham.alhamfirst.common.logger
-import org.alham.alhamfirst.domain.document.stat.StatDocument;
-import org.alham.alhamfirst.domain.dto.quest.QuestDTO;
-import org.alham.alhamfirst.domain.dto.stat.UserStatDTO;
-import org.alham.alhamfirst.domain.dto.todo.TodoDTO;
-import org.alham.alhamfirst.mapper.QuestMapper;
-import org.alham.alhamfirst.mapper.TodoMapper
-import org.alham.alhamfirst.service.orchestrator.ai.AIService;
-import org.alham.alhamfirst.service.orchestrator.stat.TodoStatService;
-import org.alham.alhamfirst.service.orchestrator.stat.UserStatService;
-import org.alham.alhamfirst.service.orchestrator.todo.TodoService;
-import org.alham.alhamfirst.util.CommonUtil;
-import org.springframework.stereotype.Service;
+import org.alham.alhamfirst.domain.dto.quest.QuestDTO
+import org.alham.alhamfirst.domain.dto.stat.UserStatDTO
+import org.alham.alhamfirst.domain.dto.todo.TodoDTO
+import org.alham.alhamfirst.service.orchestrator.ai.AIService
+import org.alham.alhamfirst.service.orchestrator.todo.TodoService
+import org.alham.alhamfirst.service.stat.TodoStatService
+import org.alham.alhamfirst.service.stat.UserStatService
+import org.springframework.stereotype.Service
 
 @Service
 @RequiredArgsConstructor
 //@Slf4j
 class OrchestratorTodoServiceImpl(
-        private val todoService: TodoService,
-        private val todoStatService: TodoStatService,
-        private val userStatService: UserStatService,
-        private val aiService: AIService
+    private val todoService: TodoService,
+    private val todoStatService: TodoStatService,
+    private val userStatService: UserStatService,
+    private val aiService: AIService
 ): OrchestratorTodoService {
 
     private val log = logger()

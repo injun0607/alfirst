@@ -4,15 +4,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.domain.dto.stat.UserStatDTO;
 import org.alham.alhamfirst.domain.dto.user.UserDTO;
-import org.alham.alhamfirst.service.orchestrator.stat.UserStatService;
+import org.alham.alhamfirst.service.stat.UserStatService;
 import org.alham.alhamfirst.service.user.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Deprecated()
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+//@RequestMapping("/api/user")
 @RestController
 public class UserApiController {
 

@@ -1,4 +1,4 @@
-package org.alham.alhamfirst.service.orchestrator.stat;
+package org.alham.alhamfirst.service.stat;
 
 import lombok.extern.slf4j.Slf4j
 import org.alham.alhamfirst.common.exception.AlhamCustomErrorLog
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service
 @Slf4j
 class UserStatServiceImpl(private val userStatRepository: UserStatRepository
 
-) :UserStatService{
+) : UserStatService {
 
     override fun createUserStatDocument(userId: Long): UserStatDocument {
         return userStatRepository.createUserStatDocument(userId)
@@ -43,7 +43,7 @@ class UserStatServiceImpl(private val userStatRepository: UserStatRepository
         }
     }
 
-    override fun updateUserStat(userId: Long, statData: Map<String,Double>,completed: Boolean) : UserStatDTO {
+    override fun updateUserStat(userId: Long, statData: Map<String,Double>,completed: Boolean): UserStatDTO {
         //유저 스탯 업데이트
         try {
             var changedStat = statData;

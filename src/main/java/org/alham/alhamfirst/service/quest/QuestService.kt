@@ -7,13 +7,15 @@ import org.alham.alhamfirst.domain.dto.quest.QuestDTO
 import org.alham.alhamfirst.mapper.QuestMapper
 import org.alham.alhamfirst.repository.quest.QuestRepository
 import org.alham.alhamfirst.service.orchestrator.ai.AIService
+import org.alham.alhamfirst.service.stat.UserStatService
 import org.alham.alhamfirst.util.CommonUtil
 import org.springframework.stereotype.Service
 
 @Service
 class QuestService(
     private val questRepository: QuestRepository,
-    private val aiService: AIService
+    private val aiService: AIService,
+    private val userStatService: UserStatService
 ) {
 
     val log = logger()
@@ -51,6 +53,10 @@ class QuestService(
         try{
             val userId = CommonUtil.getDecryptedId(encryptedId)
             quest.userId = userId
+
+            if(!quest.completed){
+                throw Exception("Quest is already completed")
+            }
 
             aiService.getAnswer(quest.detail)
                 .let { quest.statData = aiService.getStat(it) }
@@ -93,6 +99,7 @@ class QuestService(
         }
     }
 
+    //TODO - 유저 스탯연동필요
     fun completeQuest(questId: String, encryptedId: String){
         try{
             val userId = CommonUtil.getDecryptedId(encryptedId)
@@ -100,11 +107,28 @@ class QuestService(
                 ?.let {
                     it.completed = true
                     questRepository.updateQuest(it)
+                    userStatService.updateUserStat(userId,it.statData,true)
                 } ?: throw Exception("Quest not found")
 
         } catch(exception: Exception){
             AlhamCustomErrorLog(exception = exception)
             throw Exception("Error in completing quest", exception)
+        }
+    }
+
+    fun cancelQuest(questId: String, encryptedId: String){
+        try{
+            val userId = CommonUtil.getDecryptedId(encryptedId)
+            questRepository.getQuest(questId, userId)
+                ?.let {
+                    it.completed = false
+                    questRepository.updateQuest(it)
+                    userStatService.updateUserStat(userId,it.statData,false)
+                } ?: throw Exception("Quest not found")
+
+        } catch(exception: Exception){
+            AlhamCustomErrorLog(exception = exception)
+            throw Exception("Error in canceling quest", exception)
         }
     }
 

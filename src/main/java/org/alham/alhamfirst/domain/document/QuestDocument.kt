@@ -15,7 +15,7 @@ class QuestDocument(
         var completed: Boolean,
         var statData: MutableMap<String, Double>,
         var startDate: LocalDateTime = LocalDateTime.now(),
-        var endDate: LocalDateTime? = Constant.INIT_DATE_TIME
+        var endDate: LocalDateTime? = null
 ) {
 
 

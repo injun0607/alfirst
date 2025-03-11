@@ -64,8 +64,48 @@ class QuestService(
             AlhamCustomErrorLog(exception = exception)
             throw Exception("Error in changing quest", exception)
         }
+    }
 
 
+    fun getQuest(questId: String, encryptedId: String): QuestDTO{
+        try{
+            val userId = CommonUtil.getDecryptedId(encryptedId)
+
+            return questRepository.getQuest(questId, userId)
+                ?.let{ QuestMapper().createQuestDTOFromDocument(it) }
+                ?: throw Exception("Quest not found")
+        } catch(exception: Exception){
+
+            AlhamCustomErrorLog(exception = exception)
+            throw Exception("Error in getting quest", exception)
+        }
+
+    }
+
+    fun getQuestList(encryptedId: String): List<QuestDTO>{
+        try {
+            val userId = CommonUtil.getDecryptedId(encryptedId)
+            return questRepository.getQuestListByUserIdWithUnCompleted(userId)
+                .map { QuestMapper().createQuestDTOFromDocument(it) }
+        } catch(exception: Exception){
+            AlhamCustomErrorLog(exception = exception)
+            throw Exception("Error in getting quest list", exception)
+        }
+    }
+
+    fun completeQuest(questId: String, encryptedId: String){
+        try{
+            val userId = CommonUtil.getDecryptedId(encryptedId)
+            questRepository.getQuest(questId, userId)
+                ?.let {
+                    it.completed = true
+                    questRepository.updateQuest(it)
+                } ?: throw Exception("Quest not found")
+
+        } catch(exception: Exception){
+            AlhamCustomErrorLog(exception = exception)
+            throw Exception("Error in completing quest", exception)
+        }
     }
 
 }

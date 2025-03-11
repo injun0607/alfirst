@@ -10,7 +10,7 @@ data class QuestDTO(
     var completed: Boolean = false,
     var statData: MutableMap<String, Double> = mutableMapOf(),
     var startDate: LocalDateTime = LocalDateTime.now(),
-    var endDate: LocalDateTime? = Constant.INIT_DATE_TIME
+    var endDate: LocalDateTime? = null
 ) {
 
 }

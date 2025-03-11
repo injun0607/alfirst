@@ -59,7 +59,7 @@ class QuestRepositoryTest{
         Mockito.`when`(mongoTemplate.findAndRemove(query,QuestDocument::class.java))
             .thenReturn(quest)
 
-        val result = questRepository.deleteQuest("asd")
+        val result = questRepository.deleteQuest("asd",1)
         assertEquals(quest,result)
     }
 

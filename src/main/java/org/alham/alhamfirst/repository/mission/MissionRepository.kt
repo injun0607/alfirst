@@ -1,11 +1,35 @@
 package org.alham.alhamfirst.repository.mission
 
-import org.alham.alhamfirst.domain.entity.mission.Mission
-import org.springframework.data.jpa.repository.JpaRepository
+import org.alham.alhamfirst.domain.document.mission.MissionDocument
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MissionRepository: JpaRepository<Mission, Long> {
+class MissionRepository(private val mongoTemplate: MongoTemplate) {
+    fun createMission(mission: MissionDocument): MissionDocument{
+        return mongoTemplate.insert(mission)
+    }
+
+    fun getMission(id: String, userId: Long): MissionDocument? {
+        val query = Query(Criteria
+            .where("_id").`is`(id)
+            .and("userId").`is`(userId)
+        )
+        return mongoTemplate.findOne(query, MissionDocument::class.java)
+    }
+
+    fun getMissionList(userId: Long): List<MissionDocument> {
+        val query = Query(Criteria
+            .where("userId").`is`(userId)
+        )
+        return mongoTemplate.find(query, MissionDocument::class.java)
+    }
+
+
+
+
 
 
 }

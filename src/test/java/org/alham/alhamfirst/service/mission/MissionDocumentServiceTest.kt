@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-class MissionServiceTest(){
+class MissionDocumentServiceTest(){
 
     private val missionRepository: MissionRepository = mock()
     private val missionMapper : MissionMapper = MissionMapper()

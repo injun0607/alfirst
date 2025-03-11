@@ -13,20 +13,29 @@ import org.springframework.stereotype.Service
 class MissionService(private val missionRepository: MissionRepository) {
 
     val log = logger()
+    fun getMissionList(encryptedId: String): List<MissionDTO> {
+        try{
+            val userId = CommonUtil.getDecryptedId(encryptedId)
+            return missionRepository.getMissionList(userId)
+                .map{MissionMapper().createDTOFromEntity(it)}
 
-    fun getMissionList(): MissionDTO {
-        TODO()
+        }catch(e: Exception){
+            log.error("Error in getMissionList",e)
+            AlhamCustomErrorLog(errorMessage = "Error in getMissionList",exception = e)
+            throw AlhamCustomException("Error in getMissionList",e)
+        }
     }
 
     fun postMissionCompleted(missionId: Long, completed: Boolean): MissionDTO {
         TODO()
     }
 
-    fun registerMission(missionDTO: MissionDTO, encryptedId: String): MissionDTO {
+    fun create(missionDTO: MissionDTO, encryptedId: String): MissionDTO {
         try{
+            //TODO - Mapper 연결부분 손보기
             missionDTO.userId = CommonUtil.getDecryptedId(encryptedId)
             MissionMapper().createEntityFromDTO(missionDTO).let{
-                missionRepository.save(it)
+                missionRepository.createMission(it)
                 return missionDTO
             }
         }catch(e :Exception){

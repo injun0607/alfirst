@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.findAndRemove
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.update
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
@@ -25,8 +26,15 @@ class QuestRepository(private val mongoTemplate: MongoTemplate){
 
         return mongoTemplate.findAndRemove(query, QuestDocument::class.java)
     }
-    fun updateQuest(quest: QuestDocument): QuestDocument {
-        return mongoTemplate.save(quest)
+    fun updateQuest(quest: QuestDocument): QuestDocument? {
+
+        val query = Query(Criteria
+            .where("_id").`is`(quest.id)
+            .and("userId").`is`(quest.userId)
+        )
+
+        return mongoTemplate.findAndReplace(query,quest)
+
     }
 
     fun getQuest(id: String,userId: Long): QuestDocument? {

@@ -1,14 +1,16 @@
 package org.alham.alhamfirst.domain.dto.mission
 
-import org.alham.alhamfirst.common.enums.DayStatus
-import org.alham.alhamfirst.common.enums.RepeatedStatus
+import org.alham.alhamfirst.domain.document.mission.MissionStatus
+import java.time.LocalDateTime
 
 data class MissionDTO(
-    var id : Long? = null,
+    var id : String? = null,
     var userId : Long? = null,
     var detail: String = "",
-    var repeatedStatus: RepeatedStatus = RepeatedStatus.DAILY,
-    var dayStatus: DayStatus = DayStatus.NONE
+    var missionStatus: MissionStatus = MissionStatus(),
+    var streak: Int = 0,
+    var maxStreak: Int = 0,
+    var regDate: LocalDateTime = LocalDateTime.now()
 ) {
 
 }

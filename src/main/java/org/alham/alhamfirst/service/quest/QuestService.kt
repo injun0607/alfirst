@@ -62,10 +62,10 @@ class QuestService(
                 .let { quest.statData = aiService.getStat(it) }
 
             questRepository.updateQuest(QuestMapper().createDocumentFromDTO(quest))
-                .let {
+                ?.let {
                     log.info("Quest changed. change quest_id = {}, user_id={}", it.id,it.userId)
                     return QuestMapper().createQuestDTOFromDocument(it)
-                }
+                }?: throw Exception("Quest not found")
         }catch (exception: Exception){
             AlhamCustomErrorLog(exception = exception)
             throw Exception("Error in changing quest", exception)

@@ -8,7 +8,11 @@ class MissionMapper {
         return MissionDTO(
             id = mission.id,
             userId = mission.userId,
-            detail = mission.detail
+            detail = mission.detail,
+            missionStatus = mission.missionStatus,
+            streak = mission.streak,
+            maxStreak = mission.maxStreak,
+            regDate = mission.regDate
         )
     }
 
@@ -16,7 +20,11 @@ class MissionMapper {
         return MissionDocument(
             id = missionDTO.id,
             userId = missionDTO.userId,
-            detail = missionDTO.detail
+            detail = missionDTO.detail,
+            missionStatus = missionDTO.missionStatus,
+            streak = missionDTO.streak,
+            maxStreak = missionDTO.maxStreak,
+            regDate = missionDTO.regDate
         )
     }
 

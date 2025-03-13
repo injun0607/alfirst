@@ -12,7 +12,7 @@ class MissionDocument(
     val id : String? = null,
     var userId : Long? = null,
     var detail: String = "",
-    var missionStatus: MissionStatus = MissionStatus(),
+    var missionInfo: MissionInfo = MissionInfo(),
     var streak: Int = 0,
     var maxStreak: Int = 0,
     var regDate: LocalDateTime = LocalDateTime.now(),

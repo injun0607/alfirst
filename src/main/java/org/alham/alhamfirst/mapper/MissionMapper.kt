@@ -2,6 +2,8 @@ package org.alham.alhamfirst.mapper
 
 import org.alham.alhamfirst.domain.dto.mission.MissionDTO
 import org.alham.alhamfirst.domain.document.mission.MissionDocument
+import org.alham.alhamfirst.domain.document.mission.UserMissionDocument
+import org.alham.alhamfirst.domain.dto.mission.UserMissionDTO
 
 class MissionMapper {
     fun createDTOFromEntity(mission: MissionDocument): MissionDTO {
@@ -9,7 +11,7 @@ class MissionMapper {
             id = mission.id,
             userId = mission.userId,
             detail = mission.detail,
-            missionStatus = mission.missionStatus,
+            missionInfo = mission.missionInfo,
             streak = mission.streak,
             maxStreak = mission.maxStreak,
             regDate = mission.regDate
@@ -21,11 +23,27 @@ class MissionMapper {
             id = missionDTO.id,
             userId = missionDTO.userId,
             detail = missionDTO.detail,
-            missionStatus = missionDTO.missionStatus,
+            missionInfo = missionDTO.missionInfo,
             streak = missionDTO.streak,
             maxStreak = missionDTO.maxStreak,
             regDate = missionDTO.regDate
         )
     }
+
+    fun createUserMissionDTOFromEntity(userMissionDocument: UserMissionDocument): UserMissionDTO{
+        return UserMissionDTO(
+            id = userMissionDocument.id,
+            userId = userMissionDocument.userId,
+            userMissionList = userMissionDocument.userMissionList
+        )
+    }
+    fun createUserMissionEntityFromDTO(userMissionDTO: UserMissionDTO): UserMissionDocument{
+        return UserMissionDocument(
+            id = userMissionDTO.id,
+            userId = userMissionDTO.userId,
+            userMissionList = userMissionDTO.userMissionList
+        )
+    }
+
 
 }

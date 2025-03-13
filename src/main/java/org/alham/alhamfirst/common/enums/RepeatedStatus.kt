@@ -6,6 +6,5 @@ enum class RepeatedStatus {
     DAILY,
     WEEKLY,
     MONTHLY,
-    YEARLY,
     SPECIFIC_DAYS;
 }

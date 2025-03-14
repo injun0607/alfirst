@@ -10,4 +10,6 @@ class UserMissionInfo(
     var missionComplete: Boolean = false,
     var statData: Map<String, String> = mapOf(),
     var completeDateTime : LocalDateTime? = null
-) {}
+) {
+
+}

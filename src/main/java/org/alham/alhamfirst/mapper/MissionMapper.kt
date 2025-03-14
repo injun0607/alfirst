@@ -34,14 +34,16 @@ class MissionMapper {
         return UserMissionDTO(
             id = userMissionDocument.id,
             userId = userMissionDocument.userId,
-            userMissionList = userMissionDocument.userMissionList
+            userMissionList = userMissionDocument.userMissionList,
+            regDate = userMissionDocument.regDate
         )
     }
     fun createUserMissionEntityFromDTO(userMissionDTO: UserMissionDTO): UserMissionDocument{
         return UserMissionDocument(
             id = userMissionDTO.id,
             userId = userMissionDTO.userId,
-            userMissionList = userMissionDTO.userMissionList
+            userMissionList = userMissionDTO.userMissionList,
+            regDate = userMissionDTO.regDate
         )
     }
 

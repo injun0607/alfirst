@@ -17,8 +17,8 @@ class UserMissionRepository (private val mongoTemplate: MongoTemplate){
         return mongoTemplate.findOne(query, UserMissionDocument::class.java)
     }
 
-    fun registerUserMission(repeatedStatus: RepeatedStatus){
-
+    fun createUserMission(userMissionDocument: UserMissionDocument): UserMissionDocument{
+        return mongoTemplate.insert(userMissionDocument)
     }
 
 

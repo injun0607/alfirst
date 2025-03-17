@@ -14,7 +14,8 @@ class MissionMapper {
             missionInfo = mission.missionInfo,
             streak = mission.streak,
             maxStreak = mission.maxStreak,
-            regDate = mission.regDate
+            regDate = mission.regDate,
+            lastEndDate = mission.lastEndDate
         )
     }
 
@@ -26,7 +27,8 @@ class MissionMapper {
             missionInfo = missionDTO.missionInfo,
             streak = missionDTO.streak,
             maxStreak = missionDTO.maxStreak,
-            regDate = missionDTO.regDate
+            regDate = missionDTO.regDate,
+            lastEndDate = missionDTO.lastEndDate
         )
     }
 

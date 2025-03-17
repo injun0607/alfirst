@@ -8,7 +8,7 @@ class UserMissionInfo(
     var repeatedStatus: RepeatedStatus = RepeatedStatus.DAILY,
     var missionDetail: String = "",
     var missionComplete: Boolean = false,
-    var statData: Map<String, String> = mapOf(),
+    var statData: Map<String, Double> = mapOf(),
     var completeDateTime : LocalDateTime? = null
 ) {
 

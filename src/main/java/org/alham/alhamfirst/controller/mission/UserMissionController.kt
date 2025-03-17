@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/userMission")
+@RequestMapping("/api/user-mission")
 class UserMissionController(
     private val userMissionService: UserMissionService,
     private val jwtToken: UserDTO
@@ -22,11 +22,12 @@ class UserMissionController(
 
         val userId = jwtToken.id
         try{
-            return ResponseEntity.ok(userMissionService.getUserMissionList(userId))
+            return ResponseEntity.ok(userMissionService.getTodayUserMissionList(userId))
         }catch(exception: Exception){
             AlhamCustomErrorLog(errorMessage = "Error in getUserMissionList", exception = exception)
             return ResponseEntity.badRequest().build()
         }
     }
+
 
 }

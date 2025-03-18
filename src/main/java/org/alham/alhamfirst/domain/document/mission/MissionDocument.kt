@@ -16,7 +16,8 @@ class MissionDocument(
     var streak: Int = 0,
     var maxStreak: Int = 0,
     var regDate: LocalDateTime = LocalDateTime.now(),
-    var lastEndDate: LocalDate? = null
+    var lastEndDate: LocalDate? = null,
+    var useFlag: Boolean = true
 ) {
 
 

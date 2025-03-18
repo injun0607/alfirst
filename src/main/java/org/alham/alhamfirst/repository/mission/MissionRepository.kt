@@ -23,7 +23,7 @@ class MissionRepository(private val mongoTemplate: MongoTemplate) {
 
     fun getMissionList(userId: Long): List<MissionDocument> {
         val query = Query(Criteria
-            .where("userId").`is`(userId)
+            .where("userId").`is`(userId).and("useFlag").`is`(true)
         )
         return mongoTemplate.find(query, MissionDocument::class.java)
     }

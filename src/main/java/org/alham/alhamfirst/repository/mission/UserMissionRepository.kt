@@ -21,5 +21,11 @@ class UserMissionRepository (private val mongoTemplate: MongoTemplate){
         return mongoTemplate.insert(userMissionDocument)
     }
 
+    fun getUserMissionByRepeatedStatus(userId: Long, regDate: LocalDate, repeatedStatus: RepeatedStatus): UserMissionDocument? {
+        val query = Query(Criteria.where("userId")
+            .`is`(userId).and("regDate").`is`(regDate)
+            .and("repeatedStatus").`is`(repeatedStatus))
 
+        return mongoTemplate.findOne(query, UserMissionDocument::class.java)
+    }
 }

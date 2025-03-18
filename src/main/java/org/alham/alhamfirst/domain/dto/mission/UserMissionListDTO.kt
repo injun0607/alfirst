@@ -1,27 +1,25 @@
 package org.alham.alhamfirst.domain.dto.mission
 
 import org.alham.alhamfirst.common.enums.RepeatedStatus
-import org.alham.alhamfirst.domain.document.mission.UserMissionInfo
 
 
 class UserMissionListDTO (
-    var id: String? = null,
     var userId: Long? = null,
-    var weekDayMissionList: MutableList<UserMissionInfo> = mutableListOf(),
-    var weekEndMissionList: MutableList<UserMissionInfo> = mutableListOf(),
-    var dailyMissionList: MutableList<UserMissionInfo> = mutableListOf(),
-    var weeklyMissionList: MutableList<UserMissionInfo> = mutableListOf(),
-    var monthlyMissionList: MutableList<UserMissionInfo> = mutableListOf(),
-    var specificDayMissionList: MutableList<UserMissionInfo> = mutableListOf()
+    var weekDayMission: UserMissionDTO = UserMissionDTO(),
+    var weekEndMission: UserMissionDTO = UserMissionDTO(),
+    var dailyMission: UserMissionDTO = UserMissionDTO(),
+    var weeklyMission: UserMissionDTO = UserMissionDTO(),
+    var monthlyMission: UserMissionDTO = UserMissionDTO(),
+    var specificDayMission: UserMissionDTO = UserMissionDTO(),
 ){
-    fun addUserMissionList(userMissionInfo: UserMissionInfo){
-        when(userMissionInfo.repeatedStatus){
-            RepeatedStatus.WEEKDAY -> weekDayMissionList.add(userMissionInfo)
-            RepeatedStatus.WEEKEND-> weekEndMissionList.add(userMissionInfo)
-            RepeatedStatus.DAILY -> dailyMissionList.add(userMissionInfo)
-            RepeatedStatus.WEEKLY -> weeklyMissionList.add(userMissionInfo)
-            RepeatedStatus.MONTHLY -> monthlyMissionList.add(userMissionInfo)
-            RepeatedStatus.SPECIFIC_DAYS -> specificDayMissionList.add(userMissionInfo)
+    fun addUserMissionList(userMission: UserMissionDTO){
+        when(userMission.repeatedStatus){
+            RepeatedStatus.WEEKDAY -> weekDayMission
+            RepeatedStatus.WEEKEND-> weekEndMission
+            RepeatedStatus.DAILY -> dailyMission
+            RepeatedStatus.WEEKLY -> weeklyMission
+            RepeatedStatus.MONTHLY -> monthlyMission
+            RepeatedStatus.SPECIFIC_DAYS -> specificDayMission
         }
     }
 

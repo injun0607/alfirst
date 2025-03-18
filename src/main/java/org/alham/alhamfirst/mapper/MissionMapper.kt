@@ -15,7 +15,8 @@ class MissionMapper {
             streak = mission.streak,
             maxStreak = mission.maxStreak,
             regDate = mission.regDate,
-            lastEndDate = mission.lastEndDate
+            lastEndDate = mission.lastEndDate,
+            useFlag = mission.useFlag
         )
     }
 
@@ -28,7 +29,8 @@ class MissionMapper {
             streak = missionDTO.streak,
             maxStreak = missionDTO.maxStreak,
             regDate = missionDTO.regDate,
-            lastEndDate = missionDTO.lastEndDate
+            lastEndDate = missionDTO.lastEndDate,
+            useFlag = missionDTO.useFlag
         )
     }
 
@@ -36,6 +38,7 @@ class MissionMapper {
         return UserMissionDTO(
             id = userMissionDocument.id,
             userId = userMissionDocument.userId,
+            repeatedStatus = userMissionDocument.repeatedStatus,
             userMissionList = userMissionDocument.userMissionList,
             regDate = userMissionDocument.regDate
         )
@@ -44,6 +47,7 @@ class MissionMapper {
         return UserMissionDocument(
             id = userMissionDTO.id,
             userId = userMissionDTO.userId,
+            repeatedStatus = userMissionDTO.repeatedStatus,
             userMissionList = userMissionDTO.userMissionList,
             regDate = userMissionDTO.regDate
         )

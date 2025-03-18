@@ -5,7 +5,6 @@ import java.time.LocalDateTime
 
 class UserMissionInfo(
     var missionId: String? = null,
-    var repeatedStatus: RepeatedStatus = RepeatedStatus.DAILY,
     var missionDetail: String = "",
     var missionComplete: Boolean = false,
     var statData: Map<String, Double> = mapOf(),

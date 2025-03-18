@@ -1,13 +1,36 @@
 package org.alham.alhamfirst.util;
 
-public class CommonUtil {
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.temporal.TemporalAdjusters
 
-    public static Long getDecryptedId(String encryptedId) {
-        return Long.parseLong(AESUtil.decrypt(encryptedId));
+class CommonUtil {
+
+    companion object {
+        fun getDecryptedId(encryptedId: String): Long {
+            return AESUtil.decrypt(encryptedId).toLong()
+        }
+
+        fun getEncryptedId(id: Long): String {
+            return AESUtil.encrypt(id.toString())
+        }
+
+        fun getMondayOfWeek(date: LocalDate): LocalDate {
+            return date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+        }
+
+        fun getFirstDayOfMonth(date: LocalDate): LocalDate {
+            return date.with(TemporalAdjusters.firstDayOfMonth())
+        }
+
+        fun getFirstWeekendDayOfWeek(date: LocalDate): LocalDate {
+            when(date.dayOfWeek){
+                DayOfWeek.SUNDAY -> return date.minusDays(1)
+                else -> return date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY))
+            }
+        }
+
     }
 
-    public static String getEncryptedId(Long id) {
-        return AESUtil.encrypt(id.toString());
-    }
 
 }

@@ -14,8 +14,9 @@ public class SecurityConfig {
     @Bean
     public UserDTO getJwtToken(){
 
+        CommonUtil.Companion.getDecryptedId("1L");
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(CommonUtil.getEncryptedId(1L));
+        userDTO.setId(CommonUtil.Companion.getEncryptedId(1L));
         userDTO.setName("alham");
         userDTO.setAge(30);
         userDTO.setEmail("alham@alham.net");

@@ -10,6 +10,7 @@ import org.alham.alhamfirst.domain.dto.mission.UserMissionListDTO
 import org.alham.alhamfirst.mapper.MissionMapper
 import org.alham.alhamfirst.repository.mission.MissionRepository
 import org.alham.alhamfirst.repository.mission.UserMissionRepository
+import org.alham.alhamfirst.repository.stat.UserStatRepository
 import org.alham.alhamfirst.service.orchestrator.ai.AIService
 import org.alham.alhamfirst.util.CommonUtil
 import org.springframework.stereotype.Service
@@ -19,6 +20,7 @@ import java.time.LocalDate
 class UserMissionService(
     private val userMissionRepository: UserMissionRepository,
     private val missionRepository: MissionRepository,
+    private val userStatRepository: UserStatRepository,
     private val aiService: AIService
 ) {
     /**
@@ -172,6 +174,25 @@ class UserMissionService(
         }
 
         return userMission
+    }
+
+
+    fun completeUserMission(encryptedId: String, userMissionId: String, missionId: String, complete: Boolean): Boolean{
+
+        try{
+            val userId = CommonUtil.getDecryptedId(encryptedId)
+            userMissionRepository.completeUserMission(userId, userMissionId, missionId, complete)
+                ?.let{
+                    val statData = it.userMissionList.find{it.missionId == missionId}?.statData
+                    userStatRepository.updateUserStat(userId,statData?:throw Exception("StatData not found"),complete)
+                    return true
+                }?:throw Exception("UserMission not competed")
+        }catch (exception: Exception){
+            AlhamCustomErrorLog(errorMessage = "Error in completeUserMission", exception = exception)
+            throw AlhamCustomException("Error in completeUserMission", exception)
+        }
+
+
     }
 
 }

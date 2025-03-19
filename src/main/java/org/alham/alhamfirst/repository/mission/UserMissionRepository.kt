@@ -44,4 +44,20 @@ class UserMissionRepository (private val mongoTemplate: MongoTemplate){
 
         return mongoTemplate.findAndModify(query, update, FindAndModifyOptions().returnNew(true), UserMissionDocument::class.java)
     }
+
+    fun completeUserMission(userId: Long, userMissionId: String, missionId: String, complete: Boolean): UserMissionDocument?{
+        val query = Query(
+            Criteria.where("_id").`is`(userMissionId)
+                .and("userId").`is`(userId)
+                .and("userMissionList.missionId").`is`(missionId)
+        )
+
+        val update = Update()
+            .set("userMissionList.$.missionComplete", complete)
+            .set("userMissionList.$.completeDateTime", LocalDate.now())
+
+        return mongoTemplate.findAndModify(query, update, FindAndModifyOptions().returnNew(true), UserMissionDocument::class.java)
+
+    }
+
 }

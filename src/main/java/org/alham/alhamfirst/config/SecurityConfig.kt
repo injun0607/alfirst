@@ -9,20 +9,17 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class SecurityConfig {
+class SecurityConfig {
 
     @Bean
-    public UserDTO getJwtToken(){
-
-        CommonUtil.Companion.getDecryptedId("1L");
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(CommonUtil.Companion.getEncryptedId(1L));
-        userDTO.setName("alham");
-        userDTO.setAge(30);
-        userDTO.setEmail("alham@alham.net");
-        userDTO.setUserType(UserType.ADMIN);
-
-        return userDTO;
+    fun getJwtToken(): UserDTO{
+        return UserDTO(
+            id = CommonUtil.getEncryptedId(1L),
+            name = "alham",
+            age = 30,
+            email = "alham@alham.net",
+            userType = UserType.ADMIN
+        );
     }
 
 

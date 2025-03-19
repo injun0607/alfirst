@@ -9,6 +9,7 @@ import org.alham.alhamfirst.domain.dto.mission.UserMissionDTO
 import org.alham.alhamfirst.mapper.MissionMapper
 import org.alham.alhamfirst.repository.mission.MissionRepository
 import org.alham.alhamfirst.repository.mission.UserMissionRepository
+import org.alham.alhamfirst.repository.stat.UserStatRepository
 import org.alham.alhamfirst.service.orchestrator.ai.AIService
 import org.alham.alhamfirst.util.CommonUtil
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -23,7 +24,8 @@ class UserMissionServiceTest{
     private val missionRepository: MissionRepository = mockk()
     private val userMissionRepository: UserMissionRepository = mockk(relaxed = true)
     private val aiService: AIService = mockk(relaxed = true)
-    private val service = spyk(UserMissionService(userMissionRepository,missionRepository, aiService))
+    private val userStatRepository: UserStatRepository = mockk(relaxed = true)
+    private val service = spyk(UserMissionService(userMissionRepository,missionRepository, userStatRepository,aiService))
 
     private val userId = 1L
     private val encryptedId = "encryptedUserId"

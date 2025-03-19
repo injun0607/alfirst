@@ -32,7 +32,7 @@ class UserMissionService(
             val firstDayOfMonth = CommonUtil.getFirstDayOfMonth(today)
             val firstWeekendDayOfWeek = CommonUtil.getFirstWeekendDayOfWeek(today)
 
-            val userMissionList = UserMissionListDTO(
+            var userMissionList = UserMissionListDTO(
                 userId = userId
             )
 
@@ -43,63 +43,66 @@ class UserMissionService(
             }
 
             //DailyUserMission Process
-            userMissionRepository
+            val dailyUserMission =userMissionRepository
                 .getUserMissionByRepeatedStatus(userId,today,RepeatedStatus.DAILY)
                 ?.let{
-                    //TODO - 신규 미션이 있을수 있으니까
                     val userMissionDTO = MissionMapper().createUserMissionDTOFromEntity(it)
                     validMissionList(userMissionDTO,RepeatedStatus.DAILY,missionList)
-
                 }?:run{
                     userMissionRegister(userId,today,missionList,RepeatedStatus.DAILY)
-                }.apply{
-                    userMissionList.addUserMissionList(this)
                 }
+
+            userMissionList.addUserMissionList(dailyUserMission)
 
             //WeeklyUserMission Process
-            userMissionRepository
-                .getUserMissionByRepeatedStatus(userId, mondayOfWeek,RepeatedStatus.WEEKLY)
-                ?.let{
-                    MissionMapper().createUserMissionDTOFromEntity(it)
-                }?:run{
-                    userMissionRegister(userId,mondayOfWeek,missionList,RepeatedStatus.WEEKLY)
-                }.apply{
-                    userMissionList.addUserMissionList(this)
+            val weeklyUserMission = userMissionRepository
+                .getUserMissionByRepeatedStatus(userId, mondayOfWeek, RepeatedStatus.WEEKLY)
+                ?.let {
+                    val userMissionDTO = MissionMapper().createUserMissionDTOFromEntity(it)
+                    validMissionList(userMissionDTO, RepeatedStatus.WEEKLY, missionList)
+                } ?: run {
+                    userMissionRegister(userId, mondayOfWeek, missionList, RepeatedStatus.WEEKLY)
                 }
 
+            userMissionList.addUserMissionList(weeklyUserMission)
+
             //MonthlyUserMission Process
-            userMissionRepository
-                .getUserMissionByRepeatedStatus(userId,firstDayOfMonth,RepeatedStatus.MONTHLY)
-                ?.let{
-                    MissionMapper().createUserMissionDTOFromEntity(it)
-                }?:run{
-                    userMissionRegister(userId,firstDayOfMonth,missionList,RepeatedStatus.MONTHLY)
-                }.apply{
-                    userMissionList.addUserMissionList(this)
+            val monthlyUserMission = userMissionRepository
+                .getUserMissionByRepeatedStatus(userId, firstDayOfMonth, RepeatedStatus.MONTHLY)
+                ?.let {
+                    val userMissionDTO = MissionMapper().createUserMissionDTOFromEntity(it)
+                    validMissionList(userMissionDTO, RepeatedStatus.MONTHLY, missionList)
+                } ?: run {
+                    userMissionRegister(userId, firstDayOfMonth, missionList, RepeatedStatus.MONTHLY)
                 }
+
+            userMissionList.addUserMissionList(monthlyUserMission)
 
             if(today.dayOfWeek.value in 1..5){
                 //WeekDayUserMission Process
-                userMissionRepository
+                val weekDayUserMission = userMissionRepository
                     .getUserMissionByRepeatedStatus(userId, today, RepeatedStatus.WEEKDAY)
-                    ?.let{
-                        MissionMapper().createUserMissionDTOFromEntity(it)
-                    }?:run{
+                    ?.let {
+                        val userMissionDTO = MissionMapper().createUserMissionDTOFromEntity(it)
+                        validMissionList(userMissionDTO, RepeatedStatus.WEEKDAY, missionList)
+                    } ?: run {
                         userMissionRegister(userId, today, missionList, RepeatedStatus.WEEKDAY)
-                    }.apply{
-                        userMissionList.addUserMissionList(this)
                     }
+
+                userMissionList.addUserMissionList(weekDayUserMission)
+
             }else{
                 //WeekEndUserMission Process
-                userMissionRepository
+                val weekendUserMission = userMissionRepository
                     .getUserMissionByRepeatedStatus(userId, firstWeekendDayOfWeek, RepeatedStatus.WEEKEND)
                     ?.let {
-                        MissionMapper().createUserMissionDTOFromEntity(it)
+                        val userMissionDTO = MissionMapper().createUserMissionDTOFromEntity(it)
+                        validMissionList(userMissionDTO, RepeatedStatus.WEEKEND, missionList)
                     } ?: run {
                         userMissionRegister(userId, firstWeekendDayOfWeek, missionList, RepeatedStatus.WEEKEND)
-                    }.apply {
-                        userMissionList.addUserMissionList(this)
                     }
+
+                userMissionList.addUserMissionList(weekendUserMission)
             }
 
             return userMissionList
@@ -144,27 +147,31 @@ class UserMissionService(
     /**
      * 신규 등록된 미션이 기존 userMission 포함되어있는지 확인 하는 함수
      */
-    private fun validMissionList(userMission: UserMissionDTO, repeatedStatus: RepeatedStatus, missionList: List<MissionDTO>){
+    private fun validMissionList(userMission: UserMissionDTO, repeatedStatus: RepeatedStatus, missionList: List<MissionDTO>): UserMissionDTO {
 
         //받아온 미션리스트
         val filteredMissionIdList = missionList
-            .filter{ it.missionInfo.repeatedStatus == repeatedStatus }
+            .filter { it.missionInfo.repeatedStatus == repeatedStatus }
 
         //등록된 유저 미션
-        val createdMissionId = userMission.userMissionList.map{it.missionId}.toSet()
+        val createdMissionId = userMission.userMissionList.map { it.missionId }.toSet()
 
-        filteredMissionIdList.filter { !createdMissionId.contains(it.id) }
-            .map{
+        val newMission = filteredMissionIdList.filter { !createdMissionId.contains(it.id) }
+            .map {
                 val userMissionInfo = UserMissionInfo(
                     missionId = it.id,
                     missionDetail = it.detail
                 )
                 missionStatCalculate(userMissionInfo)
                 userMissionInfo
-            }.apply{
-                userMission.userMissionList.addAll(this)
             }
 
+        if(newMission.isNotEmpty()) {
+            userMission.userMissionList.addAll(newMission)
+            userMissionRepository.updateUserMissionList(MissionMapper().createUserMissionEntityFromDTO(userMission))
+        }
+
+        return userMission
     }
 
 }

@@ -14,12 +14,12 @@ class UserMissionListDTO (
 ){
     fun addUserMissionList(userMission: UserMissionDTO){
         when(userMission.repeatedStatus){
-            RepeatedStatus.WEEKDAY -> weekDayMission
-            RepeatedStatus.WEEKEND-> weekEndMission
-            RepeatedStatus.DAILY -> dailyMission
-            RepeatedStatus.WEEKLY -> weeklyMission
-            RepeatedStatus.MONTHLY -> monthlyMission
-            RepeatedStatus.SPECIFIC_DAYS -> specificDayMission
+            RepeatedStatus.WEEKDAY -> this.weekDayMission = userMission
+            RepeatedStatus.WEEKEND->this.weekEndMission = userMission
+            RepeatedStatus.DAILY -> this.dailyMission = userMission
+            RepeatedStatus.WEEKLY -> this.weeklyMission = userMission
+            RepeatedStatus.MONTHLY -> this.monthlyMission = userMission
+            RepeatedStatus.SPECIFIC_DAYS -> this.specificDayMission = userMission
         }
     }
 

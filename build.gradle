@@ -48,6 +48,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation "io.mockk:mockk:1.13.7"
 	implementation "org.jetbrains.kotlin:kotlin-stdlib"
 	implementation "org.jetbrains.kotlin:kotlin-reflect"
 

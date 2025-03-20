@@ -14,9 +14,12 @@ import java.time.LocalDate
 
 @Repository
 class UserMissionRepository (private val mongoTemplate: MongoTemplate){
+    fun getUserMission(userMissionId: String ,userId: Long): UserMissionDocument?{
 
-    fun getUserMissionListByUserIdAndRegDate(userId: Long,regDate: LocalDate): UserMissionDocument? {
-        val query = Query(Criteria.where("userId").`is`(userId).and("regDate").`is`(regDate))
+        val query = Query(Criteria
+            .where("_id").`is`(userMissionId)
+            .and("userId").`is`(userId)
+        )
 
         return mongoTemplate.findOne(query, UserMissionDocument::class.java)
     }

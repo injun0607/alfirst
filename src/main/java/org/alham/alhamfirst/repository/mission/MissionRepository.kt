@@ -1,11 +1,15 @@
 package org.alham.alhamfirst.repository.mission
 
 import org.alham.alhamfirst.domain.document.mission.MissionDocument
+import org.springframework.data.mongodb.core.FindAndModifyOptions
 import org.springframework.data.mongodb.core.FindAndReplaceOptions
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.findAndModify
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.query.Update
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 class MissionRepository(private val mongoTemplate: MongoTemplate) {
@@ -42,6 +46,20 @@ class MissionRepository(private val mongoTemplate: MongoTemplate) {
             .and("userId").`is`(userId)
         )
         return mongoTemplate.findAndRemove(query, MissionDocument::class.java)
+    }
+
+    fun updateStreakAndLastEndDate(mission: MissionDocument): MissionDocument? {
+        val query = Query(Criteria
+            .where("_id").`is`(mission.id)
+            .and("userId").`is`(mission.userId)
+        )
+
+        val update = Update()
+            .set("streak", mission.streak)
+            .set("maxStreak", mission.maxStreak)
+            .set("lastEndDate", mission.lastEndDate)
+
+        return mongoTemplate.findAndModify(query,update, FindAndModifyOptions().returnNew(true),MissionDocument::class.java)
     }
 
 }

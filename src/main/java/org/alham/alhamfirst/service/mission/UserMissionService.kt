@@ -26,6 +26,7 @@ class UserMissionService(
     /**
      * 유저가 등록한 미션을 반환하는 함수
      */
+    //TODO - 신규로 만들때 userMission
     fun getTodayUserMissionList(encryptedId: String): UserMissionListDTO{
         try {
             val userId = CommonUtil.getDecryptedId(encryptedId)
@@ -136,10 +137,10 @@ class UserMissionService(
         )
 
         MissionMapper().createUserMissionEntityFromDTO(userMissionDTO).run{
-            userMissionRepository.createUserMission(this)
+            val createUserMission = userMissionRepository.createUserMission(this)
+            return MissionMapper().createUserMissionDTOFromEntity(createUserMission)
         }
 
-        return userMissionDTO
     }
     private fun missionStatCalculate(userMissionInfo: UserMissionInfo){
         aiService.getAnswer(userMissionInfo.missionDetail).
@@ -181,12 +182,46 @@ class UserMissionService(
 
         try{
             val userId = CommonUtil.getDecryptedId(encryptedId)
-            userMissionRepository.completeUserMission(userId, userMissionId, missionId, complete)
+            //TODO - complete미션시 수행해야하는것
+            /*
+            1. userMissionInfo에서 해당 미션 complete 값 변경
+            2. 해당 stat 뽑아서 userStat에 업데이트
+            3. 해당 mission에 streak 값 변경(+1), lastEndDate 변경
+             */
+
+            //미션 완료값 검증
+            userMissionRepository.getUserMission(userMissionId,userId)?.let{
+                if(it.userMissionList.find{it.missionId == missionId}?.missionComplete == complete){
+                    return false
+                }
+            }?: throw Exception("UserMission not found")
+
+            val userMissionDTO = userMissionRepository.completeUserMission(userId, userMissionId, missionId, complete)
                 ?.let{
-                    val statData = it.userMissionList.find{it.missionId == missionId}?.statData
-                    userStatRepository.updateUserStat(userId,statData?:throw Exception("StatData not found"),complete)
-                    return true
+                    MissionMapper().createUserMissionDTOFromEntity(it)
                 }?:throw Exception("UserMission not competed")
+
+            val statData = userMissionDTO.userMissionList.find{it.missionId == missionId}?.statData
+                ?: throw Exception("StatData not found")
+
+            val mission = missionRepository.getMission(missionId,userId)?.let{MissionMapper().createDTOFromEntity(it)}
+                ?: throw Exception("Mission not found")
+
+            mission.apply{
+                val streak = this.streak + 1;
+                if(streak > mission.maxStreak){
+                    mission.maxStreak = streak
+                }
+                this.streak = streak
+                this.lastEndDate = LocalDate.now()
+            }
+
+            //userStat 업데이트
+            userStatRepository.updateUserStat(userId,statData,complete)
+            //mission 정보 업데이트
+            missionRepository.updateStreakAndLastEndDate(MissionMapper().createEntityFromDTO(mission))
+
+            return true
         }catch (exception: Exception){
             AlhamCustomErrorLog(errorMessage = "Error in completeUserMission", exception = exception)
             throw AlhamCustomException("Error in completeUserMission", exception)

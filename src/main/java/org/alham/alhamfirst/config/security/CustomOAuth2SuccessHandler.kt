@@ -19,14 +19,11 @@ class CustomOAuth2SuccessHandler(
         response: HttpServletResponse?,
         authentication: Authentication?
     ) {
-        val oauth2User = authentication?.principal as OAuth2User
-        val email = oauth2User.getAttribute<String>("email") ?: throw RuntimeException("email is null")
-
-        //DB저장, 조회
-//        val user = userRepository.findByEmail
+        val oauth2User = authentication?.principal as? OAuth2User
+        val uuid = oauth2User?.getAttribute<String>("uuid") ?: throw RuntimeException("uuid is null")
 
         val id = "random_key"
-        val token = jwtUtil.generateToken(id, email)
+        val token = jwtUtil.generateToken(id, uuid)
         response?.contentType = "application/json"
         response?.writer?.write("{\"token\": \"$token\"}")
 

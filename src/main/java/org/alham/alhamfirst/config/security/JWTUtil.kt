@@ -55,7 +55,7 @@ class JWTUtil(){
         return UsernamePasswordAuthenticationToken(email, null, emptyList());
     }
 
-    // 토큰 검증
+    // TODO - 이거 변경필요
     fun validateToken(token: String, username: String): Boolean {
         return getSubject(token) == (username) && !isTokenExpired(token);
     }

@@ -6,6 +6,9 @@ import org.alham.alhamfirst.util.AESUtil;
 
 data class UserDTO(
         var id : String = "",
+        var uuid : String = "",
+        var oauthProvider : String = "",
+        var oauthId : String = "",
         var name : String ="",
         var age : Int = 0,
         var userType : UserType = UserType.BASIC,

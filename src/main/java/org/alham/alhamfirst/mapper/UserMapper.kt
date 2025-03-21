@@ -9,6 +9,9 @@ class UserMapper {
     fun createUserDTOFromEntity(user : User) : UserDTO {
         return UserDTO(
                 id= AESUtil.encrypt(user.id.toString()),
+                uuid = user.uuid,
+                oauthProvider = user.oauthProvider,
+                oauthId = user.oauthId,
                 name = user.name,
                 age = user.age,
                 userType = user.userType,
@@ -20,6 +23,9 @@ class UserMapper {
     fun createUserFromDTO(userDTO : UserDTO) : User {
         return User(
                 id = userDTO.getIdDecrypt(),
+                uuid = userDTO.uuid,
+                oauthProvider = userDTO.oauthProvider,
+                oauthId = userDTO.oauthId,
                 name = userDTO.name,
                 age = userDTO.age,
                 userType = userDTO.userType,

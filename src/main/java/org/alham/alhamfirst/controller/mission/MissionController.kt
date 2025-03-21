@@ -27,7 +27,6 @@ class MissionController (private val jwtToken: UserDTO, private val missionServi
             AlhamCustomErrorLog(errorMessage = "Error in getMission", exception = exception)
             return ResponseEntity.badRequest().build()
         }
-
     }
 
     //사용자별 미션 불러오는 리스트

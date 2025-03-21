@@ -1,36 +1,37 @@
 package org.alham.alhamfirst.filter;
 
+import jakarta.servlet.FilterChain
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import lombok.RequiredArgsConstructor;
+import org.alham.alhamfirst.config.security.JWTUtil
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Component
+import org.springframework.web.filter.OncePerRequestFilter
+@Component
+class JwtRequestFilter(
+    private val jwtUtil: JWTUtil
+): OncePerRequestFilter() {
 
-//@Component
-@RequiredArgsConstructor
-public class JwtRequestFilter {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
+        val token = resolveToken(request)
+        if(token != null){
+            val auth = jwtUtil.getAuthentication(token)
+            SecurityContextHolder.getContext().authentication = auth
+        }
+        filterChain.doFilter(request, response)
+    }
 
-//    private final JWTUtil jwtUtil;
-//
-//
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-//            throws ServletException, IOException {
-//        final String authorizationHeader = request.getHeader("Authorization");
-//
-//        String username = null;
-//        String jwt = null;
-//
-//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-//            jwt = authorizationHeader.substring(7);
-//            username = jwtUtil.getSubject(jwt);
-//        }
-//
-//
-//        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//            if (jwtUtil.validateToken(jwt, username)) {
-//                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-//                        username, null, new ArrayList<>());
-//                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//            }
-//        }
-//        filterChain.doFilter(request, response);
-//    }
+    private fun resolveToken(request: HttpServletRequest): String? {
+        val bearer = request.getHeader("Authorization")
+        return if (bearer != null && bearer.startsWith("Bearer ")) {
+            bearer.substring(7)
+        } else null
+    }
+
+
 }

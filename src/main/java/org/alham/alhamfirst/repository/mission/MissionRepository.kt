@@ -25,7 +25,7 @@ class MissionRepository(private val mongoTemplate: MongoTemplate) {
         return mongoTemplate.findOne(query, MissionDocument::class.java)
     }
 
-    fun getMissionList(userId: Long): List<MissionDocument> {
+    fun getMissionList(userId: Long): List<MissionDocument>{
         val query = Query(Criteria
             .where("userId").`is`(userId).and("useFlag").`is`(true)
         )

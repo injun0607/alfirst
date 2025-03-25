@@ -35,20 +35,33 @@ class SecurityConfig(
         );
     }
 
+//    @Bean
+//    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain{
+//        http
+//            .csrf { it.disable() } //TODO csrf 설정 확인필요
+//            .authorizeHttpRequests { auth ->
+//                auth
+//                    .requestMatchers("/", "/login/**", "/oauth2/**").permitAll()
+//                    .anyRequest().authenticated()
+//            }
+//            .oauth2Login { oauth ->
+////                oauth.authorizationEndpoint {  } //임시 엔드포인트 지정
+//                oauth.userInfoEndpoint {oauth2 -> oauth2.userService(customOAuth2UserService)}
+//                oauth.successHandler(oAuth2SuccessHandler)
+//            }
+//            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
+//
+//        return http.build()
+//    }
+
+
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain{
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf { it.disable() } //TODO csrf 설정 확인필요
-            .authorizeHttpRequests { auth ->
-                auth
-                    .requestMatchers("/", "/login/**", "/oauth2/**").permitAll()
-                    .anyRequest().authenticated()
-            }
-            .oauth2Login { oauth ->
-                oauth.userInfoEndpoint {oauth2 -> oauth2.userService(customOAuth2UserService)}
-                oauth.successHandler(oAuth2SuccessHandler)
-            }
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .csrf { it.disable() }
+            .authorizeHttpRequests { it.anyRequest().permitAll() }
+            .formLogin { it.disable() }
+            .httpBasic { it.disable() }
 
         return http.build()
     }

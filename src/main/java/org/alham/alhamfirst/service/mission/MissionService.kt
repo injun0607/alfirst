@@ -29,8 +29,9 @@ class MissionService(private val missionRepository: MissionRepository) {
     fun getMissionList(encryptedId: String): List<MissionDTO> {
         try{
             val userId = CommonUtil.getDecryptedId(encryptedId)
-            return missionRepository.getMissionList(userId)
+            val result : List<MissionDTO> = missionRepository.getMissionList(userId)
                 .map{MissionMapper().createDTOFromEntity(it)}
+            return result
         }catch(e: Exception){
             log.error("Error in getMissionList",e)
             AlhamCustomErrorLog(errorMessage = "Error in getMissionList",exception = e)

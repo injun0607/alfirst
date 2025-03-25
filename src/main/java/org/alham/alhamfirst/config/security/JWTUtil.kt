@@ -17,8 +17,8 @@ class JWTUtil(){
      * 그후 SecretKey객체로 변경할때는 Encoding된 문자열을 Decoders.BASE64.decode()로 디코딩한후 사용한다
      */
 
-    private val SECRETKEY: String = "AlhamAndSeoHee";
-    private val KEY: SecretKey = Keys.hmacShaKeyFor(SECRETKEY.toByteArray());
+    private val SECRETKEY: String = "AlhamAndSeoHee123213AlhamAndSeoHee123213"
+    private val KEY: SecretKey = Keys.hmacShaKeyFor(SECRETKEY.toByteArray())
 
 
     //TODO - 비밀키 생성하는 로직은 바뀔수있음
@@ -49,15 +49,15 @@ class JWTUtil(){
         return extractAllClaims(token).subject;
     }
 
+    //TODO - grant담아도 괜찮을듯? 이건 좀 보자
     fun getAuthentication(token: String): Authentication {
         val claims = extractAllClaims(token);
-        val email = claims.subject;
-        return UsernamePasswordAuthenticationToken(email, null, emptyList());
+        val uuid = claims.subject;
+        return UsernamePasswordAuthenticationToken(uuid, null, emptyList());
     }
 
-    // TODO - 이거 변경필요
-    fun validateToken(token: String, username: String): Boolean {
-        return getSubject(token) == (username) && !isTokenExpired(token);
+    fun validateToken(token: String): Boolean {
+        return !isTokenExpired(token);
     }
     fun isTokenExpired(token: String): Boolean {
         return extractAllClaims(token).expiration.before(Date());

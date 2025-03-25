@@ -3,6 +3,7 @@ package org.alham.alhamfirst.service.mission
 import org.alham.alhamfirst.common.enums.RepeatedStatus
 import org.alham.alhamfirst.common.exception.AlhamCustomErrorLog
 import org.alham.alhamfirst.common.exception.AlhamCustomException
+import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.domain.document.mission.UserMissionInfo
 import org.alham.alhamfirst.domain.dto.mission.MissionDTO
 import org.alham.alhamfirst.domain.dto.mission.UserMissionDTO
@@ -23,6 +24,9 @@ class UserMissionService(
     private val userStatRepository: UserStatRepository,
     private val aiService: AIService
 ) {
+
+    val log = logger()
+
     /**
      * 유저가 등록한 미션을 반환하는 함수
      */

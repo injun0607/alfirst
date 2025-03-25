@@ -34,7 +34,8 @@ class MissionController (private val jwtToken: UserDTO, private val missionServi
     fun getMissionList(): ResponseEntity<List<MissionDTO>>{
         val userId = jwtToken.id
         try{
-            return ResponseEntity.ok(missionService.getMissionList(userId))
+            val result: List<MissionDTO> = missionService.getMissionList(userId)
+            return ResponseEntity.ok(result)
         }catch(exception: Exception){
             AlhamCustomErrorLog(errorMessage = "Error in getMissionList", exception = exception)
             return ResponseEntity.badRequest().build()

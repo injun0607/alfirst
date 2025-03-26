@@ -26,26 +26,20 @@ class UserServiceImpl(private val userRepository: UserRepository
     }
 
      override fun getUserByIdx(userId: Long): UserDTO {
-        try{
-            return userRepository.findById(userId)
-                .map{ UserMapper().createUserDTOFromEntity(it)}
-                .orElseGet{ UserDTO() }
-        } catch(e: AlhamCustomException ) {
-            AlhamCustomErrorLog(exception = e);
-            return UserDTO()
-        }
+
+        return userRepository.findById(userId)
+            .map{ UserMapper().createUserDTOFromEntity(it)}
+            .orElseThrow{ AlhamCustomException(HttpStatus.NOT_FOUND,"user not found") }
+
     }
 
     override fun getUserByEncryptedId(encryptedId: String): UserDTO {
-        try{
-            val userId = CommonUtil.getDecryptedId(encryptedId)
-            return userRepository.findById(userId)
-                .map{UserMapper().createUserDTOFromEntity(it)}
-                .orElseThrow { AlhamCustomException(HttpStatus.NOT_FOUND,"user not found") }
-        } catch(e: AlhamCustomException){
-            AlhamCustomErrorLog(exception = e);
-            return UserDTO()
-        }
+
+        val userId = CommonUtil.getDecryptedId(encryptedId)
+        return userRepository.findById(userId)
+            .map{UserMapper().createUserDTOFromEntity(it)}
+            .orElseThrow { AlhamCustomException(HttpStatus.NOT_FOUND,"user not found") }
+
     }
 
 

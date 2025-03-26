@@ -16,70 +16,39 @@ class QuestController(
 
     @PostMapping
     fun createQuest(@RequestBody quest: QuestDTO): ResponseEntity<QuestDTO> {
-        try{
-            return ResponseEntity.ok(questService.createQuest(quest,jwtToken.id))
-        } catch(e: Exception){
-            return ResponseEntity.badRequest().body(QuestDTO())
-        }
+        return ResponseEntity.ok(questService.createQuest(quest,jwtToken.id))
     }
     @GetMapping("/{questId}")
     fun getQuest(@PathVariable questId: String): ResponseEntity<QuestDTO> {
-        try{
-            return ResponseEntity.ok(questService.getQuest(questId,jwtToken.id))
-        } catch(e: Exception){
-            return ResponseEntity.badRequest().body(QuestDTO())
-        }
+        return ResponseEntity.ok(questService.getQuest(questId,jwtToken.id))
     }
     @GetMapping("/list")
     fun getQuestList(): ResponseEntity<List<QuestDTO>> {
-        try{
-            return ResponseEntity.ok(questService.getQuestList(jwtToken.id))
-        }catch(e: Exception){
-            return ResponseEntity.badRequest().body(listOf())
-        }
+        return ResponseEntity.ok(questService.getQuestList(jwtToken.id))
     }
 
     @DeleteMapping("/{questId}")
     fun deleteQuest(@PathVariable questId: String): ResponseCode {
-        try{
-            questService.deleteQuest(questId,jwtToken.id)
-            return ResponseCode.SUCCESS
-        } catch (e: Exception){
-            return ResponseCode.FAIL
-        }
+        questService.deleteQuest(questId,jwtToken.id)
+        return ResponseCode.SUCCESS
     }
 
     @PostMapping("/{questId}")
     fun changeQuest(@PathVariable questId: String, @RequestBody quest: QuestDTO): ResponseEntity<QuestDTO> {
-        try{
-            quest.id = questId
-            return ResponseEntity.ok(questService.changeQuest(quest,jwtToken.id))
-        } catch(e: Exception){
-            return ResponseEntity.badRequest().body(QuestDTO())
-        }
+        quest.id = questId
+        return ResponseEntity.ok(questService.changeQuest(quest,jwtToken.id))
     }
 
     @PostMapping("/{questId}/complete")
     fun completeQuest(@PathVariable questId: String): ResponseCode {
-        try{
-            questService.completeQuest(questId,jwtToken.id)
-            return ResponseCode.SUCCESS
-        } catch(e: Exception){
-            return ResponseCode.FAIL
-        }
+        questService.completeQuest(questId,jwtToken.id)
+        return ResponseCode.SUCCESS
     }
 
     @PostMapping("/{questId}/cancel")
     fun cancelQuest(@PathVariable questId: String): ResponseCode {
-        try{
-            questService.cancelQuest(questId,jwtToken.id)
-            return ResponseCode.SUCCESS
-        } catch(e: Exception){
-            return ResponseCode.FAIL
-        }
+        questService.cancelQuest(questId,jwtToken.id)
+        return ResponseCode.SUCCESS
     }
-
-
-
 
 }

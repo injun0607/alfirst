@@ -1,6 +1,7 @@
 package org.alham.alhamfirst.controller.mission
 
 import org.alham.alhamfirst.common.exception.AlhamCustomErrorLog
+import org.alham.alhamfirst.common.exception.AlhamCustomException
 import org.alham.alhamfirst.domain.dto.mission.UserMissionDTO
 import org.alham.alhamfirst.domain.dto.mission.UserMissionListDTO
 import org.alham.alhamfirst.domain.dto.user.UserDTO
@@ -22,29 +23,17 @@ class UserMissionController(
     @GetMapping("/list")
     fun getUserMissionList(): ResponseEntity<UserMissionListDTO> {
         val userId = jwtToken.id
-        try{
-            return ResponseEntity.ok(userMissionService.getTodayUserMissionList(userId))
-        }catch(exception: Exception){
-            AlhamCustomErrorLog(errorMessage = "Error in getUserMissionList", exception = exception)
-            return ResponseEntity.badRequest().build()
-        }
+        return ResponseEntity.ok(userMissionService.getTodayUserMissionList(userId))
     }
 
     @PostMapping("/{userMissionId}/{missionId}/{complete}")
     fun completeUserMission(@PathVariable userMissionId: String,
                             @PathVariable missionId: String,
                             @PathVariable complete: Boolean): ResponseEntity<Boolean> {
-
         val userId = jwtToken.id
-        try{
-            //업데이트 true로 바뀌고 ->
-            //userStat경험치를 변경 해야함
-            return ResponseEntity.ok(userMissionService.completeUserMission(userId,userMissionId,missionId,complete))
-        }catch (exception: Exception){
-            AlhamCustomErrorLog(errorMessage = "Error in completeUserMission", exception = exception)
-            return ResponseEntity.badRequest().build()
-        }
-
+        //업데이트 true로 바뀌고 ->
+        //userStat경험치를 변경 해야함
+        return ResponseEntity.ok(userMissionService.completeUserMission(userId,userMissionId,missionId,complete))
     }
 
 

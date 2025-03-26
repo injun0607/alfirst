@@ -13,7 +13,7 @@ import java.time.LocalDate
 
 @Repository
 class MissionRepository(private val mongoTemplate: MongoTemplate) {
-    fun createMission(mission: MissionDocument): MissionDocument{
+    fun createMission(mission: MissionDocument): MissionDocument?{
         return mongoTemplate.insert(mission)
     }
 

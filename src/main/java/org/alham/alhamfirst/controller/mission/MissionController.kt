@@ -21,64 +21,34 @@ class MissionController (private val jwtToken: UserDTO, private val missionServi
     @GetMapping("/{missionId}")
     fun getMission(@PathVariable missionId: String): ResponseEntity<MissionDTO>{
         val userId = jwtToken.id
-        try{
-            return ResponseEntity.ok(missionService.getMission(missionId,userId))
-        }catch(exception: Exception){
-            AlhamCustomErrorLog(errorMessage = "Error in getMission", exception = exception)
-            return ResponseEntity.badRequest().build()
-        }
+        return ResponseEntity.ok(missionService.getMission(missionId,userId))
     }
 
     //사용자별 미션 불러오는 리스트
     @GetMapping("/list")
     fun getMissionList(): ResponseEntity<List<MissionDTO>>{
         val userId = jwtToken.id
-        try{
-            val result: List<MissionDTO> = missionService.getMissionList(userId)
-            return ResponseEntity.ok(result)
-        }catch(exception: Exception){
-            AlhamCustomErrorLog(errorMessage = "Error in getMissionList", exception = exception)
-            return ResponseEntity.badRequest().build()
-        }
+        return ResponseEntity.ok(missionService.getMissionList(userId))
     }
     //사용자별 미션 등록
     @PostMapping
     fun createMission(@RequestBody missionDTO: MissionDTO): ResponseEntity<MissionDTO>{
         val userId = jwtToken.id
-        try{
-            return ResponseEntity.ok(missionService.createMission(missionDTO,userId))
-        }catch(exception: Exception){
-            AlhamCustomErrorLog(errorMessage = "Error in createMission", exception = exception)
-            return ResponseEntity.badRequest().build()
-        }
-    }
-    //사용자별 미션 완료시 완료처리
-    @PostMapping("/{missionId}/{completed}")
-    fun postMissionCompleted(@PathVariable missionId: Long, @PathVariable completed: Boolean) : ResponseEntity<MissionDTO>{
-        TODO()
+        return ResponseEntity.ok(missionService.createMission(missionDTO,userId))
+
     }
     //사용자별 미션 수정
     @PutMapping("/{missionId}")
     fun changeMission(@PathVariable missionId: String, @RequestBody missionDTO: MissionDTO): ResponseEntity<MissionDTO>{
-        try{
-            missionDTO.id = missionId
-            return ResponseEntity.ok(missionService.updateMission(missionDTO, jwtToken.id))
-        }catch(exception: Exception){
-            AlhamCustomErrorLog(errorMessage = "Error in changeMission", exception = exception)
-            return ResponseEntity.badRequest().build()
-        }
+        missionDTO.id = missionId
+        return ResponseEntity.ok(missionService.updateMission(missionDTO, jwtToken.id))
     }
 
     //사용자별 미션 삭제
     @DeleteMapping("/{missionId}")
     fun deleteMission(@PathVariable missionId: String): ResponseCode{
-        try{
-            missionService.deleteMission(missionId, jwtToken.id)
-            return ResponseCode.SUCCESS
-        }catch(exception: Exception){
-            AlhamCustomErrorLog(errorMessage = "Error in deleteMission", exception = exception)
-            return ResponseCode.FAIL
-        }
+        missionService.deleteMission(missionId, jwtToken.id)
+        return ResponseCode.SUCCESS
     }
 
 }

@@ -1,16 +1,13 @@
 package org.alham.alhamfirst.service.orchestrator.ai;
 
-
 import reactor.core.publisher.Flux;
 
-import java.util.Map;
+interface AIService {
 
-public interface AIService {
+    fun getAnswer(question: String): String
 
-    public String getAnswer(String question);
+    fun chat(question: String): Flux<String>
 
-    public Flux<String> chat(String question);
-
-    public Map<String ,Double> getStat(String statJson);
+    fun getStat(statJson: String): MutableMap<String ,Double>
 
 }

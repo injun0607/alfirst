@@ -73,7 +73,7 @@ class UserMissionServiceTest{
         // AI 서비스 Mock (stat 계산)
         every { aiService.getAnswer(any()) } returns "AI Answer"
 
-        val statMap = mapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
 
         every { aiService.getStat(any()) } returns statMap
 
@@ -116,7 +116,7 @@ class UserMissionServiceTest{
         // AI 서비스 Mock (stat 계산)
         every { aiService.getAnswer(any()) } returns "AI Answer"
 
-        val statMap = mapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
 
         every { aiService.getStat(any()) } returns statMap
 
@@ -149,8 +149,22 @@ class UserMissionServiceTest{
             missionRepository.getMissionList(userId)
         } returns missionList
 
+        every{
+            userMissionRepository.createUserMission(any())
+        } returns MissionMapper().createUserMissionEntityFromDTO(UserMissionDTO(
+            userId = userId,
+            repeatedStatus = repeatedStatus,
+            userMissionList = mutableListOf(
+                UserMissionInfo(missionId = "1", missionDetail = "주간 미션1"),
+                UserMissionInfo(missionId = "2", missionDetail = "주간 미션2"),
+                UserMissionInfo(missionId = "3", missionDetail = "주간 미션3"),
+                UserMissionInfo(missionId = "4", missionDetail = "주간 미션4")
+            ),
+            regDate = mondayOfWeek
+        ))
+
         every { aiService.getAnswer(any()) } returns "AI Answer"
-        val statMap = mapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
         every { aiService.getStat(any()) } returns statMap
 
         val todayUserMissionList = service.getTodayUserMissionList(encryptedId)
@@ -197,8 +211,9 @@ class UserMissionServiceTest{
 
         // AI 서비스 Mock (stat 계산)
         every { aiService.getAnswer(any()) } returns "AI Answer"
-        val statMap = mapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
         every { aiService.getStat(any()) } returns statMap
+
 
         val todayUserMissionList = service.getTodayUserMissionList(encryptedId)
         //then
@@ -237,7 +252,7 @@ class UserMissionServiceTest{
         } returns missionList
 
         every { aiService.getAnswer(any()) } returns "AI Answer"
-        val statMap = mapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
         every { aiService.getStat(any()) } returns statMap
 
         val todayUserMissionList = service.getTodayUserMissionList(encryptedId)
@@ -284,7 +299,7 @@ class UserMissionServiceTest{
 
         // AI 서비스 Mock (stat 계산)
         every { aiService.getAnswer(any()) } returns "AI Answer"
-        val statMap = mapOf(Pair("WILLPOWER", 0.3), Pair("STAMINA", 0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER", 0.3), Pair("STAMINA", 0.7))
         every { aiService.getStat(any()) } returns statMap
 
         val todayUserMissionList = service.getTodayUserMissionList(encryptedId)
@@ -331,7 +346,7 @@ class UserMissionServiceTest{
         } returns missionList
 
         every { aiService.getAnswer(any()) } returns "AI Answer"
-        val statMap = mapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER",0.3),Pair("STAMINA",0.7))
         every { aiService.getStat(any()) } returns statMap
 
         val result = service.getTodayUserMissionList(encryptedId)
@@ -375,7 +390,7 @@ class UserMissionServiceTest{
             .returns(MissionMapper().createUserMissionEntityFromDTO(userMission))
 
         every { aiService.getAnswer(any()) } returns "AI Answer"
-        val statMap = mapOf(Pair("WILLPOWER", 0.3), Pair("STAMINA", 0.7))
+        val statMap = mutableMapOf(Pair("WILLPOWER", 0.3), Pair("STAMINA", 0.7))
         every { aiService.getStat(any()) } returns statMap
 
 

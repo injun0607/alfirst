@@ -8,6 +8,7 @@ import org.alham.alhamfirst.domain.entity.User;
 import org.alham.alhamfirst.mapper.UserMapper;
 import org.alham.alhamfirst.repository.user.UserRepository;
 import org.alham.alhamfirst.util.CommonUtil;
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,13 +36,12 @@ class UserServiceImpl(private val userRepository: UserRepository
         }
     }
 
-    @Override
     override fun getUserByEncryptedId(encryptedId: String): UserDTO {
         try{
             val userId = CommonUtil.getDecryptedId(encryptedId)
             return userRepository.findById(userId)
                 .map{UserMapper().createUserDTOFromEntity(it)}
-                .orElseThrow { AlhamCustomException("User not found") }
+                .orElseThrow { AlhamCustomException(HttpStatus.NOT_FOUND,"user not found") }
         } catch(e: AlhamCustomException){
             AlhamCustomErrorLog(exception = e);
             return UserDTO()

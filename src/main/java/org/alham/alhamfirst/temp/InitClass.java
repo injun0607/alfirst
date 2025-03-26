@@ -14,29 +14,20 @@ import org.springframework.stereotype.Component;
 public class InitClass {
 
 
-    private final UserService userService;
-
-
-    @PostConstruct
-    public void init(){
-        log.info("InitClass init");
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("alham");
-        userDTO.setAge(30);
-
-        User user = userService.createUser(userDTO);
-
-        UserDTO userDTO2 = new UserDTO();
-        userDTO2.setName("aljun");
-        userDTO2.setAge(29);
-
-        User user2 = userService.createUser(userDTO2);
-
-
-
-
-    }
+//    private final UserService userService;
+//
+//
+//    @PostConstruct
+//    public void init(){
+//        log.info("InitClass init");
+//
+//        UserDTO userDTO = new UserDTO();
+//        userDTO.setName("alham");
+//        userDTO.setAge(30);
+//
+//        userService.createUser(userDTO);
+//
+//    }
 
 
 }

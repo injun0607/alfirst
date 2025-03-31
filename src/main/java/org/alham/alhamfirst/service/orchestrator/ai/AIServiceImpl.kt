@@ -11,8 +11,6 @@ import reactor.core.publisher.Flux
 
 
 @Service
-
-
 class AIServiceImpl(
     private val chatClient: ChatClient
 ):AIService{

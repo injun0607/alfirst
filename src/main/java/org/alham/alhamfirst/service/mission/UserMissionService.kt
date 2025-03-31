@@ -153,7 +153,7 @@ class UserMissionService(
     }
 
     /**
-     * 신규 등록된 미션이 기존 userMission 포함되어있는지 확인 하는 함수
+     * 신규 등록된 미션이 기존 userMission 포함되어있는지, 삭제된 미션이 기존 userMission에 포함되어있는지 확인 하는 함수,
      */
     private fun validMissionList(userMission: UserMissionDTO, repeatedStatus: RepeatedStatus, missionList: List<MissionDTO>): UserMissionDTO {
 
@@ -165,6 +165,7 @@ class UserMissionService(
 
         //등록된 유저 미션
         val createdMissionId = userMission.userMissionList.map { it.missionId }.toSet()
+        val filterMissionId = filteredMissionIdList.map { it.id }.toSet()
 
         val newMission = filteredMissionIdList.filter { !createdMissionId.contains(it.id) }
             .map {
@@ -180,6 +181,12 @@ class UserMissionService(
             userMission.userMissionList.addAll(newMission)
             userMissionRepository.updateUserMissionList(MissionMapper().createUserMissionEntityFromDTO(userMission))
         }
+
+        userMission.userMissionList
+            .find{!filterMissionId.contains(it.missionId)}
+            ?.let{
+                userMission.userMissionList.remove(it)
+            }
 
         log.info("[RESULT] validMissionList complete")
         return userMission

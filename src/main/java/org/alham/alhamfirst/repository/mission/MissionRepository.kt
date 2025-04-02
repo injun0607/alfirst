@@ -4,12 +4,10 @@ import org.alham.alhamfirst.domain.document.mission.MissionDocument
 import org.springframework.data.mongodb.core.FindAndModifyOptions
 import org.springframework.data.mongodb.core.FindAndReplaceOptions
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.findAndModify
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.Update
 import org.springframework.stereotype.Repository
-import java.time.LocalDate
 
 @Repository
 class MissionRepository(private val mongoTemplate: MongoTemplate) {
@@ -31,6 +29,14 @@ class MissionRepository(private val mongoTemplate: MongoTemplate) {
         )
         return mongoTemplate.find(query, MissionDocument::class.java)
     }
+
+    fun getMissionListCnt(userId: Long): Long{
+        val query = Query(Criteria
+            .where("userId").`is`(userId).and("useFlag").`is`(true)
+        )
+        return mongoTemplate.count(query, MissionDocument::class.java)
+    }
+
 
     fun updateMission(mission: MissionDocument): MissionDocument? {
         val query = Query(Criteria

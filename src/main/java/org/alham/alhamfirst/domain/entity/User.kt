@@ -29,6 +29,7 @@ class User(
         var age: Int = 0,
         var userType: UserType = UserType.BASIC,
         var email: String ="",
+        var todayUpdateCnt: Int = 0,
 
 ) {
 

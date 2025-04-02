@@ -15,6 +15,8 @@ interface UserRepository: JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.oauthProvider = :oauthProvider AND u.oauthId = :oauthId")
     fun findByOauthProviderAndOauthId(@Param("oauthProvider") oauthProvider: String, @Param("oauthId") oauthId: String): User?
 
+    @Query("update User u set u.todayUpdateCnt = u.todayUpdateCnt + 1 where u.id = :userId")
+    fun findAndUpdateTodayUpdateCnt(@Param("userId") userId: Long)
 
 
 }

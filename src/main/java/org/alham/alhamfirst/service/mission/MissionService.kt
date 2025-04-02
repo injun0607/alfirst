@@ -6,12 +6,16 @@ import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.domain.dto.mission.MissionDTO
 import org.alham.alhamfirst.mapper.MissionMapper
 import org.alham.alhamfirst.repository.mission.MissionRepository
+import org.alham.alhamfirst.repository.user.UserRepository
 import org.alham.alhamfirst.util.CommonUtil
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
-class MissionService(private val missionRepository: MissionRepository) {
+class MissionService(
+    private val missionRepository: MissionRepository,
+    private val userRepository: UserRepository
+) {
 
     val log = logger()
     fun getMission(missionId: String ,encryptedId: String): MissionDTO{
@@ -29,7 +33,25 @@ class MissionService(private val missionRepository: MissionRepository) {
 
     fun createMission(missionDTO: MissionDTO, encryptedId: String): MissionDTO {
 
-        missionDTO.userId = CommonUtil.getDecryptedId(encryptedId)
+        val userId = CommonUtil.getDecryptedId(encryptedId)
+        missionDTO.userId = userId
+
+        val user = userRepository.findById(userId)
+            .orElseThrow { AlhamCustomException(HttpStatus.NOT_FOUND,"User Not Found") }
+
+        missionRepository.getMissionListCnt(userId).run {
+            if(this >= user.userType.maxMissionCnt){
+                throw AlhamCustomException(HttpStatus.BAD_REQUEST,"You can't create mission anymore")
+            }
+        }
+
+        if(user.todayUpdateCnt + 1 < user.userType.maxUpdateCnt){
+            throw AlhamCustomException(HttpStatus.BAD_REQUEST,"You can't update mission anymore")
+        }else{
+            userRepository.findAndUpdateTodayUpdateCnt((userId))
+        }
+
+
         MissionMapper().createEntityFromDTO(missionDTO).let {
             missionRepository.createMission(it)
             return missionDTO

@@ -1,21 +1,14 @@
 package org.alham.alhamfirst.common.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
-public enum ProfessionalAbility {
+enum class ProfessionalAbility(
+    val description: String
+) {
 
     DOCUMENTATION("문서화 능력"),
     ANALYTICAL_SKILLS("분석력"),
     TECHNICAL_SKILLS("기술력"),
     PLANNING("계획력"),
     TIME_MANAGEMENT("시간 관리");
-
-    private final String description;
-
-
 
     /**
      문서화 능력(Documentation): 정보를 정리하고 문서로 표현하는 능력.

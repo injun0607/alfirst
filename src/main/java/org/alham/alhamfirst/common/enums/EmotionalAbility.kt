@@ -1,11 +1,8 @@
 package org.alham.alhamfirst.common.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
-public enum EmotionalAbility {
+enum class EmotionalAbility(
+    val description: String
+) {
 
     WILLPOWER("의지력"),
     EMOTIONAL_CONTROL("감정 제어력"),
@@ -14,9 +11,6 @@ public enum EmotionalAbility {
     CONFIDENCE("자신감"),
     OPTIMISM("낙관성"),
     EMOTIONAL_INTELLIGENCE("정서 지능");
-
-    private final String description;
-
 
 
     /**

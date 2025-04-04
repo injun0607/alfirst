@@ -1,19 +1,14 @@
 package org.alham.alhamfirst.common.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@Getter
-@RequiredArgsConstructor
-public enum LifeStyleAbility {
+enum class LifeStyleAbility(
+    val description: String
+) {
 
     ORGANIZATION_SKILLS("정리정돈 능력"),
     FINANCIAL_ACUMEN("경제 감각"),
     INDEPENDENCE("독립성"),
     ADAPTABILITY("적응력");
-
-    private final String description;
-
 
     /**
      정리정돈 능력(Organization Skills): 일을 체계적으로 정리하고 관리하는 능력.

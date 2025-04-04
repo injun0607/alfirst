@@ -1,11 +1,8 @@
 package org.alham.alhamfirst.common.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
-public enum MentalAbility {
+enum class MentalAbility (
+    val description: String
+) {
 
     INTELLIGENCE("지능"),
     FOCUS("집중력"),
@@ -16,10 +13,6 @@ public enum MentalAbility {
     DECISION_MAKING("판단력"),
     PROBLEM_SOLVING("문제 해결 능력"),
     LEARNING_ABILITY("학습 능력");
-
-    private final String description;
-
-
 
     /**
      지능(Intelligence): 문제를 해결하고 새로운 정보를 학습하는 능력.

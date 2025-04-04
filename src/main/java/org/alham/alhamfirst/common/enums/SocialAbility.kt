@@ -1,11 +1,8 @@
 package org.alham.alhamfirst.common.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
-public enum SocialAbility {
+enum class SocialAbility(
+    val description: String
+) {
 
     SOCIABILITY("사회성"),
     INTERPERSONAL_SKILLS("대인관계 능력"),
@@ -14,10 +11,6 @@ public enum SocialAbility {
     COMMUNICATION("의사소통 능력"),
     NEGOTIATION("협상력"),
     TEAMWORK("팀워크");
-
-    private final String description;
-
-
 
     /**
      사회성(Sociability): 타인과 잘 어울리고 커뮤니케이션할 수 있는 능력.
@@ -28,7 +21,6 @@ public enum SocialAbility {
      협상력(Negotiation): 서로 다른 의견을 조율하고 합의에 도달하는 능력.
      팀워크(Teamwork): 다른 사람들과 협력하여 공동의 목표를 이루는 능력.
      */
-
 
 
 }

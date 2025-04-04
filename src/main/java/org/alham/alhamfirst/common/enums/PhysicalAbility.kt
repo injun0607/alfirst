@@ -1,13 +1,8 @@
 package org.alham.alhamfirst.common.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@RequiredArgsConstructor
-public enum PhysicalAbility {
-
+enum class PhysicalAbility(
+    val description: String
+) {
 
     ENDURANCE("체력"),
     STRENGTH("힘"),
@@ -18,10 +13,6 @@ public enum PhysicalAbility {
     STAMINA("지구력"),
     BALANCE("균형"),
     RECOVERY("회복력");
-
-    private final String description;
-
-
 
     /**
      * 체력(Endurance): 신체 활동을 지속할 수 있는 능력, 지구력.
@@ -34,7 +25,5 @@ public enum PhysicalAbility {
      * 균형(Balance): 신체의 균형을 잘 유지하는 능력.
      * 회복력(Recovery): 피로하거나 상처를 입었을 때, 얼마나 빠르게 회복하는지.
      */
-
-
 
 }

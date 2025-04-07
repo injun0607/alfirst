@@ -1,8 +1,6 @@
 package org.alham.alhamfirst.service.mission
 
 import org.alham.alhamfirst.common.enums.RepeatedStatus
-import org.alham.alhamfirst.common.exception.AlhamCustomErrorLog
-import org.alham.alhamfirst.common.exception.AlhamCustomException
 import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.domain.document.mission.UserMissionInfo
 import org.alham.alhamfirst.domain.dto.mission.MissionDTO
@@ -166,8 +164,13 @@ class UserMissionService(
         //등록된 유저 미션
         val createdMissionId = userMission.userMissionList.map { it.missionId }.toSet()
         val filterMissionId = filteredMissionIdList.map { it.id }.toSet()
+        val updateMissionList = missionList
+            .filter{it.updateIntensityFlag}
 
-        val newMission = filteredMissionIdList.filter { !createdMissionId.contains(it.id) }
+
+
+
+        val newMissionList = filteredMissionIdList.filter { !createdMissionId.contains(it.id) }
             .map {
                 val userMissionInfo = UserMissionInfo(
                     missionId = it.id,
@@ -177,16 +180,14 @@ class UserMissionService(
                 userMissionInfo
             }
 
-        if(newMission.isNotEmpty()) {
-            userMission.userMissionList.addAll(newMission)
+        //신규 미션 추가
+        if(newMissionList.isNotEmpty()) {
+            userMission.userMissionList.addAll(newMissionList)
             userMissionRepository.updateUserMissionList(MissionMapper().createUserMissionEntityFromDTO(userMission))
         }
 
-        userMission.userMissionList
-            .find{!filterMissionId.contains(it.missionId)}
-            ?.let{
-                userMission.userMissionList.remove(it)
-            }
+        //삭제된 미션 삭제
+        userMission.userMissionList.removeIf{!filterMissionId.contains(it.missionId)}
 
         log.info("[RESULT] validMissionList complete")
         return userMission

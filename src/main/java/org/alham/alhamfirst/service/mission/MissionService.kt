@@ -45,10 +45,11 @@ class MissionService(
             }
         }
 
-        if(user.todayUpdateCnt + 1 < user.userType.maxUpdateCnt){
+        if(user.todayUpdateCnt + 1 > user.userType.maxUpdateCnt){
             throw AlhamCustomException(HttpStatus.BAD_REQUEST,"You can't update mission anymore")
         }else{
-            userRepository.findAndUpdateTodayUpdateCnt((userId))
+            user.todayUpdateCnt++
+            userRepository.save(user)
         }
 
 

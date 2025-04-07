@@ -16,7 +16,9 @@ class MissionMapper {
             maxStreak = mission.maxStreak,
             regDate = mission.regDate,
             lastEndDate = mission.lastEndDate,
-            useFlag = mission.useFlag
+            useFlag = mission.useFlag,
+            intensity = mission.intensity,
+            updateIntensityFlag = mission.updateIntensityFlag
         )
     }
 
@@ -30,7 +32,9 @@ class MissionMapper {
             maxStreak = missionDTO.maxStreak,
             regDate = missionDTO.regDate,
             lastEndDate = missionDTO.lastEndDate,
-            useFlag = missionDTO.useFlag
+            useFlag = missionDTO.useFlag,
+            intensity = missionDTO.intensity,
+            updateIntensityFlag = missionDTO.updateIntensityFlag
         )
     }
 

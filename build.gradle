@@ -51,6 +51,7 @@ dependencies {
 	testImplementation "io.mockk:mockk:1.13.7"
 	implementation "org.jetbrains.kotlin:kotlin-stdlib"
 	implementation "org.jetbrains.kotlin:kotlin-reflect"
+	implementation"org.jetbrains.kotlinx:kotlinx-coroutines-reactor"
 
 }
 

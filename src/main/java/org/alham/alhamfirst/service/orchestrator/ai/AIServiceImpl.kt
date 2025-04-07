@@ -1,6 +1,7 @@
 package org.alham.alhamfirst.service.orchestrator.ai;
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.coroutines.reactor.awaitSingle
 import org.alham.alhamfirst.common.exception.AlhamCustomException
 import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.config.AiConfig
@@ -9,7 +10,9 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
-
+/**
+ *시스템 별로 prompt 구분
+ */
 @Service
 class AIServiceImpl(
     private val chatClient: ChatClient
@@ -31,7 +34,7 @@ class AIServiceImpl(
         try{
             return chatClient.prompt()
                 .system{it.text(AiConfig.DEFAULT_SYSTEM_CHAT)}
-                .user(question)
+                .user{ (it.text(question).param("MISSION",question))}
                 .stream()
                 .content();
         }catch (e: Exception){

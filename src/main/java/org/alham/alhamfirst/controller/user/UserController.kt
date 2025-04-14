@@ -3,12 +3,14 @@ package org.alham.alhamfirst.controller.user
 import org.alham.alhamfirst.domain.dto.user.UserDTO
 import org.alham.alhamfirst.service.OrchestratorService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = ["*"], maxAge = 3600)
 class UserController (
     private val orchestratorService: OrchestratorService,
     private val jwtToken: UserDTO

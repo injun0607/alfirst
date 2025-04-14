@@ -7,14 +7,11 @@ import org.alham.alhamfirst.domain.dto.mission.UserMissionListDTO
 import org.alham.alhamfirst.domain.dto.user.UserDTO
 import org.alham.alhamfirst.service.mission.UserMissionService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/user-mission")
+@CrossOrigin(origins = ["*"], maxAge = 3600)
 class UserMissionController(
     private val userMissionService: UserMissionService,
     private val jwtToken: UserDTO

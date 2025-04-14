@@ -6,6 +6,7 @@ import org.alham.alhamfirst.domain.dto.mission.MissionDTO
 import org.alham.alhamfirst.domain.dto.user.UserDTO
 import org.alham.alhamfirst.service.mission.MissionService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/mission")
+@CrossOrigin(origins = ["*"], maxAge = 3600)
 class MissionController (private val jwtToken: UserDTO, private val missionService: MissionService){
     @GetMapping("/{missionId}")
     fun getMission(@PathVariable missionId: String): ResponseEntity<MissionDTO>{

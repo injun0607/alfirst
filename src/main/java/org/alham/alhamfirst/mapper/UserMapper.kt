@@ -18,8 +18,6 @@ class UserMapper {
                 email = user.email
         )
     }
-
-
     fun createUserFromDTO(userDTO : UserDTO) : User {
         return User(
                 id = userDTO.getIdDecrypt(),
@@ -32,6 +30,19 @@ class UserMapper {
                 email = userDTO.email
         )
     }
+
+    fun createNewUserFromDTO(userDTO: UserDTO): User {
+        return User(
+                uuid = userDTO.uuid,
+                oauthProvider = userDTO.oauthProvider,
+                oauthId = userDTO.oauthId,
+                name = userDTO.name,
+                age = userDTO.age,
+                userType = userDTO.userType,
+                email = userDTO.email
+        )
+    }
+
 
     fun addUserStatData(userDTO: UserDTO, statData: MutableMap<String, Double>) : UserDTO {
         userDTO.statData = statData

@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="/css/login.css">
+    <title>Login</title>
 </head>
 <body>
-<div class="login-container">
-    <h2>Login</h2>
-    <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+<h1>Login</h1>
+<form th:action="@{/login}" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+    </div>
+    <div>
         <button type="submit">Login</button>
-    </form>
-    <div class="google-login" onclick="window.location.href='/auth/google'">
-        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" width="20">
-        <span>Login with Google</span>
     </div>
-    <div class="signup-link">
-        <p>Don't have an account? <a href="/signup">Sign up</a></p>
-    </div>
-</div>
+</form>
+<a th:href="@{/oauth2/authorization/google}">Login with Google</a>
 </body>
 </html>

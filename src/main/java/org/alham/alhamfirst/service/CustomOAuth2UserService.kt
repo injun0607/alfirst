@@ -58,7 +58,7 @@ class CustomOAuth2UserService(
                     oauthProvider = oAuthUserInfo.registerId,
                     oauthId = oAuthUserInfo.id
                 )
-                val newUser = UserMapper().createUserFromDTO(newUserDTO)
+                val newUser = UserMapper().createNewUserFromDTO(newUserDTO)
                 UserMapper().createUserDTOFromEntity(userRepository.save(newUser))
             }
 

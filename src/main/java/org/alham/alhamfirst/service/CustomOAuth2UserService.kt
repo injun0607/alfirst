@@ -66,7 +66,7 @@ class CustomOAuth2UserService(
             "uuid" to userDTO.uuid,
         )
 
-        return DefaultOAuth2User(setOf(SimpleGrantedAuthority("ROLE_"+userDTO.userType)), attributes, userDTO.oauthId)
+        return DefaultOAuth2User(setOf(SimpleGrantedAuthority("ROLE_"+userDTO.userType)), attributes, "uuid")
     }
 
 }

@@ -35,7 +35,7 @@ class JWTUtil(){
      * @return
      */
     fun generateToken(id: String, subject: String) :String{
-        val now:Date  = Date();
+        val now: Date = Date();
         return Jwts.builder()
                 .id(id)
                 .subject(subject)

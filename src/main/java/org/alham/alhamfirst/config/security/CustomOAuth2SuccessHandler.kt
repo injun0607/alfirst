@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class CustomOAuth2SuccessHandler(
@@ -22,7 +23,7 @@ class CustomOAuth2SuccessHandler(
         val oauth2User = authentication?.principal as? OAuth2User
         val uuid = oauth2User?.getAttribute<String>("uuid") ?: throw RuntimeException("uuid is null")
 
-        val id = "random_key"
+        val id = UUID.randomUUID().toString()
         val token = jwtUtil.generateToken(id, uuid)
         response?.contentType = "application/json"
         response?.writer?.write("{\"token\": \"$token\"}")

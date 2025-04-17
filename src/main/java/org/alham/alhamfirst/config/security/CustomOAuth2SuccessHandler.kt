@@ -11,7 +11,6 @@ import java.util.UUID
 
 @Component
 class CustomOAuth2SuccessHandler(
-    private val userRepository: UserRepository,
     private val jwtUtil: JWTUtil
 ): AuthenticationSuccessHandler {
 

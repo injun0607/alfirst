@@ -6,6 +6,7 @@ import org.alham.alhamfirst.domain.dto.stat.UserStatDTO;
 import org.alham.alhamfirst.domain.dto.user.UserDTO;
 import org.alham.alhamfirst.service.stat.UserStatService;
 import org.alham.alhamfirst.service.user.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,14 +22,13 @@ public class UserApiController {
 
     private final UserStatService userStatService;
 
-    private final UserDTO userDTO;
 
     /**
      * 유저 기본 정보 가져오기
      * @return
      */
     @GetMapping("/users/get")
-    public UserDTO getUser() {
+    public UserDTO getUser(@AuthenticationPrincipal UserDTO userDTO) {
         UserDTO jwtInfo = userDTO;
         return userService.getUserByEncryptedId(jwtInfo.getId());
     }
@@ -38,7 +38,7 @@ public class UserApiController {
      * @return
      */
     @GetMapping("/user-details/get")
-    public UserDTO getUserInfo() {
+    public UserDTO getUserInfo(@AuthenticationPrincipal UserDTO userDTO) {
         UserDTO jwtInfo = userDTO;
 
         UserDTO userInfo = userService.getUserByEncryptedId(jwtInfo.getId());

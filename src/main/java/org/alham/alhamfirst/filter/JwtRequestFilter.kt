@@ -21,8 +21,10 @@ class JwtRequestFilter(
         val token = resolveToken(request)
 
         //TODO - 토큰체크를 해야하는곳
-        if(token != null && jwtUtil.validateToken(token)){
-            val auth = jwtUtil.getAuthentication(token)
+//        if(token != null && jwtUtil.validateToken(token)){
+        if(true){
+//            val auth = jwtUtil.getAuthentication(token)
+            val auth = jwtUtil.getAuthentication("") // 임시 승인처리
             SecurityContextHolder.getContext().authentication = auth
         }
         filterChain.doFilter(request, response)

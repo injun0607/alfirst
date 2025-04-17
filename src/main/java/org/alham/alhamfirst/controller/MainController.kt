@@ -10,18 +10,19 @@ import org.alham.alhamfirst.domain.dto.user.UserDTO
 import org.alham.alhamfirst.service.orchestrator.OrchestratorTodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @Slf4j
-class MainController(private val orchestratorTodoService: OrchestratorTodoService, private val jwtInfo : UserDTO) {
+class MainController(private val orchestratorTodoService: OrchestratorTodoService) {
 
     private val log = logger()
 
     @PostMapping("/todo/create")
-    fun questCreate(@RequestBody todoDTO: TodoDTO): ResponseEntity<QuestDTO>{
+    fun questCreate(@AuthenticationPrincipal principal: UserDTO ,@RequestBody todoDTO: TodoDTO): ResponseEntity<QuestDTO>{
         try{
-            val quest = orchestratorTodoService.createQuest(todoDTO,jwtInfo.id);
+            val quest = orchestratorTodoService.createQuest(todoDTO,principal.id);
             return ResponseEntity(quest, HttpStatus.OK)
         } catch(e: Exception){
             log.error("todo create error",e)
@@ -30,9 +31,9 @@ class MainController(private val orchestratorTodoService: OrchestratorTodoServic
     }
 
     @GetMapping("/quest/list")
-    fun getUndoQuestListByUserId(): ResponseEntity<List<QuestDTO>>{
+    fun getUndoQuestListByUserId(@AuthenticationPrincipal principal: UserDTO): ResponseEntity<List<QuestDTO>>{
         try {
-            val undoList = orchestratorTodoService.getUnDoQuestListByEncryptedUserId(jwtInfo.id)
+            val undoList = orchestratorTodoService.getUnDoQuestListByEncryptedUserId(principal.id)
             return ResponseEntity(undoList, HttpStatus.OK);
         } catch (e: Exception){
             log.error("undo list get error",e)
@@ -41,9 +42,11 @@ class MainController(private val orchestratorTodoService: OrchestratorTodoServic
     }
 
     @PostMapping("/todo/{id}/{completed}")
-    fun questComplete(@PathVariable id: Long,@PathVariable completed:Boolean): ResponseEntity<UserStatDTO>{
+    fun questComplete(@AuthenticationPrincipal principal: UserDTO,
+                      @PathVariable id: Long,
+                      @PathVariable completed:Boolean): ResponseEntity<UserStatDTO>{
         try{
-            return ResponseEntity.ok(orchestratorTodoService.completeQuest(id,jwtInfo.id,completed))
+            return ResponseEntity.ok(orchestratorTodoService.completeQuest(id,principal.id,completed))
         } catch(e: Exception){
             log.error("todo complete change error",e)
             return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -54,7 +57,7 @@ class MainController(private val orchestratorTodoService: OrchestratorTodoServic
     fun questChange(@PathVariable id: Long,@RequestBody todoDTO: TodoDTO): ResponseEntity<UserStatDTO>{
         try{
             TODO()
-//            return ResponseEntity.ok(orchestratorTodoService.changeQuest(id,jwtInfo.id,todoDTO.completed))
+//            return ResponseEntity.ok(orchestratorTodoService.changeQuest(id,principal.id,todoDTO.completed))
         } catch(e: Exception){
             log.error("todo update error",e)
             return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)

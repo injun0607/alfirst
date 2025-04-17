@@ -25,17 +25,6 @@ class SecurityConfig(
 ){
 
     @Bean
-    fun getJwtToken(): UserDTO{
-        return UserDTO(
-            id = CommonUtil.getEncryptedId(1L),
-            name = "alham",
-            age = 30,
-            email = "alham@alham.net",
-            userType = UserType.ADMIN
-        );
-    }
-
-    @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain{
         http
             .csrf { it.disable() } //TODO csrf 설정 확인필요

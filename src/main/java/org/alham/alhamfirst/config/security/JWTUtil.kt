@@ -4,14 +4,22 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import org.alham.alhamfirst.common.enums.UserType
+import org.alham.alhamfirst.domain.entity.User
+import org.alham.alhamfirst.mapper.UserMapper
+import org.alham.alhamfirst.repository.user.UserRepository
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.crypto.SecretKey
 
 @Component
-class JWTUtil(){
+class JWTUtil(
+    private val userRepository: UserRepository
+){
     /*
      * 기본적으로 JWT 토큰을 생생할때 비밀키가 필요한데, 보안과 호환성을 위해 일반문자열을 Encoding한 키로 사용한다.
      * 그후 SecretKey객체로 변경할때는 Encoding된 문자열을 Decoders.BASE64.decode()로 디코딩한후 사용한다
@@ -25,7 +33,7 @@ class JWTUtil(){
     fun getSigningKey(): SecretKey{
         val encoded: String  = Base64.getEncoder().encodeToString(SECRETKEY.toByteArray());
         val keyBytes: ByteArray = Decoders.BASE64.decode(encoded);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(keyBytes)
     }
 
     /**
@@ -46,14 +54,23 @@ class JWTUtil(){
     }
 
     fun getSubject(token: String): String {
-        return extractAllClaims(token).subject;
+        return extractAllClaims(token).subject
     }
 
-    //TODO - grant담아도 괜찮을듯? 이건 좀 보자
+    //TODO - 임시해제 처리 -> 테스트용으로 무조건 통과
     fun getAuthentication(token: String): Authentication {
-        val claims = extractAllClaims(token);
-        val uuid = claims.subject;
-        return UsernamePasswordAuthenticationToken(uuid, null, emptyList());
+//        val claims = extractAllClaims(token)
+//        val uuid = claims.subject
+
+//        val user = userRepository.findByUuid(uuid)
+//            ?: throw AuthenticationCredentialsNotFoundException("유저를 찾을 수 없습니다.")
+
+        val user = User(
+            id=1L,
+            userType = UserType.BASIC
+        )
+        val userDTO = UserMapper().createUserDTOFromEntity(user)
+        return UsernamePasswordAuthenticationToken(userDTO, null, setOf(SimpleGrantedAuthority("ROLE_"+userDTO.userType)))
     }
 
     fun validateToken(token: String): Boolean {

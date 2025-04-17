@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/user-mission")
-@CrossOrigin(origins = ["*"], maxAge = 3600)
 class UserMissionController(
     private val userMissionService: UserMissionService
 ) {

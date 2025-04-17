@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/mission")
-@CrossOrigin(origins = ["*"], maxAge = 3600)
 class MissionController (private val missionService: MissionService){
     @GetMapping("/{missionId}")
     fun getMission(@AuthenticationPrincipal principal: UserDTO,

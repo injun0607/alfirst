@@ -25,7 +25,8 @@ class CustomOAuth2SuccessHandler(
         val id = UUID.randomUUID().toString()
         val token = jwtUtil.generateToken(id, uuid)
         response?.contentType = "application/json"
-        response?.writer?.write("{\"token\": \"$token\"}")
+
+        response?.sendRedirect("http://localhost:3000/oauth2/success?token=$token")
 
     }
 

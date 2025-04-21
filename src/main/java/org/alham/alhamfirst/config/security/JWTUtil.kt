@@ -59,16 +59,16 @@ class JWTUtil(
 
     //TODO - 임시해제 처리 -> 테스트용으로 무조건 통과
     fun getAuthentication(token: String): Authentication {
-//        val claims = extractAllClaims(token)
-//        val uuid = claims.subject
+        val claims = extractAllClaims(token)
+        val uuid = claims.subject
 
-//        val user = userRepository.findByUuid(uuid)
-//            ?: throw AuthenticationCredentialsNotFoundException("유저를 찾을 수 없습니다.")
+        val user = userRepository.findByUuid(uuid)
+            ?: throw AuthenticationCredentialsNotFoundException("유저를 찾을 수 없습니다.")
 
-        val user = User(
-            id=1L,
-            userType = UserType.BASIC
-        )
+//        val user = User(
+//            id=1L,
+//            userType = UserType.BASIC
+//        )
         val userDTO = UserMapper().createUserDTOFromEntity(user)
         return UsernamePasswordAuthenticationToken(userDTO, null, setOf(SimpleGrantedAuthority("ROLE_"+userDTO.userType)))
     }

@@ -4,8 +4,6 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
-import org.alham.alhamfirst.common.enums.UserType
-import org.alham.alhamfirst.domain.entity.User
 import org.alham.alhamfirst.mapper.UserMapper
 import org.alham.alhamfirst.repository.user.UserRepository
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException
@@ -42,16 +40,28 @@ class JWTUtil(
      * @param subject
      * @return
      */
-    fun generateToken(id: String, subject: String) :String{
+    fun generateAccessToken(id: String, subject: String) :String{
         val now: Date = Date();
         return Jwts.builder()
                 .id(id)
                 .subject(subject)
                 .issuedAt(now)
                 .signWith(getSigningKey())
-                .expiration(Date(now.time + 1000 * 60 * 60 * 10)) // 10시간
+                .expiration(Date(now.time + 1000 * 60 * 60)) // 1시간
                 .compact();
     }
+
+    fun generateRefreshToken(id: String, subject: String) :String{
+        val now: Date = Date();
+        return Jwts.builder()
+            .id(id)
+            .subject(subject)
+            .issuedAt(now)
+            .signWith(getSigningKey())
+            .expiration(Date(now.time + 14 * 24 * 60 * 60 * 1000)) // 14일
+            .compact();
+    }
+
 
     fun getSubject(token: String): String {
         return extractAllClaims(token).subject
@@ -74,7 +84,7 @@ class JWTUtil(
     }
 
     fun validateToken(token: String): Boolean {
-        return !isTokenExpired(token);
+        return !isTokenExpired(token)
     }
     fun isTokenExpired(token: String): Boolean {
         return extractAllClaims(token).expiration.before(Date());

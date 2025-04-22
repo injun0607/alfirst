@@ -22,12 +22,15 @@ class JwtRequestFilter(
 
         //TODO - 토큰체크를 해야하는곳
         if(token != null && jwtUtil.validateToken(token)){
-//        if(true){
             val auth = jwtUtil.getAuthentication(token)
-//            val auth = jwtUtil.getAuthentication("") // 임시 승인처리
             SecurityContextHolder.getContext().authentication = auth
+            filterChain.doFilter(request, response)
+//        if(true){
+//            val auth = jwtUtil.getAuthentication("") // 임시 승인처리
+        }else{
+            returnUnauthorized(response)
+            return
         }
-        filterChain.doFilter(request, response)
     }
 
     private fun resolveToken(request: HttpServletRequest): String? {
@@ -35,6 +38,20 @@ class JwtRequestFilter(
         return if (bearer != null && bearer.startsWith("Bearer ")) {
             bearer.substring(7)
         } else null
+    }
+
+    private fun returnUnauthorized(response: HttpServletResponse) {
+        response.status = HttpServletResponse.SC_UNAUTHORIZED
+        response.contentType = "application/json"
+        response.characterEncoding = "UTF-8"
+        response.writer.write(
+            """
+            {
+                "code": 401,
+                "message": "Access Token is invalid or expired."
+            }
+            """.trimIndent()
+        )
     }
 
 

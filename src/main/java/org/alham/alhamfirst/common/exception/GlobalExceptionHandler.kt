@@ -24,6 +24,7 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse(code = "500", message = "Internal Server Error"))
     }
+
 }
 
 class ErrorResponse(

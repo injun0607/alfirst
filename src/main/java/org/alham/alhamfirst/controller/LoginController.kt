@@ -7,9 +7,6 @@ package org.alham.alhamfirst.controller;
  */
 
 import jakarta.servlet.http.HttpServletRequest
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.alham.alhamfirst.common.logger
 import org.alham.alhamfirst.config.security.JWTUtil
 import org.springframework.stereotype.Controller;
@@ -36,14 +33,14 @@ class LoginController(
     @GetMapping("/login/success-access")
     @ResponseBody
     fun loginSuccessAccess(request: HttpServletRequest):Map<String, String> {
-        val token = request.cookies.firstOrNull{it.name == "accessToken"}?.value
+        val accessToken = request.cookies.firstOrNull{it.name == "accessToken"}?.value
             ?:throw RuntimeException("accessToken is null")
 
-        if(!jwtUtil.validateToken(token)){
+        if(!jwtUtil.validateToken(accessToken)){
             throw RuntimeException("accessToken is invalid")
         }
 
-        return mapOf("accessToken" to token);
+        return mapOf("accessToken" to accessToken)
     }
 
 }

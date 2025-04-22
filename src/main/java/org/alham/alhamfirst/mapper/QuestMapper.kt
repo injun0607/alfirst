@@ -2,8 +2,6 @@ package org.alham.alhamfirst.mapper;
 
 import org.alham.alhamfirst.domain.document.QuestDocument
 import org.alham.alhamfirst.domain.dto.quest.QuestDTO
-import org.alham.alhamfirst.domain.dto.stat.StatDTO
-import org.alham.alhamfirst.domain.dto.todo.TodoDTO
 
 
 class QuestMapper() {

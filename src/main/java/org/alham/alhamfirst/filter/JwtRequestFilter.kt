@@ -20,6 +20,11 @@ class JwtRequestFilter(
     ) {
         val token = resolveToken(request)
 
+        if(request.requestURI == "/login-success" || request.requestURI == "/login/success-access"){
+            filterChain.doFilter(request, response)
+            return
+        }
+
         //TODO - 토큰체크를 해야하는곳
         if(token != null && jwtUtil.validateToken(token)){
             val auth = jwtUtil.getAuthentication(token)

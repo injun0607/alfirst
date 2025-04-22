@@ -25,7 +25,7 @@ class CustomOAuth2SuccessHandler(
         val accessId = UUID.randomUUID().toString()
         val refreshId = UUID.randomUUID().toString()
         val accessToken = jwtUtil.generateAccessToken(accessId, uuid)
-        val refreshToken = jwtUtil.generateAccessToken(refreshId, uuid)
+        val refreshToken = jwtUtil.generateRefreshToken(refreshId, uuid)
 
         response?.contentType = "application/json"
 

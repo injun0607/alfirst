@@ -30,7 +30,7 @@ class SecurityConfig(
             .csrf { it.disable() } //TODO csrf 설정 확인필요
             .authorizeHttpRequests { auth ->
                 auth
-                    .requestMatchers("/", "/login/**", "/oauth2/**","/favicon.ico","/login-success/**").permitAll()
+                    .requestMatchers("/", "/login/**", "/oauth2/**","/favicon.ico","/login-success/**","/login-success").permitAll()
                     .anyRequest().authenticated()
             }
             .oauth2Login { oauth ->
